@@ -1,64 +1,65 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Style, log } from "../../utils/log";
 import { authURL } from "../instances/authURL";
 
 export const addToCart = async (productId, quantity) => {
-  console.log("=======addToCart API=======");
+  log("=======addToCart API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).post("/add-to-cart", {
       productId,
       quantity,
     });
-    console.log("...addToCart api response:", res);
+    log("...addToCart api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...addToCart api error:", error);
+    log("...addToCart api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const getCartDetails = async () => {
-  console.log("=======getCartDetails API=======");
+  log("=======getCartDetails API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).get("/get-cart-details");
-    console.log("...getCartDetails api response:", res);
+    log("...getCartDetails api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...getCartDetails api error:", error);
+    log("...getCartDetails api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const increaseQuantity = async (productId) => {
-  console.log("=======increaseQuantity API=======");
+  log("=======increaseQuantity API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).post("/increase-quantity", {
       productId,
     });
-    console.log("...increaseQuantity api response:", res);
+    log("...increaseQuantity api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...increaseQuantity api error:", error);
+    log("...increaseQuantity api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const decreaseQuantity = async (productId) => {
-  console.log("=======decreaseQuantity API=======");
+  log("=======decreaseQuantity API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).post("/decrease-quantity", {
       productId,
     });
-    console.log("...decreaseQuantity api response:", res);
+    log("...decreaseQuantity api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...decreaseQuantity api error:", error);
+    log("...decreaseQuantity api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }

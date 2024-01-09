@@ -1,29 +1,30 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Style, log } from "../../utils/log";
 import { authURL } from "../instances/authURL";
 
 export const placeOrder = async (data) => {
-  console.log("=======placeOrder API=======");
+  log("=======placeOrder API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).post("/place-order", data);
-    console.log("...placeOrder api response:", res);
+    log("...placeOrder api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...placeOrder api error:", error);
+    log("...placeOrder api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const getOrderDetails = async () => {
-  console.log("=======getOrderDetails API=======");
+  log("=======getOrderDetails API=======", [], Style.api);
   try {
     const token = await AsyncStorage.getItem("user-token");
     const res = await authURL(token).get("/get-user-order-details");
-    console.log("...getOrderDetails api response:", res);
+    log("...getOrderDetails api response:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("...getOrderDetails api error:", error);
+    log("...getOrderDetails api error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }

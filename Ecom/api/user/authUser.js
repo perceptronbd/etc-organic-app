@@ -1,52 +1,57 @@
+import { Style, log } from "../../utils/log";
 import { authURL } from "../instances/authURL";
 import { baseURL } from "../instances/baseURL";
 
 export const registerUser = async (user) => {
+  log("=======registerUser API=======", [], Style.api);
   try {
     const res = await baseURL.post("/register", user);
-    console.log("registerUser res:", res);
+    log("registerUser res:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("loginUser error:", error.response);
+    log("loginUser error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const loginUser = async (user) => {
+  log("=======loginUser API=======", [], Style.api);
   try {
     const res = await baseURL.post("/login", user);
-    console.log("loginUser res:", res);
+    log("loginUser res:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("loginUser error:", error);
+    log("loginUser error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const getUserDetails = async (token) => {
+  log("=======getUserDetails API=======", [], Style.api);
   try {
     const res = await authURL(token).get("/get-profile");
-    console.log("getUserDetails res:", res);
+    log("getUserDetails res:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("getUserDetails error:", error.response);
+    log("getUserDetails error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
 };
 
 export const updateProfile = async (token, data) => {
+  log("=======updateProfile API=======", [], Style.api);
   try {
     const res = await authURL(token).post(
       "/update-district-and-division",
       data,
     );
-    console.log("updateProfile res:", res);
+    log("updateProfile res:", [res], Style.success);
     return res;
   } catch (error) {
-    console.log("updateProfile error:", error.response);
+    log("updateProfile error:", [error], Style.danger);
     const errorResponse = error.response;
     return errorResponse;
   }
