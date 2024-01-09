@@ -1,22 +1,22 @@
 export const Style = {
   base: [
     "color: #fff",
-    "background-color: #444",
+
     "padding: 2px 4px",
     "border-radius: 2px",
     "font-family: 'Courier New', Courier, monospace",
   ],
   warning: ["color: #eee", "background-color: #ffa500"],
-  success: ["background-color: #228b22"],
-  danger: ["background-color: #dc143c", "text-decoration: underline"],
-  api: ["color: #5f9ea0", "font-style: italic"],
+  success: ["color: #228b22"],
+  danger: ["color: #dc143c"],
+  api: ["background-color: #5f9ea0", "font-style: bold"],
   code: [
     "background-color: #333",
     "font-family: 'Courier New', Courier, monospace",
     "border-left: 3px solid #f0e68c",
   ],
   effects: ["text-shadow: 1px 1px 2px black", "font-weight: bold"],
-  function: ["color: #ba55d3", "font-weight: bold"],
+  function: ["background-color: #ba55d3", "font-weight: bold"],
 };
 
 export const log = (text, variables = [], extra = []) => {
