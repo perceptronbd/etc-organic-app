@@ -38,7 +38,9 @@ export const CustomDrawerContent = (props) => {
           borderRadius: 10,
         }}
       >
-        {profileImage ? (
+        {profileImage === "" ||
+        profileImage === undefined ||
+        profileImage === null ? (
           <Avatar.Image
             size={50}
             style={{ backgroundColor: "none ", marginRight: 10 }}
