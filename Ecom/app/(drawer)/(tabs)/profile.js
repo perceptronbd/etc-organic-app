@@ -8,7 +8,13 @@ import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
 import { ScrollView } from "react-native-gesture-handler";
-import { Avatar, Button, DataTable, Divider } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Avatar,
+  Button,
+  DataTable,
+  Divider,
+} from "react-native-paper";
 import tailwind from "twrnc";
 import { getOrderDetails } from "../../../api";
 import { updateProfile } from "../../../api/user/authUser";
@@ -24,6 +30,8 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useModal } from "../../../hooks/useModal";
 import { formatNumbers } from "../../../utils/formatNumbers";
 import { groupByOrder } from "../../../utils/groupByOrder";
+import { Style, log } from "../../../utils/log";
+import { trycatch } from "../../../utils/trycatch";
 
 const addressInput = [
   {
@@ -442,15 +450,30 @@ const NIDandAddress = ({
 const Orders = () => {
   //declare state for orders
   const [orders, setOrders] = useState({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getOrderDetails().then((res) => {
-      console.log("...profile order details:", res);
-      const { data } = res;
+    log("...order details...", [], Style.effects);
+    setLoading(true);
+    const fetchOrderDetails = async () => {
+      const [getOrderDetailsRes, getOrderDetailsErr] =
+        await trycatch(getOrderDetails());
+
+      if (getOrderDetailsErr) {
+        log("order details:", [getOrderDetailsErr], Style.danger);
+        setLoading(false);
+        return;
+      }
+
+      log("profile order details:", [getOrderDetailsRes], Style.success);
+      const { data } = getOrderDetailsRes;
       const groupedData = groupByOrder(data);
-      console.log("...groupedData:", groupedData);
+      log("groupedData:", [groupedData], Style.code);
       setOrders(groupedData);
-    });
+      setLoading(false);
+    };
+
+    fetchOrderDetails();
   }, []);
 
   useEffect(() => {
@@ -487,52 +510,60 @@ const Orders = () => {
           rowGap: 20,
         }}
       >
-        {orders.Pending && (
-          <>
-            <StyledText
-              variant="bodySmall"
-              style={{
-                marginBottom: -10,
-              }}
-            >
-              পেন্ডিং অর্ডার
-            </StyledText>
-            <ScrollView
-              contentContainerStyle={{
-                rowGap: 10,
-              }}
-            >
-              {orders?.Pending?.map((item, index) => (
-                <OrderCard
-                  key={index}
-                  products={item.cart.products}
-                  subTotal={item.cart.totalPrice}
-                />
-              ))}
-            </ScrollView>
-          </>
+        {loading ? (
+          <ActivityIndicator animating color={COLOR.secondary} size={"small"} />
+        ) : (
+          orders.Pending && (
+            <>
+              <StyledText
+                variant="bodySmall"
+                style={{
+                  marginBottom: -10,
+                }}
+              >
+                পেন্ডিং অর্ডার
+              </StyledText>
+              <ScrollView
+                contentContainerStyle={{
+                  rowGap: 10,
+                }}
+              >
+                {orders?.Pending?.map((item, index) => (
+                  <OrderCard
+                    key={index}
+                    products={item.cart.products}
+                    subTotal={item.cart.totalPrice}
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )
         )}
 
-        {orders.Completed && (
-          <>
-            <StyledText
-              variant="bodySmall"
-              style={{
-                marginBottom: -10,
-              }}
-            >
-              কমপ্লিটেড অর্ডার
-            </StyledText>
-            <ScrollView
-              contentContainerStyle={{
-                rowGap: 10,
-              }}
-            >
-              {orders.Completed?.map((item) => (
-                <OrderCard key={item._id} />
-              ))}
-            </ScrollView>
-          </>
+        {loading ? (
+          <ActivityIndicator animating color={COLOR.secondary} size={"small"} />
+        ) : (
+          orders.Completed && (
+            <>
+              <StyledText
+                variant="bodySmall"
+                style={{
+                  marginBottom: -10,
+                }}
+              >
+                কমপ্লিটেড অর্ডার
+              </StyledText>
+              <ScrollView
+                contentContainerStyle={{
+                  rowGap: 10,
+                }}
+              >
+                {orders.Completed?.map((item) => (
+                  <OrderCard key={item._id} />
+                ))}
+              </ScrollView>
+            </>
+          )
         )}
       </View>
     </View>
