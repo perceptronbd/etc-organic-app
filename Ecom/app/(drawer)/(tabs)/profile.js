@@ -502,9 +502,9 @@ const Orders = () => {
                 rowGap: 10,
               }}
             >
-              {orders?.Pending?.map((item) => (
+              {orders?.Pending?.map((item, index) => (
                 <OrderCard
-                  key={item._id}
+                  key={index}
                   products={item.cart.products}
                   subTotal={item.cart.totalPrice}
                 />
