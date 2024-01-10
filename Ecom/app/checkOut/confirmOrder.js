@@ -1,5 +1,5 @@
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import {
   DataTable,
@@ -14,46 +14,39 @@ import { StyledButton, StyledText } from "../../components";
 import COLOR from "../../constants/COLOR";
 import CartContext from "../../contexts/CartContext";
 import { formatNumbers } from "../../utils/formatNumbers";
+import { Style, log } from "../../utils/log";
+import { trycatch } from "../../utils/trycatch";
 
 const confirmOrder = () => {
   const [value, setValue] = React.useState("delivery");
-
   const [visible, setVisible] = React.useState(false);
 
   const data = useLocalSearchParams();
 
-  const { cart } = useContext(CartContext);
+  const { cart, fetchCartDetails } = useContext(CartContext);
 
-  useEffect(() => {
-    console.log("...confirmOrder useEffect start...");
-    cart.products?.map((item) => {
-      console.log(item.product);
-      console.log(item.product.productName);
-      console.log(item.quantity);
-      console.log(item.product.salesPrice);
-      console.log(item.product.salesPrice * item.quantity);
-    });
-    console.log("...confirmOrder useEffect end...");
-  }, []);
+  log("...confirmOrder cart:", [cart], Style.code);
 
   const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
 
   const onConfirm = async () => {
-    try {
-      placeOrder(data).then((res) => {
-        console.log("...confirmOrder onConfirm res:", res);
-        const { status } = res;
-        if (status === 201) {
-          console.log("...confirmOrder onConfirm status:", status);
-          showModal();
-        } else {
-          console.log("...confirmOrder onConfirm status:", status);
-        }
-      });
-    } catch (error) {
-      console.log("...confirmOrder onConfirm error:", error);
+    const [placeOrderRes, placeOrderErr] = await trycatch(placeOrder(data));
+
+    if (placeOrderErr) {
+      log("...confirmOrder onConfirm:", [placeOrderErr], Style.danger);
+      return;
     }
+
+    log("...confirmOrder onConfirm:", [placeOrderRes], Style.success);
+    const { status } = placeOrderRes;
+    if (status === 201) {
+      log("...confirmOrder onConfirm status:", [status]);
+      fetchCartDetails();
+      showModal();
+    } else {
+      log("...confirmOrder onConfirm status:", [status]);
+    }
+
     showModal();
   };
 
@@ -139,7 +132,6 @@ const confirmOrder = () => {
       <StyledButton onPress={onConfirm}>কনফার্ম অর্ডার</StyledButton>
       <ConfirmationModel
         visible={visible}
-        hideModal={hideModal}
         navigateToMyOrder={navigateToMyOrder}
       />
     </View>
