@@ -5,18 +5,16 @@ const asyncHandler = require("express-async-handler");
 const Cart = require("../../models/cartModel");
 const Product = require("../../models/productModel");
 
-
 exports.addToCart = asyncHandler(async (req, res) => {
-
   const userId = req.user._id;
   const { productId, quantity } = req.body;
 
   const product = await Product.findById(productId);
   if (!product) {
-    throw new Error('Product not found');
+    throw new Error("Product not found");
   }
 
-  const cart = await Cart.findOne({ user: userId , order: false });
+  const cart = await Cart.findOne({ user: userId, order: false });
   if (!cart) {
     // If the user doesn't have a cart or the cart is already ordered, create a new one
     const newCart = new Cart({
@@ -48,15 +46,13 @@ exports.addToCart = asyncHandler(async (req, res) => {
 });
 
 exports.removeFromCart = asyncHandler(async (req, res) => {
-  
   const { productId } = req.body;
   const userId = req.user._id;
 
-  const cart = await Cart.findOne({ user: userId , order: false });
+  const cart = await Cart.findOne({ user: userId, order: false });
   if (!cart) {
     throw new Error("Cart not found");
   }
-
 
   const productIdObj = new mongoose.Types.ObjectId(productId);
 
@@ -66,14 +62,15 @@ exports.removeFromCart = asyncHandler(async (req, res) => {
   );
 
   const savedCart = await cart.save();
-  const populatedCart = await Cart.findById(savedCart._id).populate('products.product');
+  const populatedCart = await Cart.findById(savedCart._id).populate(
+    "products.product"
+  );
 
   cart.totalPrice = calculateTotalPrice(populatedCart.products);
   await cart.save();
 
   res.json({ message: "Product removed from cart successfully", cart });
 });
-
 
 exports.updateCart = asyncHandler(async (req, res) => {
   const userId = req.user._id;
@@ -101,19 +98,18 @@ exports.updateCart = asyncHandler(async (req, res) => {
   res.json(cart);
 });
 
-
 exports.increaseQuantity = asyncHandler(async (req, res) => {
   const { productId } = req.body;
-  const userId = req.user._id; 
+  const userId = req.user._id;
 
-  const cart = await Cart.findOne({ user: userId });
+  const cart = await Cart.findOne({ user: userId, order: false });
   if (!cart) {
     throw new Error("Cart not found");
   }
 
   const product = await Product.findById(productId);
   if (!product) {
-    throw new Error('Product not exists');
+    throw new Error("Product not exists");
   }
 
   const productIndex = cart.products.findIndex(
@@ -131,14 +127,11 @@ exports.increaseQuantity = asyncHandler(async (req, res) => {
   res.json({ message: "Quantity increased successfully", cart });
 });
 
-
-
 exports.decreaseQuantity = asyncHandler(async (req, res) => {
-  
   const { productId } = req.body;
-  const userId = req.user._id; 
+  const userId = req.user._id;
 
-  const cart = await Cart.findOne({ user: userId });
+  const cart = await Cart.findOne({ user: userId, order: false });
 
   if (!cart) {
     throw new Error("Cart not found");
@@ -147,7 +140,7 @@ exports.decreaseQuantity = asyncHandler(async (req, res) => {
   const product = await Product.findById(productId);
 
   if (!product) {
-    throw new Error('Product not exists');
+    throw new Error("Product not exists");
   }
 
   const productIndex = cart.products.findIndex(
@@ -158,7 +151,6 @@ exports.decreaseQuantity = asyncHandler(async (req, res) => {
     throw new Error("Product not found in cart");
   }
 
-
   cart.products[productIndex].quantity--;
 
   // If the quantity becomes zero or negative, remove the product from the cart
@@ -166,7 +158,7 @@ exports.decreaseQuantity = asyncHandler(async (req, res) => {
     cart.products.splice(productIndex, 1);
   }
 
-  cart.totalPrice -= product.salesPrice; 
+  cart.totalPrice -= product.salesPrice;
 
   await cart.save();
 
@@ -174,7 +166,6 @@ exports.decreaseQuantity = asyncHandler(async (req, res) => {
 });
 
 function calculateTotalPrice(products) {
-  
   let totalPrice = 0;
 
   for (const item of products) {
@@ -202,12 +193,11 @@ function calculateTotalPrice(products) {
   return totalPrice;
 }
 
-
 exports.getTotalPrice = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
   // Find the user's cart
-  const cart = await Cart.findOne({ user: userId , order: false });
+  const cart = await Cart.findOne({ user: userId, order: false });
 
   if (!cart) {
     throw new Error("Cart not found");
@@ -216,15 +206,14 @@ exports.getTotalPrice = asyncHandler(async (req, res) => {
   res.json({ totalPrice: cart.totalPrice });
 });
 
-
 exports.getCartDetails = asyncHandler(async (req, res) => {
   const userId = req.user._id;
 
   // Find the user's cart and populate the 'products' field with product details
-  const cart = await Cart.findOne({ user: userId, order: false})
+  const cart = await Cart.findOne({ user: userId, order: false })
     .populate({
-      path: 'products.product',
-      model: 'Product',
+      path: "products.product",
+      model: "Product",
     })
     .exec();
 
