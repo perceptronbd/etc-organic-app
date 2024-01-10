@@ -558,8 +558,12 @@ const Orders = () => {
                   rowGap: 10,
                 }}
               >
-                {orders.Completed?.map((item) => (
-                  <OrderCard key={item._id} />
+                {orders.Completed?.map((item, index) => (
+                  <OrderCard
+                    key={index}
+                    products={item.cart.products}
+                    subTotal={item.cart.totalPrice}
+                  />
                 ))}
               </ScrollView>
             </>
