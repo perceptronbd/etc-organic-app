@@ -11,7 +11,7 @@ import { useCustomToast, useImage } from "../hooks";
 import { formatNumbers } from "../utils/formatNumbers";
 
 const productDetails = () => {
-  const { updateProductDetails } = useContext(CartContext);
+  const { updateProductDetails, fetchCartDetails } = useContext(CartContext);
   const showToast = useCustomToast();
 
   const [quantity, setQuantity] = useState(0);
@@ -46,6 +46,7 @@ const productDetails = () => {
       return;
     }
     updateProductDetails({ ...item, quantity }).then(() => {
+      fetchCartDetails();
       setLoading(false);
       console.log("...productDetails onAddToCart ");
       showToast({

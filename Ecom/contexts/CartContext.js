@@ -18,24 +18,25 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     log("...CartContext fetchCartDetails...", [], Style.effects);
-    const fetchCartDetails = async () => {
-      const [res, err] = await trycatch(getCartDetails());
-      if (err) {
-        log("CartContext fetchCartDetails:", [err], Style.danger);
-        return;
-      }
-      log("CartContext fetchCartDetails:", [res], Style.success);
-      const { data, status } = res;
-      if (status === 200) {
-        setCart(data);
-        setProducts(data.products);
-      } else {
-        setMessage(data.message);
-      }
-    };
-
     fetchCartDetails();
   }, []);
+
+  const fetchCartDetails = async () => {
+    const [res, err] = await trycatch(getCartDetails());
+    if (err) {
+      log("CartContext fetchCartDetails:", [err], Style.danger);
+      return;
+    }
+    log("CartContext fetchCartDetails:", [res], Style.success);
+    const { data, status } = res;
+    if (status === 200) {
+      setCart(data);
+      setProducts(data.products);
+    } else {
+      setProducts([]);
+      setMessage(data.message);
+    }
+  };
 
   const updateProductDetails = async (details) => {
     const { _id, quantity } = details;
@@ -66,29 +67,6 @@ export const CartProvider = ({ children }) => {
       return;
     }
     setCart(data);
-
-    const [getCartRes, getCartErr] = await trycatch(getCartDetails());
-    if (getCartErr) {
-      log(
-        "...CartContext updateProductDetails getCartDetails:",
-        [getCartErr],
-        Style.danger,
-      );
-      setLoading(false);
-      return;
-    }
-    log(
-      "...CartContext updateProductDetails getCartDetails:",
-      [getCartRes],
-      Style.success,
-    );
-    const { data: cartData, status: cartStatus } = getCartRes;
-    if (cartStatus !== 200) {
-      setLoading(false);
-      setMessage(cartData?.message);
-      return;
-    }
-    setProducts(cartData.products);
     setLoading(false);
     setMessage("পণ্য কার্ট যোগ করা হয়েছে");
   };
@@ -174,6 +152,7 @@ export const CartProvider = ({ children }) => {
         cart,
         loading,
         message,
+        fetchCartDetails,
         updateProductDetails,
         incQty,
         decQty,

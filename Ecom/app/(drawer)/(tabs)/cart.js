@@ -17,8 +17,6 @@ import { formatNumbers } from "../../../utils/formatNumbers";
 export default function Page() {
   const { loading, products, incQty, decQty } = useContext(CartContext);
 
-  console.log("===cart page===", products);
-
   const onCheckout = () => {
     router.push("/checkOut");
   };
