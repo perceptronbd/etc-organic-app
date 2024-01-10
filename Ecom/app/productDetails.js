@@ -31,7 +31,7 @@ const productDetails = () => {
   //   };
   // }, []);
 
-  const onAddToCart = () => {
+  const onAddToCart = async () => {
     console.log("===onAddToCart===");
 
     setLoading(true);

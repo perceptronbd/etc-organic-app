@@ -17,14 +17,14 @@ export const CartProvider = ({ children }) => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    log("=======CartContext fetchCartDetails=======", [], Style.effects);
+    log("...CartContext fetchCartDetails...", [], Style.effects);
     const fetchCartDetails = async () => {
       const [res, err] = await trycatch(getCartDetails());
       if (err) {
-        log("...CartContext fetchCartDetails err:", [err], Style.danger);
+        log("CartContext fetchCartDetails:", [err], Style.danger);
         return;
       }
-      log("...CartContext fetchCartDetails res:", [res], Style.success);
+      log("CartContext fetchCartDetails:", [res], Style.success);
       const { data, status } = res;
       if (status === 200) {
         setCart(data);
@@ -66,6 +66,7 @@ export const CartProvider = ({ children }) => {
       return;
     }
     setCart(data);
+
     const [getCartRes, getCartErr] = await trycatch(getCartDetails());
     if (getCartErr) {
       log(
@@ -103,7 +104,7 @@ export const CartProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-    log("...CartContext incQty addToCart:", [increaseRes], Style.success);
+    log("...CartContext incQty:", [increaseRes], Style.success);
     const { status: incQtyStatus } = increaseRes;
     if (incQtyStatus !== 200) {
       setLoading(false);
@@ -140,7 +141,7 @@ export const CartProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-    log("...CartContext decQty addToCart:", [decreaseRes], Style.success);
+    log("...CartContext decQty:", [decreaseRes], Style.success);
     const { status: decreaseStatus } = decreaseRes;
     if (decreaseStatus !== 200) {
       setLoading(false);
