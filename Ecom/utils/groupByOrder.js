@@ -1,5 +1,5 @@
 export const groupByOrder = (data) => {
-  return data.reduce((result, item) => {
+  return data?.reduce((result, item) => {
     // If the status is not yet in the result object, add it with an empty array
     if (!result[item.status]) {
       result[item.status] = [];

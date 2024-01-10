@@ -1,5 +1,5 @@
 export const groupByCategory = (data) => {
-  return data.reduce((result, item) => {
+  return data?.reduce((result, item) => {
     // If the category is not yet in the result object, add it with an empty array
     if (!result[item.category]) {
       result[item.category] = [];
