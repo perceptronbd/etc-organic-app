@@ -580,14 +580,14 @@ const OrderCard = ({ products, subTotal }) => {
     <View style={tailwind`rounded-md bg-white`}>
       <DataTable>
         <DataTable.Header style={{}}>
-          <DataTable.Title style={{ flex: 2 }}>Item Name</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.5 }}>Item Name</DataTable.Title>
           <DataTable.Title numeric>QTY</DataTable.Title>
           <DataTable.Title numeric>Price</DataTable.Title>
           <DataTable.Title numeric>T. Price</DataTable.Title>
         </DataTable.Header>
-        {products.map((item) => (
-          <DataTable.Row key={item.product_id}>
-            <DataTable.Cell style={{ flex: 2 }}>
+        {products.map((item, index) => (
+          <DataTable.Row key={index}>
+            <DataTable.Cell style={{ flex: 1.5 }}>
               {item.product.productName}
             </DataTable.Cell>
             <DataTable.Cell numeric>

@@ -15,6 +15,7 @@ import COLOR from "../../constants/COLOR";
 import CartContext from "../../contexts/CartContext";
 import { formatNumbers } from "../../utils/formatNumbers";
 import { Style, log } from "../../utils/log";
+import { totalPrice } from "../../utils/totalPrice";
 import { trycatch } from "../../utils/trycatch";
 
 const confirmOrder = () => {
@@ -23,9 +24,9 @@ const confirmOrder = () => {
 
   const data = useLocalSearchParams();
 
-  const { cart, fetchCartDetails } = useContext(CartContext);
+  const { products, fetchCartDetails } = useContext(CartContext);
 
-  log("...confirmOrder cart:", [cart], Style.code);
+  log("...confirmOrder cart:", [products], Style.code);
 
   const showModal = () => setVisible(true);
 
@@ -46,7 +47,7 @@ const confirmOrder = () => {
     } else {
       log("...confirmOrder onConfirm status:", [status]);
     }
-
+    fetchCartDetails();
     showModal();
   };
 
@@ -61,15 +62,15 @@ const confirmOrder = () => {
         <View style={tailwind`rounded-md bg-white`}>
           <DataTable>
             <DataTable.Header>
-              <DataTable.Title style={{ flex: 2 }}>Item Name</DataTable.Title>
+              <DataTable.Title style={{ flex: 1.5 }}>Item Name</DataTable.Title>
               <DataTable.Title numeric>QTY</DataTable.Title>
               <DataTable.Title numeric>Price</DataTable.Title>
               <DataTable.Title numeric>T. Price</DataTable.Title>
             </DataTable.Header>
-            {cart.products?.map((item) => {
+            {products?.map((item) => {
               return (
                 <DataTable.Row key={item._id}>
-                  <DataTable.Cell style={{ flex: 2 }}>
+                  <DataTable.Cell style={{ flex: 1.5 }}>
                     {item.product.productName}
                   </DataTable.Cell>
                   <DataTable.Cell numeric>
@@ -91,7 +92,7 @@ const confirmOrder = () => {
             <View style={tailwind`mb-4 flex-row justify-between`}>
               <StyledText>Sub Total</StyledText>
               <StyledText type="b">
-                ৳ {formatNumbers(cart.totalPrice)}
+                ৳ {formatNumbers(totalPrice(products))}
               </StyledText>
             </View>
             <View style={tailwind`flex-row justify-between`}>
@@ -105,7 +106,7 @@ const confirmOrder = () => {
             <View style={tailwind`flex-row justify-between`}>
               <StyledText variant="titleMedium">Grand Total</StyledText>
               <StyledText variant="titleLarge" type="b">
-                ৳ {formatNumbers(cart.totalPrice + 60)}
+                ৳ {formatNumbers(totalPrice(products) + 60)}
               </StyledText>
             </View>
           </View>
