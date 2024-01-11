@@ -108,7 +108,7 @@ export default function Page() {
           <StyledButton width={"28"} onPress={onRedeem}>
             Redeem
           </StyledButton>
-          <StyledButton width={"64"} onPress={onWithdraw}>
+          <StyledButton width={"64"} onPress={onWithdraw} disabled={taka <= 0}>
             Request to Withdraw
           </StyledButton>
         </View>
