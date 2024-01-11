@@ -40,9 +40,9 @@ export default function Page() {
       AsyncStorage.getItem("user-data").then((data) => {
         const userData = JSON.parse(data);
         console.log("...index redeem userData", userData);
-        setCSB(userData?.CSB);
+        setCSB(userData?.CSB || 0);
         setTotalCSB(userData?.totalCSB);
-        setTaka(userData?.taka);
+        setTaka(userData?.taka || 0);
         setLoading(false);
       });
     }
