@@ -137,7 +137,7 @@ export default function Page() {
   const { visible, showModal, hideModal, isError, modalMessage } = useModal();
 
   const pickAndUploadImage = async () => {
-    console.log("openImagePickerAsync...");
+    log("openImagePickerAsync...", [], Style.function);
     try {
       let permissionResult =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -154,6 +154,7 @@ export default function Page() {
       if (!pickerResult.canceled) {
         setIsProfileLoading(true);
         AsyncStorage.getItem("user-token").then((token) => {
+          log("Upload Image API", [], Style.api);
           FileSystem.uploadAsync(
             `${HOST}/mobile/update-image`,
             pickerResult.assets[0].uri,
@@ -165,13 +166,18 @@ export default function Page() {
                 Authorization: `Bearer ${token}`,
               },
             },
-          ).then((uploadResult) => {
-            const body = uploadResult.body;
-            const imageURL = JSON.parse(body).imagePath;
-            console.log("uploadResult:", imageURL);
-            setProfileImage(imageURL);
-            setIsProfileLoading(false);
-          });
+          )
+            .then((uploadResult) => {
+              log("uploadResult:", [uploadResult], Style.success);
+              const body = uploadResult.body;
+              const imageURL = JSON.parse(body).imagePath;
+              log("imageURL:", [imageURL], Style.code);
+              setProfileImage(imageURL);
+              setIsProfileLoading(false);
+            })
+            .catch((err) => {
+              log("uploadResult:", [err], Style.danger);
+            });
         });
       }
     } catch (error) {
@@ -287,7 +293,12 @@ export default function Page() {
           dist={user?.userDetails.district}
           isNIDLoading={isNIDLoading}
         />
-        <StyledButton disabled={disabled} width={"md"} onPress={handleSubmit}>
+        <StyledButton
+          disabled={disabled}
+          loading={disabled}
+          width={"md"}
+          onPress={handleSubmit}
+        >
           তথ্য সেভ করুন
         </StyledButton>
       </View>
@@ -453,22 +464,22 @@ const Orders = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    log("...order details...", [], Style.effects);
+    //log("...order details...", [], Style.effects);
     setLoading(true);
     const fetchOrderDetails = async () => {
       const [getOrderDetailsRes, getOrderDetailsErr] =
         await trycatch(getOrderDetails());
 
       if (getOrderDetailsErr) {
-        log("order details:", [getOrderDetailsErr], Style.danger);
+        //log("order details:", [getOrderDetailsErr], Style.danger);
         setLoading(false);
         return;
       }
 
-      log("profile order details:", [getOrderDetailsRes], Style.success);
+      //log("profile order details:", [getOrderDetailsRes], Style.success);
       const { data } = getOrderDetailsRes;
       const groupedData = groupByOrder(data);
-      log("groupedData:", [groupedData], Style.code);
+      //log("groupedData:", [groupedData], Style.code);
       setOrders(groupedData);
       setLoading(false);
     };
@@ -479,10 +490,10 @@ const Orders = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       getOrderDetails().then((res) => {
-        console.log("...profile order details:", res);
+        //console.log("...profile order details:", res);
         const { data } = res;
         const groupedData = groupByOrder(data);
-        console.log("...groupedData:", groupedData);
+        // console.log("...groupedData:", groupedData);
         setOrders(groupedData);
       });
     }, 10000); // 5000 ms = 5 s
@@ -575,7 +586,6 @@ const Orders = () => {
 };
 
 const OrderCard = ({ products, subTotal }) => {
-  console.log("...OrderCard products:", products);
   return (
     <View style={tailwind`rounded-md bg-white`}>
       <DataTable>

@@ -52,7 +52,7 @@ export const HeaderComponent = ({ imgURL, points }) => {
         ) : (
           <Avatar.Image
             size={40}
-            style={{ backgroundColor: "none " }}
+            style={tailwind`bg-[${COLOR.neutral}] rounded-full`}
             source={{ uri: imgURL }}
           />
         )}
