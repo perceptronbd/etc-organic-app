@@ -20,12 +20,4 @@ export default defineConfig({
       },
     }),
   ],
-  server: {
-    proxy: {
-      "/etc-backend/api": {
-        changeOrigin: true,
-        target: "http://localhost:5000",
-      },
-    },
-  },
 });
