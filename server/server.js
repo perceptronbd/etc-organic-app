@@ -25,6 +25,15 @@ const mobileErrorHandler = require("./Mobile_app/middleware/errorMiddleware");
 const app = express();
 //middleware
 
+//add CORS
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
