@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { loginApi } from "../../api";
 import { Button, FormInput, Text } from "../../components";
 import { useAuth } from "../../context/AuthContext";
+import { Style, logs } from "../../utils/logs";
 
 export const Login = () => {
-  const [values, setValues] = useState({
-    phoneNumber: "",
+  const [data, setData] = useState({
+    phone: "",
     password: "",
   });
 
@@ -12,8 +14,8 @@ export const Login = () => {
 
   const inputs = [
     {
-      id: "phoneNumber",
-      name: "phoneNumber",
+      id: "phone",
+      name: "phone",
       type: "tel",
       placeholder: "Phone Number",
       required: true,
@@ -30,13 +32,20 @@ export const Login = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(values);
+    const res = await loginApi(data);
+    logs("handleSubmit: loginApi res", [res], Style.function);
+    if (res.status === 200) {
+      login(res.data);
+    } else {
+      //TODO: show error toast or modal
+      alert(res.data.message);
+    }
   };
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   return (
