@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const authURL = (token) =>
   axios.create({
-    baseURL: "/etc-backend/api/",
+    baseURL: "http://localhost:5000/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -11,6 +11,6 @@ export const authURL = (token) =>
 
 export const noAuthURL = () =>
   axios.create({
-    baseURL: "/etc-backend/api/",
+    baseURL: "http://localhost:5000/api",
     timeout: 1000,
   });
