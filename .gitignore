@@ -9,6 +9,7 @@ dist/
 .env
 web-build/
 %ProgramData%/Microsoft/Windows/UUS/State/_active.uusver
+credentials.json
 
 # Native
 *.orig.*
