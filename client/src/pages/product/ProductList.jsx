@@ -18,7 +18,7 @@ export const ProductList = () => {
           Product List
         </Text>
         <Button variant={"ghost"} asChild>
-          <Link to={"add-product"}>Edit Product</Link>
+          <Link to={"add-product"}>Add Product</Link>
         </Button>
       </div>
       <div className="w-full rounded-md bg-foreground p-2">
