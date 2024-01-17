@@ -44,8 +44,6 @@ export const Login = () => {
       setLoading(false);
       login(res.data);
     } else {
-      //TODO: show error toast or modal
-      //alert(res.data.message);
       setLoading(false);
       return toast.error(res.data.message);
     }
