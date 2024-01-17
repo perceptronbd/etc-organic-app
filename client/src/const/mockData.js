@@ -5,13 +5,10 @@ export const selectDesignation = {
   required: true,
   type: "select",
   selectOpts: {
-    "Department 01": [
-      { value: "designation1", label: "Designation 1" },
-      { value: "designation2", label: "Designation 2" },
-    ],
-    "Department 02": [
-      { value: "designation3", label: "Designation 3" },
-      { value: "designation4", label: "Designation 4" },
+    "Select Designation": [
+      { value: "admin", label: "Admin" },
+      { value: "productManager", label: "Product Manager" },
+      { value: "salesManager", label: "Sales Manager" },
     ],
   },
 };

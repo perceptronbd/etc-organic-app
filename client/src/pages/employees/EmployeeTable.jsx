@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, SearchInput } from "../../components";
+import { textFormat } from "../../utils/textFormat";
 
 export const EmployeeTable = ({ data }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,20 +40,18 @@ export const EmployeeTable = ({ data }) => {
                   <td className={`flex px-2 py-1 text-sm`}>
                     <span
                       className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                        item.designation === "Manager"
+                        item.designation === "admin"
                           ? "bg-green-200 text-green-500"
-                          : item.designation === "Supervisor"
+                          : item.designation === "productManager"
                             ? "bg-yellow-200 text-yellow-500"
                             : "bg-red-200 text-red-500"
                       }`}
                     >
-                      {item.designation}
+                      {textFormat(item.designation)}
                     </span>
                   </td>
                   <td className=" px-2 py-1  text-textColor-light">{item.branch}</td>
-                  <td className=" px-2 py-1  text-center text-textColor-light">
-                    {item.phoneNumber}
-                  </td>
+                  <td className=" px-2 py-1  text-center text-textColor-light">{item.phone}</td>
 
                   <td className="flex justify-center rounded-r-2xl py-1">
                     <Button asChild className={"h-6"}>

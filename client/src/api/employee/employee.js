@@ -17,3 +17,18 @@ export const registerEmployeeApi = async (data) => {
 
   return registerRes;
 };
+
+export const getAllEmployeesApi = async () => {
+  logs("API Call: getAllEmployeesApi", [], Style.api);
+
+  const [employeesRes, employeesErr] = await trycatch(noAuthURL().get("/employee/getallusers"));
+
+  if (employeesErr) {
+    logs("Error: getAllEmployeesApi", [employeesErr.response], Style.danger);
+    return employeesErr.response;
+  }
+
+  logs("Success: getAllEmployeesApi", [employeesRes], Style.success);
+
+  return employeesRes;
+};
