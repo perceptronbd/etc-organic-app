@@ -9,7 +9,17 @@ import { navLinks } from "./navLinks";
 export const Sidebar = () => {
   const [open, setOpen] = useState(true);
 
-  const { user, logout } = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const { logout } = useAuth();
+
+  const handleLogOut = () => {
+    setLoading(true);
+    setTimeout(() => {
+      logout();
+      setLoading(false);
+    }, 1000);
+  };
 
   return (
     <div className="m-2 mr-4 h-[98%] rounded-md bg-foreground">
@@ -76,7 +86,9 @@ export const Sidebar = () => {
           open ? "w-52" : "w-20"
         } items-center justify-between p-2 text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
       >
-        <Button className="w-full">Logout</Button>
+        <Button className="w-full" onClick={() => handleLogOut()} loading={loading}>
+          Logout
+        </Button>
       </div>
     </div>
   );
