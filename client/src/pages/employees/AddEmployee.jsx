@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { registerEmployeeApi } from "../../api";
 import { Button, Checkbox, Container, FormInput, SelectInput, Text } from "../../components";
 import { selectBranch, selectDesignation } from "../../const/mockData";
+import { Style, logs } from "../../utils/logs";
 
 export const AddEmployee = () => {
   const [fullAccess, setFullAccess] = useState(false);
@@ -19,8 +22,14 @@ export const AddEmployee = () => {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   const onChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
+
+  const onChangeSelect = (name, value) => {
+    setFormValues({ ...formValues, [name]: value });
   };
 
   const onChangeCheckbox = (e) => {
@@ -45,9 +54,23 @@ export const AddEmployee = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
+    logs("AddEmployee onSubmit:", [], Style.function);
+    setLoading(true);
     e.preventDefault();
-    console.log({ form: formValues });
+    logs("AddEmployee form:", [formValues], Style.code);
+    const res = await registerEmployeeApi(formValues);
+
+    if (res.status === 200 || res.status === 201) {
+      setLoading(false);
+      toast.success("Employee Added Successfully");
+    } else if (res.status === 400) {
+      setLoading(false);
+      return toast.error(res.data.message);
+    } else {
+      setLoading(false);
+      return toast.error("Something went wrong!");
+    }
   };
 
   return (
@@ -76,6 +99,8 @@ export const AddEmployee = () => {
             name={"email"}
             type={"email"}
             placeholder={"Email Address"}
+            pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"}
+            errorMessage={"Please enter a valid email address"}
             required
             onChange={onChange}
           />
@@ -84,13 +109,17 @@ export const AddEmployee = () => {
             id={"phone"}
             label={"Phone Number"}
             name={"phone"}
-            placeholder={"Employee Number"}
-            type={"number"}
+            placeholder={"Phone Number"}
+            type={"tel"}
             pattern={"[0-9]{11}"}
+            errorMessage={"Please enter a valid phone number"}
             required
             onChange={onChange}
           />
-          <SelectInput {...selectDesignation} />
+          <SelectInput
+            onValueChange={(value) => onChangeSelect("designation", value)}
+            {...selectDesignation}
+          />
         </div>
         <div className="grid grid-rows-2">
           <FormInput
@@ -102,7 +131,10 @@ export const AddEmployee = () => {
             required
             onChange={onChange}
           />
-          <SelectInput {...selectBranch} />
+          <SelectInput
+            onValueChange={(value) => onChangeSelect("branch", value)}
+            {...selectBranch}
+          />
         </div>
         <section className="relative my-4 w-72 rounded-lg border p-4">
           <Text className={"absolute -top-3 bg-white px-1 text-sm text-textColor-light "}>
@@ -130,8 +162,8 @@ export const AddEmployee = () => {
           </div>
         </section>
 
-        <Button className={`bg-accent-secondary mt-4`} type={"submit"}>
-          Add
+        <Button type={"submit"} loading={loading}>
+          Add Employee
         </Button>
       </form>
     </Container>

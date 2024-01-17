@@ -10,8 +10,8 @@ export const selectDesignation = {
       { value: "designation2", label: "Designation 2" },
     ],
     "Department 02": [
-      { value: "designation1", label: "Designation 1" },
-      { value: "designation2", label: "Designation 2" },
+      { value: "designation3", label: "Designation 3" },
+      { value: "designation4", label: "Designation 4" },
     ],
   },
 };
