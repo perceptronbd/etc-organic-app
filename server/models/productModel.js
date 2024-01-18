@@ -39,7 +39,7 @@ const productSchema = mongoose.Schema({
     trim: true,
   },
   image: {
-    type: String,
+    type: Object,
     required: true,
     trim: true,
   },

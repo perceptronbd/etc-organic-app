@@ -1,25 +1,52 @@
 const asyncHandler = require("express-async-handler");
+const multer = require('multer');
 
-
+const path = require('path');
 
 const Product = require("../../models/productModel");
 
-const createProduct  = asyncHandler(async(req,res) =>{
-    const { productName, salesPrice, csb, points, description,image,units,purchasePrice,category} = req.body;
-    const data = { productName, salesPrice, csb, points, description,image,units,purchasePrice,category};
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/images')
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname )
+  }
+ })
+ 
+ 
 
-    const product = new Product(data)
 
-    if(!product){
-        res.status(500);
-        throw new Error("Product not created");
-    }
+const createProduct = async (req, res) => {
+  try {
+    // Handle file upload
 
-    const createdProduct = await product.save()
-    res.status(201).json(createdProduct);
-
-})
-
+    // console.log(req.file);
+    if (!req.file) throw new Error('No file received')
+ 
+    // Create a new product instance
+    const product = new Product({
+      productName: req.body.productName,
+      category: req.body.category,
+      salesPrice: req.body.salesPrice,
+      purchasePrice: req.body.purchasePrice,
+      units: req.body.units,
+      csb: req.body.csb,
+      points: req.body.points,
+      description: req.body.description,
+      image: req.file
+    });
+ 
+    // Save the product
+    await product.save();
+ 
+    // Send response
+    res.status(201).send(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+ };
 
 
 const getAllProducts = asyncHandler(async(req,res) => {
