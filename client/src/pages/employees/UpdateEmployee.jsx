@@ -12,9 +12,12 @@ import {
   Text,
 } from "../../components";
 import { selectBranch, selectDesignation } from "../../const/mockData";
+import { useAuth } from "../../context/AuthContext";
 import { Style, logs } from "../../utils/logs";
 
 export const UpdateEmployee = () => {
+  const { user } = useAuth();
+
   const userId = useParams();
 
   const navigate = useNavigate();
@@ -243,10 +246,21 @@ export const UpdateEmployee = () => {
           </section>
 
           <section className="flex gap-2">
-            <Button type={"submit"} loading={updating} onClick={onUpdate}>
+            <Button
+              type={"submit"}
+              loading={updating}
+              disabled={user._id === userId.item}
+              onClick={onUpdate}
+            >
               Update Employee
             </Button>
-            <Button variant="destructive" type={"submit"} loading={deleting} onClick={onDelete}>
+            <Button
+              variant="destructive"
+              type={"submit"}
+              loading={deleting}
+              disabled={user._id === userId.item}
+              onClick={onDelete}
+            >
               Delete
             </Button>
           </section>
