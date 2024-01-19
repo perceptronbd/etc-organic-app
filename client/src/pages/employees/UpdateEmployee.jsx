@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { getEmployeeByIdApi, updateEmployeeApi } from "../../api";
+import { deleteEmployeeApi, getEmployeeByIdApi, updateEmployeeApi } from "../../api";
 import {
   Button,
   Checkbox,
@@ -17,11 +17,12 @@ import { Style, logs } from "../../utils/logs";
 export const UpdateEmployee = () => {
   const userId = useParams();
 
-  logs("UpdateEmployee item:", [userId], Style.code);
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
 
   const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const [fullAccess, setFullAccess] = useState(false);
   const [formValues, setFormValues] = useState({
@@ -112,6 +113,23 @@ export const UpdateEmployee = () => {
     }
   };
 
+  const onDelete = async (e) => {
+    setDeleting(true);
+
+    e.preventDefault();
+
+    const res = await deleteEmployeeApi(userId.item);
+
+    if (res.status === 200) {
+      toast.success("Employee deleted successfully");
+      setDeleting(false);
+      navigate(-1);
+    } else {
+      toast.error("Something went wrong");
+      setDeleting(false);
+    }
+  };
+
   return (
     <Container className={"justify-start"}>
       <div className="mb-2 flex w-full items-center justify-between">
@@ -141,7 +159,7 @@ export const UpdateEmployee = () => {
           <Skeleton className={"h-12 w-96 bg-muted"} />
         </div>
       ) : (
-        <form action="submit" onSubmit={onUpdate} className="w-full rounded-lg bg-white p-4">
+        <form action="submit" className="w-full rounded-lg bg-white p-4">
           <div className="grid w-[80%] grid-cols-2 gap-x-8">
             <FormInput
               id={"name"}
@@ -190,7 +208,6 @@ export const UpdateEmployee = () => {
               name={"password"}
               placeholder={"Password"}
               type={"password"}
-              required
               onChange={onChange}
             />
             <SelectInput
@@ -226,10 +243,10 @@ export const UpdateEmployee = () => {
           </section>
 
           <section className="flex gap-2">
-            <Button type={"submit"} loading={updating}>
+            <Button type={"submit"} loading={updating} onClick={onUpdate}>
               Update Employee
             </Button>
-            <Button variant="destructive" type={"submit"}>
+            <Button variant="destructive" type={"submit"} loading={deleting} onClick={onDelete}>
               Delete
             </Button>
           </section>

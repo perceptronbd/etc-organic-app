@@ -48,6 +48,21 @@ export const getAllEmployeesApi = async () => {
   return employeesRes;
 };
 
+export const deleteEmployeeApi = async (id) => {
+  logs("API Call: deleteEmployeeApi", [id], Style.api);
+
+  const [deleteRes, deleteErr] = await trycatch(noAuthURL().delete(`/employee/deleteuser/${id}`));
+
+  if (deleteErr) {
+    logs("Error: deleteEmployeeApi", [deleteErr.response], Style.danger);
+    return deleteErr.response;
+  }
+
+  logs("Success: deleteEmployeeApi", [deleteRes], Style.success);
+
+  return deleteRes;
+};
+
 export const updateEmployeeApi = async (id, data) => {
   logs("API Call: updateEmployeeApi", [], Style.api);
   logs("Data: updateEmployeeApi", [data], Style.code);
