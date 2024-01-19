@@ -32,10 +32,17 @@ export const SelectInput = ({
   required,
   selectOpts,
   onValueChange,
+  value,
   ...props
 }) => {
   return (
-    <Select.Root required={required} name={name} onValueChange={onValueChange} {...props}>
+    <Select.Root
+      required={required}
+      name={name}
+      value={value}
+      onValueChange={onValueChange}
+      {...props}
+    >
       <div className="relative">
         <Select.Trigger
           id={id}
