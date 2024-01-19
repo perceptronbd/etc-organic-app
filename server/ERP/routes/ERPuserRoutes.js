@@ -18,6 +18,7 @@ const {
   getAllUsers,
   updateUser,
   getUserById,
+  deleteUser,
 } = require("../controllers/userController.js");
 const { checkLogin } = require("../middleware/checkLogin");
 const {
@@ -38,6 +39,7 @@ router.post("/employee/register", registerUser);
 router.get("/employee/getallusers", getAllUsers);
 router.put("/employee/update-users/:id", updateUser);
 router.get("/employee/getuserbyid/:id", getUserById);
+router.delete("/employee/deleteuser/:id", deleteUser);
 
 //products
 
