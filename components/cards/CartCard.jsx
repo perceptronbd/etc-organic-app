@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimensions, Image, View } from "react-native";
-import { IconButton, Text } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import tailwind from "twrnc";
 import COLOR from "../../constants/COLOR";
 import { formatNumbers } from "../../utils/formatNumbers";
@@ -89,9 +89,9 @@ export const CartCard = ({
           style={tailwind`bg-[${COLOR.tertiary}]`}
           onPress={decrement}
         />
-        <Text variant="titleLarge" style={{ marginHorizontal: 10 }}>
+        <StyledText variant="titleLarge" style={{ marginHorizontal: 10 }}>
           {formatNumbers(quantity)}
-        </Text>
+        </StyledText>
         <IconButton
           icon={"plus"}
           iconColor="white"

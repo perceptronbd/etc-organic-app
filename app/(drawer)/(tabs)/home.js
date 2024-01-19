@@ -85,7 +85,7 @@ export default function Page() {
               showToast({ description: "world", variant: "warning" })
             }
           >
-            Book Now
+            <StyledText>Book Now</StyledText>
           </StyledButton>
         </View>
         {/* Categories */}

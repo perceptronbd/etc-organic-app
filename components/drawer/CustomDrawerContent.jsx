@@ -16,7 +16,7 @@ export const CustomDrawerContent = (props) => {
   const pathName = usePathname();
 
   const { user } = useAuth();
-  const { imageUrl: profileImage } = useImage(user?.userDetails.image);
+  const { imageUrl: profileImage } = useImage(user?.userDetails?.image);
 
   useEffect(() => {
     console.log(pathName);
