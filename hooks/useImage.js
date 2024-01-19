@@ -7,19 +7,17 @@ export const useImage = (image) => {
 
   useEffect(() => {
     log("...useImage...", [], Style.effects);
-    if (image) {
+    if (image && typeof image === "string") {
       log("Image URL", [image], Style.code);
       const imageURL = image.replace(/public\\uploads\\/g, "");
-
       setImageUrl(`${HOST}/uploads/${imageURL}`);
     }
   }, [image]);
 
-  //set image url function
-
+  // Set image url function
   const setImage = (img) => {
     log("...useImage setImage...", [], Style.function);
-    if (img) {
+    if (img && typeof img === "string") {
       const imageURL = img.replace("public\\uploads\\", "");
       setImageUrl(`${HOST}/uploads/${imageURL}`);
     }
