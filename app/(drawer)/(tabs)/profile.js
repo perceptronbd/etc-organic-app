@@ -1,4 +1,3 @@
-import { HOST } from "@env";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
@@ -117,6 +116,8 @@ const addressInput = [
 ];
 
 export default function Page() {
+  //const apiUrl = Constants.manifest2.extra.apiUrl;
+
   const [address, setAddress] = useState({
     division: "",
     district: "",
@@ -156,7 +157,7 @@ export default function Page() {
         AsyncStorage.getItem("user-token").then((token) => {
           log("Upload Image API", [], Style.api);
           FileSystem.uploadAsync(
-            `${HOST}/mobile/update-image`,
+            `https://etc-organic-backend.onrender.com/mobile/update-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
@@ -205,7 +206,7 @@ export default function Page() {
         console.log("pickerResult:", pickerResult);
         AsyncStorage.getItem("user-token").then((token) => {
           FileSystem.uploadAsync(
-            `${HOST}/mobile/update-national-image`,
+            `https://etc-organic-backend.onrender.com/mobile/update-national-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
