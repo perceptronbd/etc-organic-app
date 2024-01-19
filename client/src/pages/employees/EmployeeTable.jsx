@@ -55,7 +55,7 @@ export const EmployeeTable = ({ data }) => {
 
                   <td className="flex justify-center rounded-r-2xl py-1">
                     <Button asChild className={"h-6"}>
-                      <Link to={"update-employee"}>Edit</Link>
+                      <Link to={`update-employee/${item._id}`}>Edit</Link>
                     </Button>
                   </td>
                 </tr>
