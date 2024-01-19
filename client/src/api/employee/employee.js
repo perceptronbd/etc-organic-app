@@ -18,6 +18,21 @@ export const registerEmployeeApi = async (data) => {
   return registerRes;
 };
 
+export const getEmployeeByIdApi = async (id) => {
+  logs("API Call: getEmployeeByIdApi", [id], Style.api);
+
+  const [employeeRes, employeeErr] = await trycatch(noAuthURL().get(`/employee/getuserbyid/${id}`));
+
+  if (employeeErr) {
+    logs("Error: getEmployeeByIdApi", [employeeErr.response], Style.danger);
+    return employeeErr.response;
+  }
+
+  logs("Success: getEmployeeByIdApi", [employeeRes], Style.success);
+
+  return employeeRes;
+};
+
 export const getAllEmployeesApi = async () => {
   logs("API Call: getAllEmployeesApi", [], Style.api);
 
@@ -31,4 +46,22 @@ export const getAllEmployeesApi = async () => {
   logs("Success: getAllEmployeesApi", [employeesRes], Style.success);
 
   return employeesRes;
+};
+
+export const updateEmployeeApi = async (id, data) => {
+  logs("API Call: updateEmployeeApi", [], Style.api);
+  logs("Data: updateEmployeeApi", [data], Style.code);
+
+  const [updateRes, updateErr] = await trycatch(
+    noAuthURL().put(`/employee/update-users/${id}`, data)
+  );
+
+  if (updateErr) {
+    logs("Error: updateEmployeeApi", [updateErr.response], Style.danger);
+    return updateErr.response;
+  }
+
+  logs("Success: updateEmployeeApi", [updateRes], Style.success);
+
+  return updateRes;
 };
