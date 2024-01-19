@@ -6,3 +6,4 @@ export {
   registerEmployeeApi,
   updateEmployeeApi,
 } from "./employee/employee";
+export { createProductApi } from "./product/product";

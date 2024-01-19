@@ -27,16 +27,31 @@ export const selectBranch = {
   },
 };
 
-export const selectItem = {
-  id: "item",
-  name: "item",
-  placeholder: "Select Item",
+export const selectCategory = {
+  id: "category",
+  name: "category",
+  placeholder: "Select Category",
   required: true,
   type: "select",
   selectOpts: {
-    "Select Item": [
-      { value: "item-1", label: "Item 01" },
-      { value: "item-2", label: "Item 02" },
+    "Select Category": [
+      { value: "category-1", label: "Category 01" },
+      { value: "category-2", label: "Category 02" },
+    ],
+  },
+};
+
+export const selectUnit = {
+  id: "unit",
+  name: "unit",
+  placeholder: "Select Unit",
+  required: true,
+  type: "select unit",
+  selectOpts: {
+    "Select Category": [
+      { value: "kg", label: "kg" },
+      { value: "l", label: "littre" },
+      { value: "packet", label: "packet" },
     ],
   },
 };
