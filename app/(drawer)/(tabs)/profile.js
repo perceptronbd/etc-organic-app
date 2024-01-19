@@ -591,24 +591,40 @@ const OrderCard = ({ products, subTotal }) => {
     <View style={tailwind`rounded-md bg-white`}>
       <DataTable>
         <DataTable.Header style={{}}>
-          <DataTable.Title style={{ flex: 1.5 }}>Item Name</DataTable.Title>
-          <DataTable.Title numeric>QTY</DataTable.Title>
-          <DataTable.Title numeric>Price</DataTable.Title>
-          <DataTable.Title numeric>T. Price</DataTable.Title>
+          <DataTable.Title style={{ flex: 1.5 }}>
+            <StyledText variant="bodySmall">Item Name</StyledText>
+          </DataTable.Title>
+          <DataTable.Title numeric>
+            <StyledText variant="bodySmall">QTY</StyledText>
+          </DataTable.Title>
+          <DataTable.Title numeric>
+            <StyledText variant="bodySmall">Price</StyledText>
+          </DataTable.Title>
+          <DataTable.Title numeric>
+            <StyledText variant="bodySmall">T. Price</StyledText>
+          </DataTable.Title>
         </DataTable.Header>
         {products.map((item, index) => (
           <DataTable.Row key={index}>
             <DataTable.Cell style={{ flex: 1.5 }}>
-              {item.product.productName}
+              <StyledText variant="bodySmall">
+                {item.product.productName}
+              </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
-              {formatNumbers(item.quantity)}
+              <StyledText variant="bodySmall">
+                {formatNumbers(item.quantity)}
+              </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
-              ৳ {formatNumbers(item.product.salesPrice)}
+              <StyledText variant="bodySmall">
+                ৳ {formatNumbers(item.product.salesPrice)}
+              </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
-              ৳ {formatNumbers(item.product.salesPrice * item.quantity)}
+              <StyledText variant="bodySmall">
+                ৳ {formatNumbers(item.product.salesPrice * item.quantity)}
+              </StyledText>
             </DataTable.Cell>
           </DataTable.Row>
         ))}
