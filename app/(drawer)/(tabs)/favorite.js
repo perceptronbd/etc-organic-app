@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
 import React from "react";
+import { Text, View } from "react-native";
 
 export default function Page() {
   return (
@@ -10,7 +10,7 @@ export default function Page() {
         alignItems: "center",
       }}
     >
-      <Text>favorite</Text>
+      <Text>Coming Soon...</Text>
     </View>
   );
 }
