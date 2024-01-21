@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { router } from "expo-router";
 import { usePathname } from "expo-router/src/hooks";
-import React, { useEffect } from "react";
+import React from "react";
 import { Text, View } from "react-native";
 import { Avatar } from "react-native-paper";
 import COLOR from "../../constants/COLOR";
@@ -17,10 +17,6 @@ export const CustomDrawerContent = (props) => {
 
   const { user } = useAuth();
   const { imageUrl: profileImage } = useImage(user?.userDetails?.image);
-
-  useEffect(() => {
-    console.log(pathName);
-  }, [pathName]);
 
   const drawerItems = drawerContents.map((item, index) => {
     return item.labal === "Profile" ? (
@@ -38,9 +34,7 @@ export const CustomDrawerContent = (props) => {
           borderRadius: 10,
         }}
       >
-        {profileImage === "" ||
-        profileImage === undefined ||
-        profileImage === null ? (
+        {typeof profileImage === "string" ? (
           <Avatar.Image
             size={50}
             style={{ backgroundColor: "none ", marginRight: 10 }}
