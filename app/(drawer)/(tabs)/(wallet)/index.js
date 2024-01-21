@@ -41,7 +41,7 @@ export default function Page() {
         const userData = JSON.parse(data);
         console.log("...index redeem userData", userData);
         setCSB(userData?.CSB || 0);
-        setTotalCSB(userData?.totalCSB);
+        setTotalCSB(userData?.totalCSB || 0);
         setTaka(userData?.taka || 0);
         setLoading(false);
       });

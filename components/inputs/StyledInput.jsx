@@ -15,6 +15,7 @@ export const StyledInput = ({ style, ...props }) => {
         lineHeight: 21,
         ...style,
       }}
+      textColor="#000"
       activeOutlineColor="#0C904D"
       outlineStyle={{
         borderRadius: 10,

@@ -95,7 +95,7 @@ export const StyledButton = ({
         variant === "outline" || variant === "ghost"
           ? ""
           : disabled
-            ? `bg-[${COLOR.neutral}]`
+            ? `bg-[${COLOR.neutral}] text-[${COLOR.neutralDark}]`
             : `bg-[${color}]`,
         determineWidth(),
         determineHeight(),

@@ -129,10 +129,10 @@ export default function Page() {
 
   const { user, loading } = useAuth();
   const { imageUrl: profileImage, setImage: setProfileImage } = useImage(
-    user?.userDetails.image,
+    user?.userDetails?.image,
   );
   const { imageUrl: nationalIdImage, setImage: setNationalIdImage } = useImage(
-    user?.userDetails.nationalIdImage,
+    user?.userDetails?.nationalIdImage,
   );
 
   const { visible, showModal, hideModal, isError, modalMessage } = useModal();
@@ -290,8 +290,8 @@ export default function Page() {
           pickNID={pickAndUploadNID}
           nidImage={nationalIdImage}
           setData={setAddress}
-          div={user?.userDetails.thana}
-          dist={user?.userDetails.district}
+          div={user?.userDetails?.thana}
+          dist={user?.userDetails?.district}
           isNIDLoading={isNIDLoading}
         />
         <StyledButton
@@ -478,11 +478,16 @@ const Orders = () => {
       }
 
       //log("profile order details:", [getOrderDetailsRes], Style.success);
-      const { data } = getOrderDetailsRes;
-      const groupedData = groupByOrder(data);
-      //log("groupedData:", [groupedData], Style.code);
-      setOrders(groupedData);
-      setLoading(false);
+      const { data, status } = getOrderDetailsRes;
+      if (status === 200 || status === 201) {
+        log("data:", [data], Style.code);
+        const groupedData = groupByOrder(data);
+        //log("groupedData:", [groupedData], Style.code);
+        setOrders(groupedData);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
     };
 
     fetchOrderDetails();
@@ -492,10 +497,16 @@ const Orders = () => {
     const intervalId = setInterval(() => {
       getOrderDetails().then((res) => {
         //console.log("...profile order details:", res);
-        const { data } = res;
-        const groupedData = groupByOrder(data);
-        // console.log("...groupedData:", groupedData);
-        setOrders(groupedData);
+        const { data, status } = res;
+        if (status === 200 || status === 201) {
+          log("data:", [data], Style.code);
+          const groupedData = groupByOrder(data);
+          //log("groupedData:", [groupedData], Style.code);
+          setOrders(groupedData);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
       });
     }, 10000); // 5000 ms = 5 s
 

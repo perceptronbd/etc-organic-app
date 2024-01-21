@@ -28,11 +28,13 @@ const inputFeilds = [
     id: "newPassword",
     label: "New Password",
     mode: "outlined",
+    secureTextEntry: true,
   },
   {
     id: "confirmPassword",
     label: "Confirm Password",
     mode: "outlined",
+    secureTextEntry: true,
   },
   {
     id: "givenCode",

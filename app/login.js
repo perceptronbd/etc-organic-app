@@ -25,6 +25,7 @@ const inputFeilds = [
     id: "password",
     label: "Password",
     mode: "outlined",
+    secureTextEntry: true,
   },
 ];
 
