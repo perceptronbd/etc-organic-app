@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, FormInput, IncDecButton, SelectInput } from "../../components";
-import { selectBranch, selectItem } from "../../const/mockData";
+import { selectBranch, selectCategory } from "../../const/mockData";
 
 export const Wholesale = () => {
   const [quantity, setQuantity] = useState(0);
@@ -37,7 +37,7 @@ export const Wholesale = () => {
       <form action="submit" onSubmit={onSubmit} className=" w-full rounded-xl bg-foreground pb-4">
         <div className="flex w-full gap-4 ">
           <div className="flex flex-col gap-2 rounded-xl bg-foreground p-4">
-            <SelectInput {...selectItem} />
+            <SelectInput {...selectCategory} />
             <IncDecButton
               name={"quantity"}
               value={quantity}
