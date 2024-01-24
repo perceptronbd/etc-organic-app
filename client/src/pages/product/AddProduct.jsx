@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { createProductApi } from "../../api";
 import {
   Button,
   Container,
@@ -9,9 +11,17 @@ import {
   Text,
   TextInput,
 } from "../../components";
-import { selectItem } from "../../const/mockData";
+import { selectCategory } from "../../const/mockData";
+import { useAuth } from "../../context/AuthContext";
+import { Style, logs } from "../../utils/logs";
 
 export const AddProduct = () => {
+  const { user } = useAuth();
+
+  const navigate = useNavigate();
+
+  const [submitting, setSubmitting] = useState(false);
+
   const [file, setFile] = useState();
   const [formValues, setFormValues] = useState({
     productName: "",
@@ -20,7 +30,7 @@ export const AddProduct = () => {
     purchasePrice: "",
     csb: "",
     points: "",
-    unit: "",
+    units: "",
     description: "",
     image: null,
   });
@@ -40,9 +50,51 @@ export const AddProduct = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onChangeSelect = (name, value) => {
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const onSubmit = async (e) => {
+    setSubmitting(true);
     e.preventDefault();
-    console.log({ form: formValues });
+
+    logs("onSubmit -> formValues", [formValues], Style.code);
+
+    // Create a new FormData object for each submission
+    const formData = new FormData();
+
+    // Populate formData with the current formValues
+    for (const key in formValues) {
+      if (key === "image" && formValues[key]) {
+        // Append the file with the correct filename
+        formData.append(key, formValues[key], formValues[key].name);
+      } else {
+        // Append other form values
+        formData.append(key, formValues[key]);
+      }
+    }
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    try {
+      // Pass formData to the API call
+      const res = await createProductApi(formData, user.token);
+      logs("onSubmit -> res", [res], Style.function);
+
+      if (res.status === 200 || res.status === 201) {
+        setSubmitting(false);
+        navigate(-1);
+        toast.success("Product added successfully");
+      } else {
+        setSubmitting(false);
+        toast.error("Error submitting form");
+      }
+    } catch (error) {
+      setSubmitting(false);
+      toast.error("Error submitting form");
+    }
   };
 
   return (
@@ -66,7 +118,10 @@ export const AddProduct = () => {
             required
             onChange={onChange}
           />{" "}
-          <SelectInput {...selectItem} />
+          <SelectInput
+            {...selectCategory}
+            onValueChange={(value) => onChangeSelect("category", value)}
+          />
           <>
             <FormInput
               id={"salesPrice"}
@@ -111,7 +166,16 @@ export const AddProduct = () => {
             required
             onChange={onChange}
           />
-          <SelectInput {...selectItem} />
+          <FormInput
+            id={"units"}
+            label={"Unit(s)"}
+            placeholder={"Unit(s)"}
+            name={"units"}
+            type={"number"}
+            pattern={"[0-9]{3}-[0-9]{2}-[0-9]{3}"}
+            required
+            onChange={onChange}
+          />
         </div>
         <div className="mb-4">
           <ImgInput file={file} label={"Upload Image"} id={"img"} onChange={onChange} />
@@ -125,7 +189,9 @@ export const AddProduct = () => {
           required
           onChange={onChange}
         />
-        <Button type={"submit"}>Add Product</Button>
+        <Button type={"submit"} loading={submitting}>
+          Add Product
+        </Button>
       </form>
     </Container>
   );

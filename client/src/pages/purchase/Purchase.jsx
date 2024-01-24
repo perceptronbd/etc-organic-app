@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, FormInput, IncDecButton, SelectInput, Text } from "../../components";
-import { selectBranch, selectItem } from "../../const/mockData";
+import { selectBranch, selectCategory } from "../../const/mockData";
 export const Purchase = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -42,7 +42,7 @@ export const Purchase = () => {
       <form action="submit" onSubmit={onSubmit} className="w-full">
         <div className="grid h-[450px] w-full grid-cols-2 gap-2 p-2">
           <div className="grid w-full grid-rows-6 gap-y-2 rounded-xl bg-foreground p-4">
-            <SelectInput {...selectItem} />
+            <SelectInput {...selectCategory} />
             <IncDecButton
               name={"quantity"}
               value={quantity}

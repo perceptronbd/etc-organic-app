@@ -31,55 +31,65 @@ export const SelectInput = ({
   placeholder,
   required,
   selectOpts,
+  onValueChange,
+  value,
   ...props
-}) => (
-  <Select.Root required={required} name={name} {...props}>
-    <div className="relative">
-      <Select.Trigger
-        id={id}
-        className="font-base peer inline-flex h-10 w-72 items-center justify-start gap-[5px] rounded-lg border bg-white px-[15px] text-base leading-none text-textColor outline-none hover:border-primary focus:border focus:border-primary focus:outline-none focus:ring-1 data-[placeholder]:text-textColor-light"
-        aria-label="Food"
-      >
-        <Select.Value placeholder={placeholder} />
-        <Select.Icon className="text-textColor">
-          <ChevronDownIcon />
-        </Select.Icon>
-      </Select.Trigger>
-      {placeholder && (
-        <label
-          htmlFor={id}
-          className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-6 scale-75 transform bg-foreground px-1 text-sm text-textColor-light duration-300 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:bg-white peer-focus:text-primary"
+}) => {
+  return (
+    <Select.Root
+      required={required}
+      name={name}
+      value={value}
+      onValueChange={onValueChange}
+      {...props}
+    >
+      <div className="relative">
+        <Select.Trigger
+          id={id}
+          className="font-base peer inline-flex h-10 w-72 items-center justify-start gap-[5px] rounded-lg border bg-white px-[15px] text-base leading-none text-textColor outline-none hover:border-primary focus:border focus:border-primary focus:outline-none focus:ring-1 data-[placeholder]:text-textColor-light"
+          aria-label="Food"
         >
-          {placeholder}
-        </label>
-      )}
-    </div>
-    <Select.Portal>
-      <Select.Content className="z-20 overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
-        <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-textColor">
-          <ChevronUpIcon />
-        </Select.ScrollUpButton>
-        <Select.Viewport className="p-[5px]">
-          {Object.entries(selectOpts).map(([group, options]) => (
-            <Select.Group key={group}>
-              <Select.Label className=" mb-1 mt-2 w-fit px-5 text-xs leading-[25px] text-textColor-light">
-                {group.charAt(0).toUpperCase() + group.slice(1)}
-              </Select.Label>
-              {options.map(({ value, label }) => (
-                <SelectItem key={value} value={value}>
-                  {label}
-                </SelectItem>
-              ))}
-            </Select.Group>
-          ))}
-        </Select.Viewport>
-        <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-textColor">
-          <ChevronDownIcon />
-        </Select.ScrollDownButton>
-      </Select.Content>
-    </Select.Portal>
-  </Select.Root>
-);
+          <Select.Value placeholder={placeholder} />
+          <Select.Icon className="text-textColor">
+            <ChevronDownIcon />
+          </Select.Icon>
+        </Select.Trigger>
+        {placeholder && (
+          <label
+            htmlFor={id}
+            className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-6 scale-75 transform bg-foreground px-1 text-sm text-textColor-light duration-300 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:bg-white peer-focus:text-primary"
+          >
+            {placeholder}
+          </label>
+        )}
+      </div>
+      <Select.Portal>
+        <Select.Content className="z-20 overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+          <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-textColor">
+            <ChevronUpIcon />
+          </Select.ScrollUpButton>
+          <Select.Viewport className="p-[5px]">
+            {Object.entries(selectOpts).map(([group, options]) => (
+              <Select.Group key={group}>
+                <Select.Label className=" mb-1 mt-2 w-fit px-5 text-xs leading-[25px] text-textColor-light">
+                  {group.charAt(0).toUpperCase() + group.slice(1)}
+                </Select.Label>
+                {options.map(({ value, label }) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </Select.Group>
+            ))}
+          </Select.Viewport>
+          <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white text-textColor">
+            <ChevronDownIcon />
+          </Select.ScrollDownButton>
+        </Select.Content>
+      </Select.Portal>
+    </Select.Root>
+  );
+};
 
 const SelectItem = React.forwardRef(({ children, className, ...props }, forwardedRef) => {
   return (

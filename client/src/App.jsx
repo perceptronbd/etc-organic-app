@@ -40,7 +40,7 @@ export default function App() {
         <Route path="orders" element={<Orders />} />
         <Route path="employees" element={<Employees />} />
         <Route path="employees/add-employee" element={<AddEmployee />} />
-        <Route path="employees/update-employee" element={<UpdateEmployee />} />
+        <Route path="employees/update-employee/:item" element={<UpdateEmployee />} />
       </Route>
     </Routes>
   );

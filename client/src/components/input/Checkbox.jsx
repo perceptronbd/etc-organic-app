@@ -7,7 +7,7 @@ export const Checkbox = (props) => {
     <>
       <div className="py-1">
         <input
-          className="appearance-none h-4 w-4 border-2 border-accent-secondary rounded bg-transparent checked:bg-accent-secondary checked:border-accent-secondary focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+          className="border-accent-secondary float-left mr-2 mt-1 h-4 w-4 cursor-pointer appearance-none rounded border-2 bg-transparent bg-contain bg-center bg-no-repeat align-top transition duration-200 checked:border-primary checked:bg-primary focus:outline-none"
           type="checkbox"
           id={id}
           {...inputProps}

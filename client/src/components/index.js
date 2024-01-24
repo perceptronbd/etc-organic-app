@@ -31,3 +31,5 @@ export { CalendarComponent } from "./calendar/CalendarComponent";
 export { DonutChart } from "./chart/DonutChart";
 //Modals
 export { ContentModal } from "./modals/ContentModal";
+//Skeleton
+export { Skeleton } from "./skeleton/Skeleton";

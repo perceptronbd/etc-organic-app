@@ -1,19 +1,24 @@
 import React, { useState } from "react";
+import { Toaster, toast } from "sonner";
+import { loginApi } from "../../api";
 import { Button, FormInput, Text } from "../../components";
 import { useAuth } from "../../context/AuthContext";
+import { Style, logs } from "../../utils/logs";
 
 export const Login = () => {
-  const [values, setValues] = useState({
-    phoneNumber: "",
+  const [data, setData] = useState({
+    phone: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const { login } = useAuth();
 
   const inputs = [
     {
-      id: "phoneNumber",
-      name: "phoneNumber",
+      id: "phone",
+      name: "phone",
       type: "tel",
       placeholder: "Phone Number",
       required: true,
@@ -30,17 +35,27 @@ export const Login = () => {
     },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(values);
+    setLoading(true);
+    const res = await loginApi(data);
+    logs("handleSubmit: loginApi res", [res], Style.function);
+    if (res.status === 200) {
+      setLoading(false);
+      login(res.data);
+    } else {
+      setLoading(false);
+      return toast.error(res.data.message);
+    }
   };
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: e.target.value });
   };
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-muted">
+      <Toaster richColors />
       <div className="flex flex-col items-center justify-center rounded-[40px] bg-foreground p-24">
         <section className="flex flex-col gap-4 ">
           <img src="/logo192.png" alt="ETC Organic" width={100} height={100} />
@@ -63,7 +78,7 @@ export const Login = () => {
             ))}
           </div>
           <hr className="py-1 " />
-          <Button type="submit" className={"w-40"}>
+          <Button loading={loading} type="submit" className={"w-40"}>
             Login
           </Button>
         </form>

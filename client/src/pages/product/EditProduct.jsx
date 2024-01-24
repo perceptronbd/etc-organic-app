@@ -9,7 +9,7 @@ import {
   Text,
   TextInput,
 } from "../../components";
-import { selectBranch, selectItem } from "../../const/mockData";
+import { selectCategory } from "../../const/mockData";
 
 const categories = [
   { value: "1", label: "Category 1" },
@@ -74,7 +74,7 @@ export const EditProduct = () => {
             required
             onChange={onChange}
           />{" "}
-          <SelectInput {...selectBranch} />
+          <SelectInput {...selectCategory} />
           <>
             <FormInput
               id={"salesPrice"}
@@ -119,7 +119,7 @@ export const EditProduct = () => {
             required
             onChange={onChange}
           />
-          <SelectInput {...selectItem} />
+          <SelectInput {...selectCategory} />
         </div>
         <div className="mb-4">
           <ImgInput file={file} label={"Upload Image"} id={"img"} onChange={onChange} />
