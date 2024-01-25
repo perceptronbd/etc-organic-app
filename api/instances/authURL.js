@@ -1,10 +1,9 @@
 import axios from "axios";
 
-//const apiUrl = Constants.manifest2.extra.apiUrl;
-
+//NOTE: URL Hardcoded
 export const authURL = (token) =>
   axios.create({
-    baseURL: `https://etc-organic-backend.onrender.com/mobile`,
+    baseURL: `https://etc-backend.onrender.com/mobile`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

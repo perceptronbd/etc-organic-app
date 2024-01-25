@@ -12,7 +12,8 @@ export const useImage = (image) => {
       log("Image URL", [image], Style.code);
       const imageURL = image.replace(/public\\uploads\\/g, "");
       setImageUrl(
-        `https://etc-organic-backend.onrender.com/uploads/${imageURL}`,
+        //NOTE: URL Hardcoded
+        `https://etc-backend.onrender.com/uploads/${imageURL}`,
       );
     }
   }, [image]);
@@ -23,7 +24,8 @@ export const useImage = (image) => {
     if (img && typeof img === "string") {
       const imageURL = img.replace("public\\uploads\\", "");
       setImageUrl(
-        `https://etc-organic-backend.onrender.com/uploads/${imageURL}`,
+        //NOTE: URL Hardcoded
+        `https://etc-backend.onrender.com/uploads/${imageURL}`,
       );
     }
   };

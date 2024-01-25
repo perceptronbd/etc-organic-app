@@ -157,7 +157,8 @@ export default function Page() {
         AsyncStorage.getItem("user-token").then((token) => {
           log("Upload Image API", [], Style.api);
           FileSystem.uploadAsync(
-            `https://etc-organic-backend.onrender.com/mobile/update-image`,
+            //NOTE: URL Hardcoded
+            `https://etc-backend.onrender.com/mobile/update-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
@@ -206,7 +207,8 @@ export default function Page() {
         console.log("pickerResult:", pickerResult);
         AsyncStorage.getItem("user-token").then((token) => {
           FileSystem.uploadAsync(
-            `https://etc-organic-backend.onrender.com/mobile/update-national-image`,
+            //NOTE: URL Hardcoded
+            `https://etc-backend.onrender.com/mobile/update-national-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
