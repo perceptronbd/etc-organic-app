@@ -33,3 +33,4 @@ export { DonutChart } from "./chart/DonutChart";
 export { ContentModal } from "./modals/ContentModal";
 //Skeleton
 export { Skeleton } from "./skeleton/Skeleton";
+export { TableSkeleton } from "./skeleton/TableSkeleton";
