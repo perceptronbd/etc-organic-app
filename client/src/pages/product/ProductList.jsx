@@ -41,7 +41,7 @@ export const ProductList = () => {
         <Text variant="titleSmall" type="m">
           Product List
         </Text>
-        <Button variant={"ghost"} asChild>
+        <Button variant="primary" asChild>
           <Link to={"add-product"}>Add Product</Link>
         </Button>
       </div>
