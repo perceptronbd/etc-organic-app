@@ -7,15 +7,20 @@ import tailwind, { default as tw } from "twrnc";
 import COLOR from "../../constants/COLOR";
 import { useImage } from "../../hooks";
 import { formatNumbers } from "../../utils/formatNumbers";
+import { log } from "../../utils/log";
 import { StyledText } from "../texts/StyledText";
 
 export function ProductCard({ productData }) {
   const [isFavorite, setIsFavorite] = useState(productData?.favorite);
 
-  const { imageUrl: productImageUrl } = useImage(productData?.image);
+  const { imageUrl: productImageUrl } = useImage(productData?.image.path);
 
   const handleNavigation = () => {
-    router.push({ pathname: "productDetails", params: productData });
+    const item = { ...productData, image: productImageUrl };
+
+    log("ProductCard", [item]);
+
+    router.push({ pathname: "productDetails", params: item });
   };
 
   const handleFavorite = () => {

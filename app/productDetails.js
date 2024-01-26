@@ -1,13 +1,14 @@
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Image } from "native-base";
 import React, { useContext, useState } from "react";
-import { Image, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import tailwind from "twrnc";
 import { Counter, Loading, StyledButton, StyledText } from "../components";
 import COLOR from "../constants/COLOR";
 import CartContext from "../contexts/CartContext";
-import { useCustomToast, useImage } from "../hooks";
+import { useCustomToast } from "../hooks";
 import { formatNumbers } from "../utils/formatNumbers";
 
 const productDetails = () => {
@@ -95,13 +96,11 @@ const productDetails = () => {
 };
 
 const ProductImage = ({ image, name }) => {
-  const { imageUrl } = useImage(image);
-
   return (
     <View
       style={tailwind`bg-[${COLOR.foreground}] mb-4 h-56 items-center justify-center rounded-md p-2`}
     >
-      <Image source={{ uri: imageUrl }} alt={name} />
+      <Image size={"xl"} source={{ uri: image }} alt={name} />
     </View>
   );
 };
