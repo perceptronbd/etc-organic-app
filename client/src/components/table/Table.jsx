@@ -77,7 +77,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                       );
                     }
                     return (
-                      <td className=" px-4 py-1" key={i}>
+                      <td className="max-w-[10px] truncate px-4 py-1" key={i}>
                         {item[key]}
                       </td>
                     );
