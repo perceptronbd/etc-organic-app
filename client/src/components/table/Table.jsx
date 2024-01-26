@@ -1,4 +1,5 @@
-// this is a reusable table component that can be used to display data in a table format. It takes in the following props:
+//DOC: Reusable Table Component
+//This is a reusable table component that can be used to display data in a table format. It takes in the following props:
 // data: an array of objects that contain the data to be displayed
 // headers: an array of strings that contain the headers for the table
 // actions: an array of objects that contain the label and link for the action button

@@ -6,4 +6,4 @@ export {
   registerEmployeeApi,
   updateEmployeeApi,
 } from "./employee/employee";
-export { createProductApi } from "./product/product";
+export { createProductApi, getAllProductsApi } from "./product/product";

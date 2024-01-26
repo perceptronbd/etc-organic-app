@@ -19,3 +19,20 @@ export const createProductApi = async (data, token) => {
 
   return registerRes;
 };
+
+export const getAllProductsApi = async (token) => {
+  logs("API Call: getAllProductsApi", [], Style.api);
+
+  const [registerRes, registerErr] = await trycatch(
+    authFileURL(token).get("/products/getproducts")
+  );
+
+  if (registerErr) {
+    logs("Error: getAllProductsApi", [registerErr.response], Style.danger);
+    return registerErr.response;
+  }
+
+  logs("Success: getAllProductsApi", [registerRes], Style.success);
+
+  return registerRes;
+};

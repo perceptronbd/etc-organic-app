@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { getAllProductsApi } from "../../api";
 import { Button, Container, SearchInput, Table, Text } from "../../components";
-import { productData } from "../../const/mockData";
+import { useAuth } from "../../context/AuthContext";
 import { useFilter } from "../../hooks";
+import { Style, logs } from "../../utils/logs";
 
 export const ProductList = () => {
-  const { filterQuery, handleSearch, filteredData } = useFilter({ data: productData });
+  const [products, setProducts] = useState([]);
+
+  const { user } = useAuth();
+
+  const { filterQuery, handleSearch, filteredData } = useFilter({ data: products });
 
   const headers = ["Name", "Sales Price", "CSB", "Points", "Description"];
   const actions = [{ label: "Edit", link: "edit-product" }];
-  const ignoreKeys = ["sn", "imgUrl", "otherKey"];
+  const ignoreKeys = ["sn", "_id", "__v", "createdAt", "updatedAt"];
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const response = await getAllProductsApi(user.token);
+      logs("getProducts", [response], Style.effects);
+      if (response.status === 200) {
+        setProducts(response.data);
+      } else {
+        toast.error(response.data.message);
+      }
+    };
+    getProducts();
+  }, []);
 
   return (
     <Container className={"flex-col justify-start"}>
