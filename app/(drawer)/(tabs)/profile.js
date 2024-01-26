@@ -179,6 +179,7 @@ export default function Page() {
             })
             .catch((err) => {
               log("uploadResult:", [err], Style.danger);
+              setIsProfileLoading(false);
             });
         });
       }
@@ -229,6 +230,7 @@ export default function Page() {
       }
     } catch (error) {
       console.log("error:", error);
+      setIsNIDLoading(false);
     }
   };
 
@@ -348,6 +350,7 @@ const Profile = ({
           onPress={pickImage}
           loading={isProfileLoading}
           disabled={isProfileLoading}
+          textColor={COLOR.primary}
         >
           Edit <Feather name="edit" size={15} color={COLOR.primary} />
         </Button>
@@ -418,6 +421,7 @@ const NIDandAddress = ({
           onPress={pickNID}
           loading={isNIDLoading}
           disabled={isNIDLoading}
+          textColor={COLOR.primary}
         >
           Upload NID <Feather name="edit" size={15} color={COLOR.primary} />
         </Button>

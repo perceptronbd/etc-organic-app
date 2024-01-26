@@ -23,7 +23,7 @@ export const useImage = (image) => {
   const setImage = (img) => {
     log("...useImage setImage...", [], Style.function);
     if (img && typeof img === "string") {
-      const imageURL = removeUploadsPrefix(image);
+      const imageURL = removeUploadsPrefix(img);
       log("setImage Image URL", [image], Style.code);
       log("setImage ImageURL", [imageURL], Style.code);
       setImageUrl(
