@@ -100,7 +100,7 @@ const ProductImage = ({ image, name }) => {
     <View
       style={tailwind`bg-[${COLOR.foreground}] mb-4 h-56 items-center justify-center rounded-md p-2`}
     >
-      <Image size={"xl"} source={{ uri: image }} alt={name} />
+      <Image size={"xl"} source={{ uri: image }} alt={name || "Unknown"} />
     </View>
   );
 };
