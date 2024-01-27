@@ -19,6 +19,7 @@ export function ProductCard({ productData }) {
     const item = { ...productData, image: productImageUrl };
 
     log("ProductCard", [item]);
+    log("ProductCard", [productData]);
 
     router.push({ pathname: "productDetails", params: item });
   };
@@ -64,7 +65,7 @@ export function ProductCard({ productData }) {
       </Pressable>
       <View style={tailwind`flex h-20 justify-between px-2`}>
         {/* Product Name */}
-        <StyledText type="b" variant="bodySmall" style={tw`mb-1`}>
+        <StyledText type="b" variant="bodySmall" style={tw`mb-1 h-10`}>
           {productData.productName}
         </StyledText>
         {/* Product Price and point*/}
