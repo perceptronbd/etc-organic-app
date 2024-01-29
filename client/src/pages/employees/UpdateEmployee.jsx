@@ -7,8 +7,8 @@ import {
   Checkbox,
   Container,
   FormInput,
+  FormSkeleton,
   SelectInput,
-  Skeleton,
   Text,
 } from "../../components";
 import { useAuth } from "../../context/AuthContext";
@@ -146,22 +146,7 @@ export const UpdateEmployee = () => {
       </div>
 
       {loading ? (
-        <div className="grid h-[500px] w-full grid-cols-2 grid-rows-6 gap-x-8 gap-y-1 rounded-md bg-white p-4">
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-        </div>
+        <FormSkeleton />
       ) : (
         <form action="submit" className="w-full rounded-lg bg-white p-4">
           <div className="grid w-[80%] grid-cols-2 gap-x-8">
