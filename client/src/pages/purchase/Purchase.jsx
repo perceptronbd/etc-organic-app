@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Container, FormInput, IncDecButton, SelectInput, Text } from "../../components";
-import { selectBranch, selectCategory } from "../../const/mockData";
-export const Purchase = () => {
-  const [quantity, setQuantity] = useState(1);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+import { useProductOptions } from "../../hooks";
+import { selectBranch } from "./selectInputs";
 
-  const changeQuantity = (newQuantity) => {
-    setQuantity(newQuantity);
-  };
+export const Purchase = () => {
+  const { productOptions } = useProductOptions();
+
+  const [quantity, setQuantity] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const [formValues, setFormValues] = useState({
     productName: "",
@@ -18,6 +18,14 @@ export const Purchase = () => {
     supplierNumber: "",
     branch: "",
   });
+
+  const changeQuantity = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
+
+  const onChangeSelect = (name, value) => {
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -35,14 +43,22 @@ export const Purchase = () => {
   };
 
   return (
-    <Container className={"flex-col justify-start"}>
+    <Container className={"flex-col items-start justify-start"}>
       <Text variant="titleSmall" type="m" className={"self-start"}>
         Purchase
       </Text>
       <form action="submit" onSubmit={onSubmit} className="w-full">
         <div className="grid h-[450px] w-full grid-cols-2 gap-2 p-2">
           <div className="grid w-full grid-rows-6 gap-y-2 rounded-xl bg-foreground p-4">
-            <SelectInput {...selectCategory} />
+            <SelectInput
+              id="products"
+              name="products"
+              placeholder="Select Products"
+              required={true}
+              type="select"
+              selectOpts={productOptions}
+              onValueChange={(value) => onChangeSelect("productName", value)}
+            />
             <IncDecButton
               name={"quantity"}
               value={quantity}

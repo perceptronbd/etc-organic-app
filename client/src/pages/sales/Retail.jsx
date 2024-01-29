@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, FormInput, IncDecButton, SelectInput } from "../../components";
-import { selectBranch, selectProducts } from "./selectInputs";
+import { useProductOptions } from "../../hooks";
+import { selectBranch } from "./selectInputs";
 
 export const Retail = () => {
+  const { productOptions } = useProductOptions();
+
   const [quantity, setQuantity] = useState(0);
 
   const changeQuantity = (newQuantity) => {
@@ -22,6 +25,10 @@ export const Retail = () => {
     shopAddress: "",
     branch: "",
   });
+
+  const onChangeSelect = (name, value) => {
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +72,15 @@ export const Retail = () => {
       >
         <div className="flex gap-4">
           <div className="flex flex-col gap-2 rounded-xl bg-foreground p-4">
-            <SelectInput {...selectProducts} />
+            <SelectInput
+              id="products"
+              name="products"
+              placeholder="Select Products"
+              required={true}
+              type="select"
+              selectOpts={productOptions}
+              onValueChange={(value) => onChangeSelect("productName", value)}
+            />
             <IncDecButton
               id={"quantity"}
               name={"quantity"}
