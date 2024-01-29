@@ -133,8 +133,9 @@ const loginUser = asyncHandler(async (req, res) => {
       permissions,
     });
   } else {
-    res.status(401); // Unauthorized status for incorrect password
-    throw new Error("Invalid phone or password");
+    res.status(401); 
+    const message = !passwordIsCorrect ? "Invalid password" : "Invalid phone";
+    throw new Error(message);
   }
 });
 
