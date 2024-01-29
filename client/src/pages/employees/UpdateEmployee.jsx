@@ -11,9 +11,9 @@ import {
   Skeleton,
   Text,
 } from "../../components";
-import { selectBranch, selectDesignation } from "../../const/mockData";
 import { useAuth } from "../../context/AuthContext";
 import { Style, logs } from "../../utils/logs";
+import { selectBranch, selectDesignation } from "./selectInputs";
 
 export const UpdateEmployee = () => {
   const { user } = useAuth();
@@ -109,6 +109,7 @@ export const UpdateEmployee = () => {
 
     if (res.status === 200) {
       toast.success("Employee updated successfully");
+      navigate(-1);
       setUpdating(false);
     } else {
       toast.error("Something went wrong");

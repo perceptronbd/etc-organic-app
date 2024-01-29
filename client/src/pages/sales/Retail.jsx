@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, FormInput, IncDecButton, SelectInput } from "../../components";
-import { selectBranch, selectCategory } from "../../const/mockData";
+import { selectBranch, selectProducts } from "./selectInputs";
 
 export const Retail = () => {
   const [quantity, setQuantity] = useState(0);
@@ -65,7 +65,7 @@ export const Retail = () => {
       >
         <div className="flex gap-4">
           <div className="flex flex-col gap-2 rounded-xl bg-foreground p-4">
-            <SelectInput {...selectCategory} />
+            <SelectInput {...selectProducts} />
             <IncDecButton
               id={"quantity"}
               name={"quantity"}

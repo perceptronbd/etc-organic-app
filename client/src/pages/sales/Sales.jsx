@@ -2,17 +2,16 @@ import React from "react";
 import { Container, Text } from "../../components";
 import { Retail } from "./Retail";
 import { Tabs } from "./Tabs";
-import { Wholesale } from "./Wholesale";
 
 const tabs = [
   {
     label: "Retail",
     content: <Retail />,
   },
-  {
-    label: "Wholesale",
-    content: <Wholesale />,
-  },
+  // {
+  //   label: "Wholesale",
+  //   content: <Wholesale />,
+  // },
 ];
 
 export const Sales = () => {

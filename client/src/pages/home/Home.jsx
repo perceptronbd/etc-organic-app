@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Sidebar } from "../../components/sidebar/Sidebar";
+import { getAllProducts } from "../../redux/slices/productSlice";
 
 export const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
   return (
     <div className="flex h-screen w-full bg-background">
       <Toaster richColors />

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { registerEmployeeApi } from "../../api";
 import { Button, Checkbox, Container, FormInput, SelectInput, Text } from "../../components";
-import { selectBranch, selectDesignation } from "../../const/mockData";
 import { Style, logs } from "../../utils/logs";
+import { selectBranch, selectDesignation } from "./selectInputs";
 
 export const AddEmployee = () => {
   const [fullAccess, setFullAccess] = useState(false);
