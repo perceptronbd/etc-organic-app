@@ -8,4 +8,5 @@ export {
   updateEmployeeApi
 } from "./employee/employee";
 export { createProductApi, getAllProductsApi } from "./product/product";
+export { createPurchaseApi, getAllPurchasesApi } from './product/purchase';
 
