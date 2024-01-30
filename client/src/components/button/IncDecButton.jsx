@@ -1,14 +1,19 @@
-export const IncDecButton = (props) => {
-  const { name, value, onChange } = props;
-
-  let incNum = () => {
-    onChange(value + 1);
+export const IncDecButton = ({ name, value, setValue, ...props }) => {
+  const increment = () => {
+    const newValue = value + 1;
+    setValue(newValue);
   };
 
-  let decNum = () => {
-    if (value > 0) {
-      onChange(value - 1);
+  const decrement = () => {
+    const newValue = value - 1;
+    if (newValue > 0) {
+      setValue(newValue);
     }
+  };
+
+  const onChange = (e) => {
+    const { value } = e.target;
+    setValue(value);
   };
 
   return (
@@ -22,7 +27,7 @@ export const IncDecButton = (props) => {
         <button
           className="hover:bg-accent-primary flex h-6 w-6 items-center justify-center rounded-md border border-secondary-light bg-secondary-light text-white transition-all duration-300 ease-in-out hover:bg-opacity-40 hover:text-secondary"
           type="button"
-          onClick={decNum}
+          onClick={decrement}
         >
           -
         </button>
@@ -37,7 +42,7 @@ export const IncDecButton = (props) => {
         <button
           className="hover:bg-accent-primary flex h-6 w-6 items-center justify-center rounded-md border border-secondary-light bg-secondary-light text-white transition-all duration-300 ease-in-out hover:bg-opacity-40 hover:text-secondary"
           type="button"
-          onClick={incNum}
+          onClick={increment}
         >
           +
         </button>
