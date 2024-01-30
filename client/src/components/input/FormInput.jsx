@@ -3,7 +3,7 @@ import React from "react";
 import { cw } from "../../utils/cw";
 
 export const FormInput = React.forwardRef(
-  ({ className, id, name, placeholder, type, onChange, errorMessage, ...props }, ref) => {
+  ({ className, id, name, placeholder, value, type, onChange, errorMessage, ...props }, ref) => {
     return (
       <div className="relative my-2 ">
         <input
@@ -11,6 +11,7 @@ export const FormInput = React.forwardRef(
           name={name}
           type={type}
           placeholder={placeholder}
+          value={value}
           autoComplete="off"
           {...props}
           onChange={onChange}
@@ -25,7 +26,7 @@ export const FormInput = React.forwardRef(
             htmlFor={id}
             className="absolute left-2.5 top-4 z-10 origin-[0] -translate-y-6 scale-75 transform bg-white px-1 text-sm text-gray-500 duration-300 peer-placeholder-shown:-translate-y-1 peer-placeholder-shown:scale-100 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:bg-white peer-focus:text-primary"
           >
-            {placeholder}
+            {value || placeholder}
           </label>
         )}
         <span
