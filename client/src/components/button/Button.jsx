@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { RefreshCw } from "lucide-react";
+import { LucideLoader2 } from "lucide-react";
 import React from "react";
 import { cw } from "../../utils/cw";
 
@@ -47,9 +47,9 @@ export const Button = React.forwardRef(
         {loading ? (
           <>
             <div className="flex h-4 w-4 animate-spin items-center justify-center rounded-full">
-              <RefreshCw />
+              <LucideLoader2 />
             </div>
-            loading...
+            {children && <span>{children}</span>}
           </>
         ) : (
           children

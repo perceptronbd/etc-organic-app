@@ -3,7 +3,7 @@ import React from "react";
 import { cw } from "../../utils/cw";
 
 export const FormInput = React.forwardRef(
-  ({ className, id, name, placeholder, type, onChange, errorMessage, ...props }, ref) => {
+  ({ className, id, name, placeholder, value, type, onChange, errorMessage, ...props }, ref) => {
     return (
       <div className="relative my-2 ">
         <input
@@ -11,6 +11,7 @@ export const FormInput = React.forwardRef(
           name={name}
           type={type}
           placeholder={placeholder}
+          value={value}
           autoComplete="off"
           {...props}
           onChange={onChange}

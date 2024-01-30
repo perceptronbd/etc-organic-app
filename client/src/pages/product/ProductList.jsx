@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { getAllProductsApi } from "../../api";
@@ -13,6 +14,8 @@ export const ProductList = () => {
 
   const { user } = useAuth();
 
+  const productsData = useSelector((state) => state.product.products);
+
   const { filterQuery, handleSearch, filteredData } = useFilter({ data: products });
 
   const headers = ["Name", "Sales Price", "CSB", "Points", "Description"];
@@ -21,6 +24,9 @@ export const ProductList = () => {
 
   useEffect(() => {
     setLoading(true);
+
+    logs("ProductList useEffect:", [productsData], Style.effects);
+
     const getProducts = async () => {
       const response = await getAllProductsApi(user.token);
       logs("getProducts", [response], Style.effects);
@@ -41,7 +47,7 @@ export const ProductList = () => {
         <Text variant="titleSmall" type="m">
           Product List
         </Text>
-        <Button variant={"ghost"} asChild>
+        <Button variant="primary" asChild>
           <Link to={"add-product"}>Add Product</Link>
         </Button>
       </div>

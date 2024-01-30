@@ -25,7 +25,7 @@ export const navLinks = [
     title: "Dashboard",
     links: [
       {
-        title: "Product List",
+        title: "Products",
         path: "/product-list",
         icon: <Boxes strokeWidth={1.3} size={18} />,
       },

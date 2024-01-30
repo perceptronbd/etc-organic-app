@@ -20,8 +20,10 @@ export const createProductApi = async (data, token) => {
   return registerRes;
 };
 
-export const getAllProductsApi = async (token) => {
+export const getAllProductsApi = async () => {
   logs("API Call: getAllProductsApi", [], Style.api);
+  const storedUser = sessionStorage.getItem("user");
+  const token = JSON.parse(storedUser).token;
 
   const [registerRes, registerErr] = await trycatch(
     authFileURL(token).get("/products/getproducts")

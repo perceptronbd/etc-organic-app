@@ -1,8 +1,4 @@
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import * as Select from "@radix-ui/react-select";
-import React from "react";
-import { cw } from "../../utils/cw";
-
+//DOC: SelectInput Component
 // the input takes the following props:
 // id: string
 // name: string
@@ -22,8 +18,11 @@ import { cw } from "../../utils/cw";
 //     { value: "broccoli", label: "Broccoli" },
 //   ],
 // }
-// Sample usage:
-// <SelectInput {...selectInputs1} />
+
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
+import * as Select from "@radix-ui/react-select";
+import React from "react";
+import { cw } from "../../utils/cw";
 
 export const SelectInput = ({
   id = "select",
@@ -74,11 +73,12 @@ export const SelectInput = ({
                 <Select.Label className=" mb-1 mt-2 w-fit px-5 text-xs leading-[25px] text-textColor-light">
                   {group.charAt(0).toUpperCase() + group.slice(1)}
                 </Select.Label>
-                {options.map(({ value, label }) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
+                {options.length > 0 &&
+                  options.map(({ value, label }) => (
+                    <SelectItem key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
               </Select.Group>
             ))}
           </Select.Viewport>

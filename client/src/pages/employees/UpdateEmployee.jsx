@@ -7,13 +7,12 @@ import {
   Checkbox,
   Container,
   FormInput,
+  FormSkeleton,
   SelectInput,
-  Skeleton,
   Text,
 } from "../../components";
-import { selectBranch, selectDesignation } from "../../const/mockData";
 import { useAuth } from "../../context/AuthContext";
-import { Style, logs } from "../../utils/logs";
+import { selectBranch, selectDesignation } from "./selectInputs";
 
 export const UpdateEmployee = () => {
   const { user } = useAuth();
@@ -43,7 +42,7 @@ export const UpdateEmployee = () => {
 
   useEffect(() => {
     setLoading(true);
-    logs("UpdateEmployee useEffect:", [userId], Style.effects);
+    // logs("UpdateEmployee useEffect:", [userId], Style.effects);
     const fetchEmployee = async () => {
       const res = await getEmployeeByIdApi(userId.item);
 
@@ -109,6 +108,7 @@ export const UpdateEmployee = () => {
 
     if (res.status === 200) {
       toast.success("Employee updated successfully");
+      navigate(-1);
       setUpdating(false);
     } else {
       toast.error("Something went wrong");
@@ -145,22 +145,7 @@ export const UpdateEmployee = () => {
       </div>
 
       {loading ? (
-        <div className="grid h-[500px] w-full grid-cols-2 grid-rows-6 gap-x-8 gap-y-1 rounded-md bg-white p-4">
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-          <Skeleton className={"h-12 w-96 bg-muted"} />
-        </div>
+        <FormSkeleton />
       ) : (
         <form action="submit" className="w-full rounded-lg bg-white p-4">
           <div className="grid w-[80%] grid-cols-2 gap-x-8">
