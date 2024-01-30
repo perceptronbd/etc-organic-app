@@ -10,7 +10,7 @@ export const useBranchOpt = () => {
 
   useEffect(() => {
     const options = branches.reduce((acc, branch) => {
-      const { category } = branch;
+      const  category  = 'Branches';
       if (acc[category]) {
         acc[category].push({ value: branch._id, label: branch.name });
       } else {

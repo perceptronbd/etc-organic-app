@@ -42,7 +42,7 @@ export const branchSlice = createSlice({
     }).addCase(getBranch.fulfilled, (state, action) => {
         logs("productSlice: fulfilled..",[action], Style.code);
         state.status = 'success'
-        state.products = action.payload
+        state.branches = action.payload.branches
     }).addCase(getBranch.rejected, (state, action) => {
         logs("productSlice: rejected..",[ action], Style.code);
         state.message = action.error.message
@@ -50,8 +50,5 @@ export const branchSlice = createSlice({
     })
   }
 })
-
-// Action creators are generated for each case reducer function
-//export const { decrement } = productSlice.actions
 
 export default branchSlice.reducer
