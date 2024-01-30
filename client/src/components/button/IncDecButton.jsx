@@ -2,10 +2,9 @@ export const IncDecButton = (props) => {
   const { name, value, onChange } = props;
 
   let incNum = () => {
-    if (value < 10) {
-      onChange(value + 1);
-    }
+    onChange(value + 1);
   };
+
   let decNum = () => {
     if (value > 0) {
       onChange(value - 1);
