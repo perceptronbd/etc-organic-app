@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Sidebar } from "../../components/sidebar/Sidebar";
+import { getBranch } from "../../redux/slices/branchSlice";
 import { getAllProducts } from "../../redux/slices/productSlice";
 
 export const Home = () => {
@@ -10,6 +11,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
+    dispatch(getBranch());
   }, [dispatch]);
 
   return (
