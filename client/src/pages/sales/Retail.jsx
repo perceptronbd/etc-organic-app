@@ -14,16 +14,15 @@ export const Retail = () => {
   };
 
   const [formValues, setFormValues] = useState({
-    productName: "",
+    product: "",
     quantity: "",
     price: "",
-    discount: "",
     finalPrice: "",
-    proprietorName: "",
-    shopName: "",
-    shopNumber: "",
+    customerName: "",
+    customerNumber: "",
     shopAddress: "",
     branch: "",
+    discount: "",
   });
 
   const onChangeSelect = (name, value) => {
@@ -41,7 +40,7 @@ export const Retail = () => {
   };
 
   useEffect(() => {
-    if (formValues.productName && quantity > 0) {
+    if (formValues.product && quantity > 0) {
       // const selectedProduct = products.find(
       //   (product) => product.name === formValues.productName
       // );
@@ -73,13 +72,13 @@ export const Retail = () => {
         <div className="flex gap-4">
           <div className="flex flex-col gap-2 rounded-xl bg-foreground p-4">
             <SelectInput
-              id="products"
-              name="products"
-              placeholder="Select Products"
+              id="product"
+              name="product"
+              placeholder="Select Product"
               required={true}
               type="select"
               selectOpts={productOptions}
-              onValueChange={(value) => onChangeSelect("productName", value)}
+              onValueChange={(value) => onChangeSelect("product", value)}
             />
             <IncDecButton
               id={"quantity"}
@@ -139,15 +138,6 @@ export const Retail = () => {
               label={"Customer Number"}
               name={"customerNumber"}
               placeholder={"Number"}
-              onChange={onChange}
-              required
-            />
-            <FormInput
-              id={"customerID"}
-              label={"Customer ID"}
-              placeholder={"ID"}
-              name={"customerID"}
-              errorMessage={"Please enter a ID"}
               onChange={onChange}
               required
             />
