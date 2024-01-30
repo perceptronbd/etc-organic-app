@@ -12,7 +12,6 @@ import {
   Text,
 } from "../../components";
 import { useAuth } from "../../context/AuthContext";
-import { Style, logs } from "../../utils/logs";
 import { selectBranch, selectDesignation } from "./selectInputs";
 
 export const UpdateEmployee = () => {
@@ -43,7 +42,7 @@ export const UpdateEmployee = () => {
 
   useEffect(() => {
     setLoading(true);
-    logs("UpdateEmployee useEffect:", [userId], Style.effects);
+    // logs("UpdateEmployee useEffect:", [userId], Style.effects);
     const fetchEmployee = async () => {
       const res = await getEmployeeByIdApi(userId.item);
 

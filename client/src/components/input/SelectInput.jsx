@@ -1,9 +1,4 @@
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
-import * as Select from "@radix-ui/react-select";
-import React from "react";
-import { cw } from "../../utils/cw";
-import { Style, logs } from "../../utils/logs";
-
+//DOC: SelectInput Component
 // the input takes the following props:
 // id: string
 // name: string
@@ -23,8 +18,11 @@ import { Style, logs } from "../../utils/logs";
 //     { value: "broccoli", label: "Broccoli" },
 //   ],
 // }
-// Sample usage:
-// <SelectInput {...selectInputs1} />
+
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
+import * as Select from "@radix-ui/react-select";
+import React from "react";
+import { cw } from "../../utils/cw";
 
 export const SelectInput = ({
   id = "select",
@@ -36,8 +34,6 @@ export const SelectInput = ({
   value,
   ...props
 }) => {
-  logs("selectOpts", [selectOpts], Style.function);
-
   return (
     <Select.Root
       required={required}

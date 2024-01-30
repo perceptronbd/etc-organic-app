@@ -1,3 +1,19 @@
+//DOC: logging function
+// Usage examples:
+//   log("Normal Logs");
+//   log("Warning Logs", [], Style.warning);
+//   log("Success Logs", [], Style.success);
+//   log("Danger Logs", [], Style.danger);
+//   log("API Call", [], Style.api);
+//   log("Code Block Example", [], Style.code);
+//   log("Special Effects", [], Style.effects);
+//   log("Function Call", [], Style.function);
+
+//   // Logging with variables
+//   const username = 'Alice';
+//   const points = 1200;
+//   log("User %s has %d points", [username, points]);
+
 export const Style = {
   base: [
     "color: #fff",
@@ -24,18 +40,3 @@ export const logs = (text, variables = [], extra = []) => {
     console.log(`%c${text}`, style);
   }
 };
-
-// Usage examples:
-//   log("Normal Logs");
-//   log("Warning Logs", [], Style.warning);
-//   log("Success Logs", [], Style.success);
-//   log("Danger Logs", [], Style.danger);
-//   log("API Call", [], Style.api);
-//   log("Code Block Example", [], Style.code);
-//   log("Special Effects", [], Style.effects);
-//   log("Function Call", [], Style.function);
-
-//   // Logging with variables
-//   const username = 'Alice';
-//   const points = 1200;
-//   log("User %s has %d points", [username, points]);

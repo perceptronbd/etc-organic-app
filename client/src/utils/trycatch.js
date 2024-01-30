@@ -1,3 +1,12 @@
+//DOC: trycatch function
+// Usage example:
+//   const [data, error] = await trycatch(asyncFn());
+//   if (error) {
+//     logs("Error", [error], Style.danger);
+//   } else {
+//     logs("Data", [data], Style.success);
+//   }
+
 export async function trycatch(promise) {
   try {
     const data = await promise;

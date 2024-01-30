@@ -1,4 +1,4 @@
-//DOC: Reusable Table Component
+//DOC: Table Component
 //This is a reusable table component that can be used to display data in a table format. It takes in the following props:
 // data: an array of objects that contain the data to be displayed
 // headers: an array of strings that contain the headers for the table
@@ -86,7 +86,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                     <td className=" px-2 py-1">
                       {actions.map((action, idx) => (
                         <Button asChild key={idx} className={"h-6"}>
-                          <Link to={action.link}> {action.label} </Link>
+                          <Link to={`${action.link}/${item}`}> {action.label} </Link>
                         </Button>
                       ))}
                     </td>

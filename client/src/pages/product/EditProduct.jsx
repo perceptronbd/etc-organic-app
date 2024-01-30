@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -10,16 +10,18 @@ import {
   TextInput,
 } from "../../components";
 import { selectCategory } from "../../const/mockData";
-
-const categories = [
-  { value: "1", label: "Category 1" },
-  { value: "2", label: "Category 2" },
-  { value: "3", label: "Category 3" },
-  { value: "4", label: "Category 4" },
-  { value: "5", label: "Category 5" },
-];
+import { Style, logs } from "../../utils/logs";
 
 export const EditProduct = () => {
+  const item = useParams();
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+
+  const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
   const [file, setFile] = useState();
   const [formValues, setFormValues] = useState({
     productName: "",
@@ -32,6 +34,11 @@ export const EditProduct = () => {
     description: "",
     image: null,
   });
+
+  useEffect(() => {
+    setLoading(true);
+    logs("EditProduct useEffect:", [item], Style.effects);
+  }, []);
 
   const onChange = (e) => {
     if (e.target.name === "image") {
@@ -48,7 +55,9 @@ export const EditProduct = () => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onDelete = async (e) => {};
+
+  const onUpdate = async (e) => {
     e.preventDefault();
     console.log({ form: formValues });
   };
@@ -63,7 +72,7 @@ export const EditProduct = () => {
           <Link to={-1}>Go Back</Link>
         </Button>
       </div>
-      <form action="submit" onSubmit={onSubmit} className="w-full rounded-lg bg-white p-4">
+      <form action="submit" className="w-full rounded-lg bg-white p-4">
         <></>
         <div className="grid w-[80%] grid-cols-2 gap-x-8 gap-y-2">
           <FormInput
@@ -133,10 +142,10 @@ export const EditProduct = () => {
           required
           onChange={onChange}
         />
-        <Button className={`mr-2`} type={"submit"}>
+        <Button className={`mr-2`} type={"submit"} onClick={onUpdate}>
           Update Product
         </Button>
-        <Button variant="destructive" type={"submit"}>
+        <Button variant="destructive" type={"submit"} onClick={onDelete}>
           Delete
         </Button>
       </form>
