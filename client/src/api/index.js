@@ -9,4 +9,5 @@ export {
 } from "./employee/employee";
 export { createProductApi, getAllProductsApi } from "./product/product";
 export { createPurchaseApi, getAllPurchasesApi } from './product/purchase';
+export { createSaleseApi } from './product/sales';
 
