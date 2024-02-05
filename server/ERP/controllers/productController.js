@@ -98,7 +98,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     const file = req.file; // file object provided by Multer
 
     // Update the product with the new data and file
-    const product = await Product.findByIdAndUpdate(productId, {...updatedData, image: file.path}, { new: true });
+    const product = await Product.findByIdAndUpdate(productId, {...updatedData, image: file}, { new: true });
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
