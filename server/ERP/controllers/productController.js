@@ -72,12 +72,30 @@ const getAllProducts = asyncHandler(async(req,res) => {
     res.status(200).json(productsWithTotalStock);
 });
 
+const deleteProduct = asyncHandler(async (req, res) => {
+  try {
+     const productId = req.params.id; // Assuming the product ID is passed as a route parameter
 
+    console.log(productId);
+
+     const deletedProduct = await Product.findByIdAndDelete(productId);
+ 
+     if (!deletedProduct) {
+       return res.status(404).json({ message: 'Product not found' });
+     }
+ 
+     res.status(200).json({ message: 'Product deleted successfully' });
+  } catch (error) {
+     console.error('Error deleting product:', error);
+     res.status(500).json({ message: 'Internal server error' });
+  }
+ });
 
 
 module.exports = {
     createProduct,
     getAllProducts,
     calculateProductStock,
+    deleteProduct
     
 };

@@ -6,6 +6,9 @@ const Branch = require("../models/branchModel");
 // @route   GET /api/products
 // @access  Public")
 
+//NOTE: getAllProducts for mobile app only
+//route: /api/getAllproducts
+
 exports.getAllProducts = asyncHandler(async (req, res) => {
   try {
       // Replace the hardcoded branch ID with your actual branch ID

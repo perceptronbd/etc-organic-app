@@ -26,6 +26,7 @@ const {
   getAllProducts,
   calculateProductStock,
   addBranch,
+  deleteProduct
 } = require("../controllers/productController.js");
 const { productManagement } = require("../middleware/authMiddleware.js");
 
@@ -41,8 +42,8 @@ router.put("/employee/update-users/:id", updateUser);
 router.get("/employee/getuserbyid/:id", getUserById);
 router.delete("/employee/deleteuser/:id", deleteUser);
 
+//NOTE: product routes are in ERPuserRoutes
 //products
-
 router.get(
   "/products/getproducts",
   checkLogin,
@@ -57,6 +58,14 @@ router.post(
   createProduct
 );
 
+router.delete(
+  "/deleteProduct/:productId",
+  checkLogin,
+  productManagement,
+  deleteProduct
+);
+
+
 // //Sales
 // router.post("/sales/purchase", inputSales, (req, res)=>{
 //     res.status.json()
@@ -69,3 +78,5 @@ router.post(
 // })
 
 module.exports = router;
+
+
