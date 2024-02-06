@@ -90,12 +90,51 @@ const deleteProduct = asyncHandler(async (req, res) => {
      res.status(500).json({ message: 'Internal server error' });
   }
  });
+const getProductByid = asyncHandler(async (req, res) => {
+  try {
+     const productId = req.params.id; // Assuming the product ID is passed as a route parameter
+ 
+     const product = await Product.findById(productId);
+ 
+     if (!product) {
+       return res.status(404).json({ message: 'Product not found' });
+     }
+ 
+     res.status(200).json(product);
+  } catch (error) {
+     console.error('Error getting product:', error);
+     res.status(500).json({ message: 'Internal server error' });
+  }
+ });
 
 
+const updateProduct = asyncHandler(async (req, res) => {
+
+  //Second PR 
+ try {
+    const productId = req.params.id; // Assuming the product ID is passed as a route parameter
+    const updatedData = req.body; // Assuming the updated data is sent in the request body
+    const file = req.file; // file object provided by Multer
+
+    // Update the product with the new data and file
+    const product = await Product.findByIdAndUpdate(productId, {...updatedData, image: file}, { new: true });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    res.status(200).json(product);
+ } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: 'Internal server error' });
+ }
+});
 module.exports = {
     createProduct,
     getAllProducts,
     calculateProductStock,
+    getProductByid,
+    updateProduct,
     deleteProduct
     
 };

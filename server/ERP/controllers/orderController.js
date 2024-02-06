@@ -1,10 +1,10 @@
 const Order = require('../../models/orderModel'); // Import the Order model
 const mobileUser = require('../../models/mobileUserModel'); // Import the mobileUser model
 const Cart = require('../../models/cartModel'); // Import the cart model
+const Product = require('../../models/productModel')
 const Checkout = require('../../models/checkoutModel'); // Import the checkout model
 const Branch = require('../../models/branchModel'); // Import the branch model
-//import asynchandler
-const asyncHandler = require('express-async-handler');
+const asyncHandler = require('express-async-handler');//import asynchandler
 
 exports.getAllOrders = async (req, res) => {
   try {
@@ -23,15 +23,19 @@ exports.displayOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find()
       .populate({
         path: 'cart',
-        model: Cart, // replace with your Cart model name if different
+        model: Cart,
         populate: {
-          path: 'user',
-          model: mobileUser // replace with your User model name if different
-        }
+          path: 'products.product', // Populate the 'product' field in the 'products' array
+          model: Product, // Replace with your Product model name if different
+        },
       })
       .populate({
         path: 'checkoutDetails',
-        model: Checkout // replace with your Checkout model name if different
+        model: Checkout,
+      })
+      .populate({
+        path: 'user',
+        model: mobileUser,
       });
 
     console.log(orders);

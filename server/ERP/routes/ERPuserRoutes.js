@@ -20,15 +20,23 @@ const {
   getUserById,
   deleteUser,
 } = require("../controllers/userController.js");
+
+//middleWares
 const { checkLogin } = require("../middleware/checkLogin");
+const { productManagement } = require("../middleware/authMiddleware.js");
+
+//prductControllers 
 const {
   createProduct,
   getAllProducts,
   calculateProductStock,
   addBranch,
+  getProductByid,
+  updateProduct,
   deleteProduct
 } = require("../controllers/productController.js");
-const { productManagement } = require("../middleware/authMiddleware.js");
+
+
 
 // const protect = require("../middleware/authMiddleware.js");
 
@@ -46,10 +54,10 @@ router.delete("/employee/deleteuser/:id", deleteUser);
 //products
 router.get(
   "/products/getproducts",
-  checkLogin,
-  productManagement,
   getAllProducts
 );
+
+
 router.post(
   "/products/createproduct",
   checkLogin,
@@ -76,6 +84,23 @@ router.delete(
 // router.post("/sales/wholesale", inputSales, (req, res)=>{
 //     res.status.json()
 // })
+
+
+router.get(
+  "/getproductById/:id",
+  checkLogin,
+  productManagement,
+  getProductByid
+);
+router.put(
+  "/updateProducts/:id",
+  checkLogin,
+  productManagement,
+  upload.single('image'),
+  updateProduct
+);
+
+
 
 module.exports = router;
 
