@@ -92,6 +92,8 @@ const getProductByid = asyncHandler(async (req, res) => {
 
 
 const updateProduct = asyncHandler(async (req, res) => {
+
+  //Second PR 
  try {
     const productId = req.params.id; // Assuming the product ID is passed as a route parameter
     const updatedData = req.body; // Assuming the updated data is sent in the request body
