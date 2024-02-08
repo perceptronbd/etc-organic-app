@@ -1,7 +1,6 @@
-import { Style, logs } from "./logs";
 
 export const imageURL = (str) => {
-  logs("removePrefix imageURL", [str],Style.code);
+  //logs("removePrefix imageURL", [str],Style.code);
   const prefix = "public/uploads/";
 
   if (str === undefined || str === null || str === "") {
@@ -11,7 +10,7 @@ export const imageURL = (str) => {
 
   if (str.startsWith(prefix)) {
     const url = str.slice(prefix.length);
-    logs("url", [`${import.meta.env.VITE_ETC_API}/uploads/${url}`],Style.code);
+    //logs("url", [`${import.meta.env.VITE_ETC_API}/uploads/${url}`],Style.code);
     return `${import.meta.env.VITE_ETC_API}/uploads/${url}`;
   }
   return `import.meta.env.VITE_ETC_API}/uploads`;

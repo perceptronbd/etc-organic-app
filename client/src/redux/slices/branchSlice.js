@@ -12,11 +12,11 @@ export const getBranch = createAsyncThunk(
           );
 
             if(apiErr){
-                logs("Error: getAllProducts", [apiErr.response], Style.danger);
+                logs("Error: getBranch", [apiErr.response], Style.danger);
                 return apiErr;
             }
 
-            logs("Success: getAllProducts", [apiRes], Style.success);
+            logs("Success: getBranch", [apiRes], Style.success);
 
             return apiRes.data;
     }
@@ -40,11 +40,11 @@ export const branchSlice = createSlice({
         state.message = 'loading'
         state.status = 'loading'
     }).addCase(getBranch.fulfilled, (state, action) => {
-        logs("productSlice: fulfilled..",[action], Style.code);
+        logs("branchSlice: fulfilled..",[action], Style.code);
         state.status = 'success'
         state.branches = action.payload.branches
     }).addCase(getBranch.rejected, (state, action) => {
-        logs("productSlice: rejected..",[ action], Style.code);
+        logs("branchSlice: rejected..",[ action], Style.code);
         state.message = action.error.message
         state.status = 'error'
     })
