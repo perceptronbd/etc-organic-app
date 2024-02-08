@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Text } from "../text/Text";
 
 export const ImgInput = (props) => {
-  const { id, onChange, className, errorMessage, label, file, ...inputProps } = props;
+  const { id, onChange, ...inputProps } = props;
   const [imagePreview, setImagePreview] = useState(null);
   const [imageName, setImageName] = useState(null);
 
@@ -24,7 +24,7 @@ export const ImgInput = (props) => {
   };
 
   return (
-    <div className="my-2">
+    <div className="my-2" id={id}>
       <input
         id="image"
         name="image"

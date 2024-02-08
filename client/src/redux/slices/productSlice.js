@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getAllProductsApi } from '../../api';
-import { Style, logs } from '../../utils/logs';
 import { trycatch } from '../../utils/trycatch';
 
 
@@ -11,12 +10,14 @@ export const getAllProducts = createAsyncThunk(
             getAllProductsApi()
           );
 
+        
+
             if(apiErr){
-                logs("Error: getAllProducts", [apiErr.response], Style.danger);
+                // logs("Error: getAllProducts", [apiErr.response], Style.danger);
                 return apiErr;
             }
 
-            logs("Success: getAllProducts", [apiRes], Style.success);
+            //logs("Success: getAllProducts", [apiRes], Style.success);
 
             return apiRes.data;
     }
@@ -40,11 +41,11 @@ export const productSlice = createSlice({
         state.message = 'loading'
         state.status = 'loading'
     }).addCase(getAllProducts.fulfilled, (state, action) => {
-        logs("productSlice: fulfilled..",[action], Style.code);
+        //logs("productSlice: fulfilled..",[action], Style.code);
         state.status = 'success'
         state.products = action.payload
     }).addCase(getAllProducts.rejected, (state, action) => {
-        logs("productSlice: rejected..",[ action], Style.code);
+        //logs("productSlice: rejected..",[ action], Style.code);
         state.message = action.error.message
         state.status = 'error'
     })
