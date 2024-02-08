@@ -171,8 +171,6 @@ export const AddProduct = () => {
             label={"Unit(s)"}
             placeholder={"Unit(s)"}
             name={"units"}
-            type={"number"}
-            pattern={"[0-9]{3}-[0-9]{2}-[0-9]{3}"}
             required
             onChange={onChange}
           />

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { textFormat } from "../../utils/textFormat";
 import { Button } from "../button/Button";
 import { Text } from "../text/Text";
 
@@ -15,10 +14,12 @@ export const OrderCard = ({
   const [isComplete, setIsComplete] = useState(status === "complete" ? true : false);
   const [loading, setLoading] = useState(false);
 
-  const firstThreeKeys = Object.keys(data).slice(0, 3);
+  //const firstThreeKeys = Object.keys(data).slice(0, 3);
 
   //see if the selected order is the same as the order card
   const isSelected = selectedOrder === data;
+
+  // logs("OrderCard:", [data, selectedOrder, isSelected], Style.code);
 
   const handleComplete = () => {
     setLoading(true);
@@ -38,13 +39,22 @@ export const OrderCard = ({
         isSelected ? "border-accent" : "border-neutral-200"
       } bg-foreground p-6`}
     >
-      <div className="grid grid-rows-3">
-        {firstThreeKeys.map((key) => (
-          <div className="flex" key={key}>
-            <Text className={"w-44 text-sm text-textColor-light"}>{textFormat(key)}</Text>
-            <Text className={"w-36 text-sm font-semibold"}>{data[key]}</Text>
-          </div>
-        ))}
+      <div className="grid w-80 grid-rows-3">
+        <div className="flex">
+          <Text className={"w-20 text-sm text-textColor-light"}>Mobile: </Text>
+          <Text className={"w-36 text-sm font-semibold"}>{data?.user?.mobileNumber}</Text>
+        </div>
+        <div className="flex">
+          <Text className={"w-20 text-sm text-textColor-light"}>Name: </Text>
+
+          <Text className={"w-36 text-sm font-semibold"}>{data?.user?.name}</Text>
+        </div>
+        <div className="flex items-center">
+          <Text className={"w-20 text-sm text-textColor-light"}>Ref Code: </Text>{" "}
+          <span className="w-fit rounded-lg border border-accent bg-accent-light bg-opacity-20 px-2">
+            <Text className={"text-xs font-semibold text-accent"}>{data?.user?.referralCode}</Text>
+          </span>
+        </div>
       </div>
       <div className="flex flex-col justify-start gap-2">
         <Button

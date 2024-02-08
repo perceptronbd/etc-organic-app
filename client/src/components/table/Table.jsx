@@ -11,8 +11,6 @@ import { Button } from "../../components";
 import { imageURL } from "../../utils/removePrefix";
 
 export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
-  console.log("data", data.length > 0 && Object.keys(data[0]));
-
   return (
     <>
       <div className="max-h-[80vh] w-full overflow-y-auto">
@@ -86,7 +84,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                     <td className=" px-2 py-1">
                       {actions.map((action, idx) => (
                         <Button asChild key={idx} className={"h-6"}>
-                          <Link to={`${action.link}/${item}`}> {action.label} </Link>
+                          <Link to={`${action.link}/${item._id}`}> {action.label} </Link>
                         </Button>
                       ))}
                     </td>

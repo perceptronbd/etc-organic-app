@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { getAllProductsApi } from "../../api";
 import { Button, Container, SearchInput, Table, TableSkeleton, Text } from "../../components";
 import { useAuth } from "../../context/AuthContext";
 import { useFilter } from "../../hooks";
-import { Style, logs } from "../../utils/logs";
 
 export const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { user } = useAuth();
-
-  const productsData = useSelector((state) => state.product.products);
 
   const { filterQuery, handleSearch, filteredData } = useFilter({ data: products });
 
@@ -25,11 +21,11 @@ export const ProductList = () => {
   useEffect(() => {
     setLoading(true);
 
-    logs("ProductList useEffect:", [productsData], Style.effects);
+    //logs("ProductList useEffect:", [productsData], Style.effects);
 
     const getProducts = async () => {
       const response = await getAllProductsApi(user.token);
-      logs("getProducts", [response], Style.effects);
+      // logs("getProducts", [response], Style.effects);
       if (response.status === 200) {
         setProducts(response.data);
         setLoading(false);

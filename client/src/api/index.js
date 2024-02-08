@@ -7,7 +7,8 @@ export {
   registerEmployeeApi,
   updateEmployeeApi
 } from "./employee/employee";
-export { createProductApi, getAllProductsApi } from "./product/product";
+export { getAllOrdersApi } from "./order/order";
+export { createProductApi, getAllProductsApi, getProductByIdApi, updateProductApi, deleteProductApi } from "./product/product";
 export { createPurchaseApi, getAllPurchasesApi } from './product/purchase';
 export { createSaleseApi } from './product/sales';
 

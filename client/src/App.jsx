@@ -31,7 +31,7 @@ export default function App() {
         <Route path="overview" element={<Overview />} />
         <Route path="product-list" element={<ProductList />} />
         <Route path="product-list/add-product" element={<AddProduct />} />
-        <Route path="product-list/edit-product/:item" element={<EditProduct />} />
+        <Route path="product-list/edit-product/:id" element={<EditProduct />} />
         <Route path="purchase" element={<Purchase />} />
         <Route path="sales" element={<Sales />} />
         <Route path="sales-report" element={<SalesReport />} />
