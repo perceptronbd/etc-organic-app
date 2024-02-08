@@ -102,7 +102,7 @@ export const UpdateEmployee = () => {
     setUpdating(true);
 
     e.preventDefault();
-    console.log({ form: formValues });
+    // console.log({ form: formValues });
 
     const res = await updateEmployeeApi(userId.item, formValues);
 
@@ -234,7 +234,7 @@ export const UpdateEmployee = () => {
             <Button
               type={"submit"}
               loading={updating}
-              disabled={user._id === userId.item}
+              disabled={user._id === userId.item || deleting}
               onClick={onUpdate}
             >
               Update Employee
@@ -243,7 +243,7 @@ export const UpdateEmployee = () => {
               variant="destructive"
               type={"submit"}
               loading={deleting}
-              disabled={user._id === userId.item}
+              disabled={user._id === userId.item || updating}
               onClick={onDelete}
             >
               Delete
