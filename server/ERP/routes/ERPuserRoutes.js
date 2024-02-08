@@ -67,7 +67,7 @@ router.post(
 );
 
 router.delete(
-  "/deleteProduct/:productId",
+  "/deleteProduct/:id",
   checkLogin,
   productManagement,
   deleteProduct
