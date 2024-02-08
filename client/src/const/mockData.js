@@ -605,3 +605,58 @@ export const ordersData1 = [
     status: "complete",
   },
 ];
+
+
+export const ordersData2 = [
+  {
+    "_id": "65b4129759537004d7362a36",
+    "user": {
+        "_id": "65b4115e59537004d73629a4",
+        "mobileNumber": "01234567899",
+        "password": "$2b$10$PYhYuZKXPKkAKNDhQ10aXOt243/qRn5LZ9zuun70LoBtl0XBvez7S",
+        "name": "Solaiman Khan",
+        "referralCode": "m6RFmT",
+        "referredBy": "65b3ee3c59537004d736215c",
+        "__v": 0
+    },
+    "cart": {
+        "_id": "65b4127159537004d7362a07",
+        "user": "65b4115e59537004d73629a4",
+        "products": [
+            {
+                "product": {
+                    "_id": "65b40d4059537004d736261f",
+                    "productName": "New Product Name",
+                    "category": "category-2",
+                    "salesPrice": 200,
+                    "purchasePrice": 100,
+                    "units": 50,
+                    "csb": 10,
+                    "points": 2000,
+                    "description": "New Description",
+                    "image": "public\\uploads\\1706746720234-20487367.jpg",
+                    "__v": 0
+                },
+                "quantity": 2,
+                "_id": "65b4127159537004d7362a08"
+            }
+        ],
+        "totalPrice": 4000,
+        "order": true,
+        "__v": 0
+    },
+    "checkoutDetails": {
+        "_id": "65b4129659537004d7362a32",
+        "user": "65b4115e59537004d73629a4",
+        "name": "Pll",
+        "phone": "012345y7890",
+        "division": "ঢাকা",
+        "district": "ঢাকা",
+        "address": "Address ",
+        "__v": 0
+    },
+    "status": "Pending",
+    "orderDate": "2024-01-26T20:14:15.206Z",
+    "__v": 0
+}
+];
