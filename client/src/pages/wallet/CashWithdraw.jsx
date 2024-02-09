@@ -1,5 +1,7 @@
 import { Info } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { toast } from "sonner";
+import { getWithdrawRequestsApi } from "../../api";
 import { Button, Container, ContentModal, Text } from "../../components";
 import { useModal } from "../../hooks";
 
@@ -9,6 +11,21 @@ export const CashWithdraw = () => {
     openModal: openEarnings,
     closeModal: closeEarnings,
   } = useModal();
+
+  useEffect(() => {
+    const getWithdrawRequests = async () => {
+      const response = await getWithdrawRequestsApi();
+      //logs("Withdraw Requests", [response], Style.effects);
+
+      if (response.status === 200 || response.status === 201) {
+        console.log(response.data);
+      } else {
+        toast.error(response.data.message);
+      }
+    };
+
+    getWithdrawRequests();
+  }, []);
 
   const handleShowEarnings = () => {
     openEarnings();

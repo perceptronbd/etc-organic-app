@@ -8,7 +8,8 @@ export {
   updateEmployeeApi
 } from "./employee/employee";
 export { getAllOrdersApi } from "./order/order";
-export { createProductApi, getAllProductsApi, getProductByIdApi, updateProductApi, deleteProductApi } from "./product/product";
+export { createProductApi, deleteProductApi, getAllProductsApi, getProductByIdApi, updateProductApi } from "./product/product";
 export { createPurchaseApi, getAllPurchasesApi } from './product/purchase';
 export { createSaleseApi } from './product/sales';
+export { getWithdrawRequestsApi } from './withdraw/withdraw';
 
