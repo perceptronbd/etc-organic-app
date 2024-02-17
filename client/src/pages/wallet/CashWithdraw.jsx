@@ -62,6 +62,7 @@ export const CashWithdraw = () => {
         <EarningHistory />
         <EarningHistory />
         <EarningHistory />
+        <EarningHistory />
       </ContentModal>
     </Container>
   );
