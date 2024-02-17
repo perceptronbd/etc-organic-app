@@ -7,7 +7,7 @@ const mobileUserSchema = new mongoose.Schema({
     referralCode: { type: String, unique: true },
     referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'MobileUser' },
     CSB: {type: Number},
-    totalCSB: {type: Number},
+    totalCSB: {type: Number,default:0},
     points: {type: Number},
     taka: {type:Number}
 });
