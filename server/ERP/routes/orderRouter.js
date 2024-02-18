@@ -12,7 +12,7 @@ router.get("/getMobileUserOrders", checkLogin, salesManagement, getAllOrders);
 router.get("/displayOrders", checkLogin, salesManagement, displayOrders);
 router.get("/getOnlineOrders", checkLogin, salesManagement, getOnlineOrders);
 
-router.delete("/deleteOnlineOrders/:id", checkLogin, salesManagement, cancelOrder);
+router.delete("/cancelOnlineOrder/:id", checkLogin, salesManagement, cancelOrder);
 router.put("/confirmOnlineOrder/:id", checkLogin, salesManagement, completeOrder);
 
 
