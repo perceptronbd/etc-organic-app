@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { getAllEmployeesApi } from "../../api";
-import { Button, Container, TableSkeleton, Text } from "../../components";
+import { Button, Container, SearchInput, TableSkeleton, Text } from "../../components";
+import { useFilter } from "../../hooks";
 import { Style, logs } from "../../utils/logs";
 import { EmployeeTable } from "./EmployeeTable";
 
@@ -10,6 +11,8 @@ export const Employees = () => {
   const [employeeData, setEmployeeData] = useState([]);
 
   const [loading, setLoading] = useState(false);
+
+  const { filterQuery, handleSearch, filteredData } = useFilter({ data: employeeData });
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +41,14 @@ export const Employees = () => {
             <Link to={"add-employee"}>Add Employee</Link>
           </Button>
         </div>
-        {loading ? <TableSkeleton /> : <EmployeeTable data={employeeData} />}
+        {loading ? (
+          <TableSkeleton />
+        ) : (
+          <div className="w-full rounded-md bg-foreground p-2">
+            <SearchInput value={filterQuery} onChange={handleSearch} />
+            <EmployeeTable data={filteredData} />
+          </div>
+        )}
       </>
     </Container>
   );

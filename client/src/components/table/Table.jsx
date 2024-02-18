@@ -11,6 +11,8 @@ import { Button } from "../../components";
 import { imageURL } from "../../utils/removePrefix";
 
 export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
+  const sortedData = [...data].reverse();
+
   return (
     <>
       <div className="max-h-[80vh] w-full overflow-y-auto">
@@ -47,7 +49,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                 </td>
               </tr>
             ) : (
-              data.map((item, index) => (
+              sortedData.map((item, index) => (
                 <tr
                   key={index}
                   className={`h-4 bg-foreground text-sm font-normal hover:bg-neutral-200`}

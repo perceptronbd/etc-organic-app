@@ -152,10 +152,12 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
 };
 
 export const ListAndView = ({ data }) => {
-  logs("ListAndView:", [data], Style.code);
+  // logs("ListAndView:", [data], Style.code);
 
   const [selectedOrder, setSelectedOrder] = useState(data[0] || {});
   const [loading, setLoading] = useState(false);
+
+  const sortedData = [...data].reverse();
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -166,7 +168,7 @@ export const ListAndView = ({ data }) => {
       <div className="flex w-full justify-between gap-4">
         <div className="h-[90vh] w-fit overflow-auto overflow-x-hidden">
           {data.length > 0 &&
-            data.map((order, index) => (
+            sortedData.map((order, index) => (
               <OrderCard
                 key={index}
                 data={order}
