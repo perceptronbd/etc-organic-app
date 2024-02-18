@@ -11,25 +11,24 @@ const product = require("../../models/productModel");
 const addSale = asyncHandler(async (req, res) => {
     try {
         // Get sale details from the request body
-        const { product, customerName, customerNumber, customerId, quantity, price, branch, discount, finalPrice } = req.body;
+        const { product, customerName, customerNumber, quantity, price, branch, discount, finalPrice } = req.body;
 
+        // Find the user by their mobile number
         const user = await mobileUser.findOne({ mobileNumber: customerNumber });
 
         if (!user) {
             return res.status(404).json({
-                code: 404,
+                code:  404,
                 message: "User not found",
             });
         }
-        // const user = await mobileUser.findOne({ mobileNumber: customerNumber });
-
 
         // Create a new sale record
         const newSale = new Sales({
             product,
             customerName,
             customerNumber,
-            customerId,
+            customerId: user._id, // Use the _id from the user object
             quantity,
             price,
             branch,
@@ -37,20 +36,17 @@ const addSale = asyncHandler(async (req, res) => {
             finalPrice,
         });
 
-        newSale.customerId = user._id;
+        // Find the branch by its ID
+        const branchData = await Branch.findById(branch);
 
-        if(customerId != user._id){
+        if (!branchData) {
+            // Handle if the branch is not found
+            console.error(`Branch with ID ${branch} not found.`);
             return res.status(404).json({
-                code: 404,
-                message: "Customer not found",
+                code:  404,
+                message: `Branch not found`,
             });
         }
-
-
-        // Save the sale record to the database
-
-        // Update stock in the branch for the sold product
-        const branchData = await Branch.findById(branch);
 
         const stock = branchData.stock;
 
@@ -58,7 +54,7 @@ const addSale = asyncHandler(async (req, res) => {
             // Handle if the stock array is not found in the branch data
             console.error(`Stock array not found in branch ${branch}.`);
             return res.status(404).json({
-                code: 404,
+                code:  404,
                 message: `No stock found for branch`,
             });
         }
@@ -69,7 +65,7 @@ const addSale = asyncHandler(async (req, res) => {
             // If the product is not found in the stock, handle the error
             console.error(`Product with name ${newSale.product} not found in branch ${branch} stock.`);
             return res.status(404).json({
-                code: 404,
+                code:  404,
                 message: `Product not found in branch stock`,
             });
         }
@@ -81,7 +77,7 @@ const addSale = asyncHandler(async (req, res) => {
             // Handle if the requested quantity is greater than the available stock
             console.error(`Insufficient stock for product ${newSale.product} in branch ${branch}.`);
             return res.status(400).json({
-                code: 400,
+                code:  400,
                 message: `Insufficient stock for product in branch`,
             });
         }
@@ -93,15 +89,16 @@ const addSale = asyncHandler(async (req, res) => {
             { new: true }
         );
 
-        // console.log(updatedBranch);
-        updateUserCSB(product,customerId,quantity);
-        // Send a success response
+        // Update user CSB (assuming this function is defined elsewhere)
+        updateUserCSB(product, user._id, quantity);
 
+        // Save the new sale record
         await newSale.save();
 
+        // Send a success response
         res.status(201).json({
-            code: 201,
-            sale: newSale ,
+            code:  201,
+            sale: newSale,
             message: "Sale added successfully",
         });
     } catch (error) {
@@ -109,5 +106,6 @@ const addSale = asyncHandler(async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
 
 module.exports = {addSale, updateUserCSB};
