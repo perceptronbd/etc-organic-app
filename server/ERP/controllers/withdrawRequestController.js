@@ -6,7 +6,7 @@ const Bank = require('../../models/bankModel');
 exports.getAllWithdrawRequests = async (req, res) => {
     try {
       // Get all withdraw requests
-      const withdrawRequests = await Withdraw.find();
+      const withdrawRequests = await Withdraw.find().populate('userId');
   
       // Check payment type for each request
       const processedRequests = await Promise.all(
