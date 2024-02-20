@@ -8,7 +8,7 @@ const {walletHistoryERP, getWalletHistoryById}  = require("../controllers/wallet
 // const { checkLogin } = require("../middleware/checkLogin");
 
 
-router.get("/getwallethistoryERP", walletHistoryERP)
+router.get("/getwallethistoryERP/:id", walletHistoryERP)
 router.get("/getwallethistoryByid/:id", getWalletHistoryById)
 
 module.exports = router;

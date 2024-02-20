@@ -2,8 +2,8 @@ const WalletHistory = require('../../models/walletHistory');
 const asyncHandler = require("express-async-handler");
 
 exports.walletHistoryERP = asyncHandler(async (req, res) => {
-    const receiverId = req.body.receiverId;
-    // console.log(receiverId);
+    const receiverId = req.params.id;
+    console.log(receiverId);
     const history = await WalletHistory.find({ recieverId: receiverId });
     console.log(history);
     if (!history || history.length === 0) {
