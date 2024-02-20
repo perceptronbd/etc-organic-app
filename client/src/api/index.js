@@ -12,4 +12,5 @@ export { createProductApi, deleteProductApi, getAllProductsApi, getProductByIdAp
 export { createPurchaseApi, getAllPurchasesApi } from './product/purchase';
 export { createSaleseApi } from './product/sales';
 export { getWithdrawRequestsApi } from './withdraw/withdraw';
+export { getWalletHistoryByIdApi } from './withdraw/wallet';
 

@@ -1,11 +1,17 @@
-import { Info } from "lucide-react";
-import React, { useEffect } from "react";
+import { Info, LucideLoader2, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getWithdrawRequestsApi } from "../../api";
+import { getWalletHistoryByIdApi, getWithdrawRequestsApi } from "../../api";
 import { Button, Container, ContentModal, Text } from "../../components";
 import { useModal } from "../../hooks";
 
 export const CashWithdraw = () => {
+  const [withdrawRequests, setWithdrawRequests] = useState([]);
+  const [walletHistory, setWalletHistory] = useState([]);
+
+  const [fetchingData, setFetchingData] = useState(false);
+  const [fetchingHistory, setFetchingHistory] = useState(false);
+
   const {
     showModal: showEarnings,
     openModal: openEarnings,
@@ -13,62 +19,86 @@ export const CashWithdraw = () => {
   } = useModal();
 
   useEffect(() => {
-    const getWithdrawRequests = async () => {
-      const response = await getWithdrawRequestsApi();
-      //logs("Withdraw Requests", [response], Style.effects);
-
-      if (response.status === 200 || response.status === 201) {
-        console.log(response.data);
-      } else {
-        toast.error(response.data.message);
-      }
-    };
+    setFetchingData(true);
 
     getWithdrawRequests();
   }, []);
 
-  const handleShowEarnings = () => {
-    openEarnings();
+  const getWithdrawRequests = async () => {
+    const response = await getWithdrawRequestsApi();
+    //logs("Withdraw Requests", [response], Style.effects);
+
+    if (response.status === 200 || response.status === 201) {
+      console.log("withdrawRequests", response.data.withdrawRequests);
+      setWithdrawRequests(response.data.withdrawRequests.reverse());
+      setFetchingData(false);
+    } else {
+      setFetchingData(false);
+      toast.error(response.data.message);
+    }
   };
 
-  return (
+  const handleShowEarnings = async (id) => {
+    setFetchingHistory(true);
+    toast.custom((t) => {
+      return (
+        <div className="flex items-center justify-between gap-4 rounded-lg bg-foreground p-4">
+          <div className="flex h-4 w-4 animate-spin items-center justify-center rounded-full">
+            <LucideLoader2 />
+          </div>
+          <Text>Fetching wallet history...</Text>
+          <button
+            className={
+              "group flex h-5 w-5 items-center justify-center rounded bg-red-500 transition-all duration-300 ease-in-out"
+            }
+            onClick={() => toast.dismiss(t)}
+          >
+            <X className="text-white" />
+          </button>
+        </div>
+      );
+    });
+
+    const response = await getWalletHistoryByIdApi(id);
+    console.log("response", id);
+    // console.log("walletHistory", response);
+    if (response.status === 200 || response.status === 201) {
+      setWalletHistory(response.data.data.reverse());
+      setFetchingHistory(false);
+      toast.success(`Wallet history fetched successfully!`);
+      openEarnings();
+    } else {
+      setFetchingHistory(false);
+      toast.error(response.data.message);
+    }
+  };
+
+  return withdrawRequests.length === 0 ? (
+    <Container className={"flex h-full w-full flex-col items-center justify-center bg-foreground"}>
+      <Text variant="headerMedium" type="sb" className={"text-neutral-400"}>
+        No Withdraw Requests Available!
+      </Text>
+    </Container>
+  ) : (
     <Container className={"justify-start"}>
       <Text variant="titleMedium" type="m" className={"self-start"}>
-        Cash With Request
+        Cash Withdraw Request
       </Text>
       <div className="h-screen self-start overflow-y-auto">
-        <CashWithdrawCard showEarnings={handleShowEarnings} />
-        <CashWithdrawCard showEarnings={handleShowEarnings} />
-        <CashWithdrawCard showEarnings={handleShowEarnings} />
+        {withdrawRequests.map((item) => (
+          <CashWithdrawCard key={item._id} data={item} showEarnings={handleShowEarnings} />
+        ))}
       </div>
       <ContentModal isOpen={showEarnings} closeModal={closeEarnings} title="Earning History">
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
-        <EarningHistory />
+        {walletHistory.map((item) => (
+          <EarningHistory key={item._id} data={item} />
+        ))}
       </ContentModal>
     </Container>
   );
 };
 
-const CashWithdrawCard = ({ showEarnings }) => {
+const CashWithdrawCard = ({ data, showEarnings }) => {
   return (
     <>
       <section className="mx-1 my-2 w-[800px] self-start rounded-md bg-foreground px-4 py-2">
@@ -78,15 +108,15 @@ const CashWithdrawCard = ({ showEarnings }) => {
               Username
             </Text>
             <Text variant="bodySmall" type="m">
-              : Username
+              : {data.userId.name}
             </Text>
           </div>
           <div className="flex gap-6">
             <Text variant="bodySmall" className={"w-20 text-neutral-400"}>
-              User ID
+              Ref Code:
             </Text>
-            <Text variant="bodySmall" type="m">
-              : User ID
+            <Text variant="bodySmall" type="b" className={"text-accent"}>
+              : {data.userId.referralCode}
             </Text>
           </div>
           <div className="flex gap-6">
@@ -94,7 +124,7 @@ const CashWithdrawCard = ({ showEarnings }) => {
               Number
             </Text>
             <Text variant="bodySmall" type="m">
-              : 01712244605
+              : {data.userId.mobileNumber}
             </Text>
           </div>
         </div>
@@ -104,8 +134,13 @@ const CashWithdrawCard = ({ showEarnings }) => {
             Amount:
           </Text>
           <Text variant="titleSmall">
-            <span className="font-semibold"> 1000</span> TK{" "}
-            <Button size="icon" variant="ghost" className="h-5 w-5" onClick={showEarnings}>
+            <span className="font-semibold"> {data.withdrawAmount}</span> TK{" "}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-5 w-5"
+              onClick={() => showEarnings(data.userId._id)}
+            >
               <Info size={16} />
             </Button>
           </Text>
@@ -119,7 +154,7 @@ const CashWithdrawCard = ({ showEarnings }) => {
   );
 };
 
-const EarningHistory = () => {
+const EarningHistory = ({ data }) => {
   return (
     <section className="m-1 w-[800px] self-start rounded-md border-2 bg-foreground px-4 py-2">
       <div className="grid h-32 grid-rows-4 ">
@@ -128,15 +163,15 @@ const EarningHistory = () => {
             Refer and Earn program
           </Text>
           <Text variant="bodyMedium" type="b">
-            18-04-23
+            {data.date}
           </Text>
         </div>
         <div className="flex h-fit justify-between">
           <Text variant="bodySmall" type="b" className={"text-neutral-400"}>
-            +100 CSB
+            {data.csb} CSB
           </Text>
           <Text variant="bodySmall" type="b" className={"text-neutral-400"}>
-            08:44 PM
+            {data.time}
           </Text>
         </div>
         <div className="row-end-5 flex h-fit justify-between">
@@ -144,7 +179,7 @@ const EarningHistory = () => {
             A sale was made in the Referral Generation
           </Text>
           <Text variant="bodySmall" type="b">
-            10%
+            {data.percentage * 100}%
           </Text>
         </div>
       </div>
