@@ -105,7 +105,7 @@ export default function Page() {
         </StyledText>
         {/* Buttons */}
         <View style={tailwind`flex-row justify-between gap-2`}>
-          <StyledButton width={"28"} onPress={onRedeem}>
+          <StyledButton width={"28"} onPress={onRedeem} disabled={csb<=0}>
             Redeem
           </StyledButton>
           <StyledButton width={"64"} onPress={onWithdraw} disabled={taka <= 0}>

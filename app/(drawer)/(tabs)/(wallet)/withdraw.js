@@ -51,6 +51,7 @@ const withdraw = () => {
   const [phoneNumber, setPhoneNumber] = useState(""); //state value for phone number for bkash and nagad withdraw
 
   const [loading, setLoading] = useState(false); //state value for loading
+  const [loadingWithdraw, setLoadingWithdraw] = useState(false); //state value for loading withdraw request
 
   const showToast = useCustomToast();
 
@@ -142,11 +143,13 @@ const withdraw = () => {
         (paymentType === "nagad" && !phoneNumber)
       ) {
         showToast({
-          description: "দয়া করে সব Phone Number প্রদান করুন​।",
+          description: "দয়া করে Phone Number প্রদান করুন​।",
           variant: "warning",
         });
         return;
       }
+
+      setLoadingWithdraw(true);
 
       requestWithdraw(data).then((res) => {
         console.log("...withdraw res:", res);
@@ -161,6 +164,7 @@ const withdraw = () => {
             description: "আপনার Withdraw সম্পন্ন হয়েছে​।",
             variant: "success",
           });
+          setLoadingWithdraw(false);
         } else if (status === 400) {
           const { message } = res.data;
           hideConfirmModal();
@@ -170,6 +174,7 @@ const withdraw = () => {
             description: message,
             variant: "warning",
           });
+          setLoadingWithdraw(false);
         } else {
           hideConfirmModal();
           hideBkash();
@@ -178,9 +183,11 @@ const withdraw = () => {
             description: "দুঃখিত, আপনার Withdraw সম্পন্ন হয়নি​।",
             variant: "danger",
           });
+          setLoadingWithdraw(false);
         }
       });
     } catch (error) {
+      setLoadingWithdraw(false);
       console.log("...withdraw goHome error:", error);
     }
   };
@@ -214,7 +221,7 @@ const withdraw = () => {
               handlePhoneNumber(text);
             }}
           />
-          <StyledButton width={"md"} onPress={goHome}>
+          <StyledButton width={"md"} onPress={goHome} loading={loadingWithdraw}>
             কনফার্ম
           </StyledButton>
         </View>
@@ -230,7 +237,7 @@ const withdraw = () => {
             label={"Phone No."}
             onChangeText={(text) => handlePhoneNumber(text)}
           />
-          <StyledButton width={"md"} onPress={goHome}>
+          <StyledButton width={"md"} onPress={goHome} loading={loadingWithdraw}>
             কনফার্ম
           </StyledButton>
         </View>
@@ -248,7 +255,7 @@ const withdraw = () => {
             আপনার রিকুয়েস্ট টি যাচাই করার পর যত দ্রুত সম্ভব আপনার প্রাপ্য
             ব্যালেন্স পাঠিয়ে দেয়া হবে আপনার দেয়া অ্যাকাউন্ট ইনফরমেশন-এ
           </StyledText>
-          <StyledButton width={"md"} onPress={goHome}>
+          <StyledButton width={"md"} onPress={goHome} loading={loadingWithdraw}>
             ঠিক আছে
           </StyledButton>
         </View>
@@ -266,7 +273,8 @@ const BalanceWithdraw = ({ setWithdrawAmount, balance }) => {
         <StyledText variant="titleMedium">Available Balance :</StyledText>
         <View style={tailwind`flex-row items-end gap-2`}>
           <StyledText variant="titleLarge" type="b">
-            {balance}
+            {parseFloat( balance).toFixed(2) 
+            }
           </StyledText>
           <StyledText type="b">BDT</StyledText>
         </View>
