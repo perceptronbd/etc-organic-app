@@ -24,7 +24,6 @@ export const Retail = () => {
     finalPrice: "",
     customerName: "",
     customerNumber: "",
-    shopAddress: "",
     branch: "",
     discount: "",
   });
@@ -72,6 +71,7 @@ export const Retail = () => {
     const form = {
       ...formValues,
       quantity: quantity.toString(),
+      price: selectedProduct?.purchasePrice,
       finalPrice: (
         parseFloat(selectedProduct?.purchasePrice) * quantity -
         parseFloat(selectedProduct?.purchasePrice) *
@@ -79,6 +79,8 @@ export const Retail = () => {
           parseFloat(formValues.discount ? formValues.discount / 100 : 0)
       ).toString(),
     };
+
+    console.log("form", form);
 
     const res = await createSaleseApi(form);
 
@@ -146,7 +148,7 @@ export const Retail = () => {
               id={"finalPrice"}
               label={"Final Price"}
               placeholder={"Final Price"}
-              pattern={"[0-9]+"}
+              pattern={"^(?=.)([+-]?([0-9]*)(.([0-9]+))?)$"}
               name={"finalPrice"}
               errorMessage={"Please enter a valid price"}
               value={

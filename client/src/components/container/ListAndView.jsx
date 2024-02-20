@@ -27,7 +27,7 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
       </div>
     </div>
   ) : (
-    <article className=" w-[450px] animate-enterFromLeft rounded-lg bg-foreground p-4">
+    <article key={key} className="w-[450px] animate-enterFromRight rounded-lg bg-foreground p-4">
       {selectedOrder.checkoutDetails ? (
         <div className="flex flex-col justify-between">
           <div>
@@ -129,10 +129,7 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
                   </tbody>
                 </table>
 
-                <section
-                  key={key}
-                  className="mt-4 flex w-full justify-between gap-4 rounded-md bg-neutral-100 p-2 font-semibold"
-                >
+                <section className="mt-4 flex w-full justify-between gap-4 rounded-md bg-neutral-100 p-2 font-semibold">
                   <div className="font-medium text-neutral-400">Grand Total:</div>
                   <div className=" font-medium">
                     {parseFloat(selectedOrder?.cart?.totalPrice).toFixed(2)}
@@ -155,10 +152,12 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
 };
 
 export const ListAndView = ({ data }) => {
-  logs("ListAndView:", [data], Style.code);
+  // logs("ListAndView:", [data], Style.code);
 
   const [selectedOrder, setSelectedOrder] = useState(data[0] || {});
   const [loading, setLoading] = useState(false);
+
+  const sortedData = [...data].reverse();
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -169,7 +168,7 @@ export const ListAndView = ({ data }) => {
       <div className="flex w-full justify-between gap-4">
         <div className="h-[90vh] w-fit overflow-auto overflow-x-hidden">
           {data.length > 0 &&
-            data.map((order, index) => (
+            sortedData.map((order, index) => (
               <OrderCard
                 key={index}
                 data={order}

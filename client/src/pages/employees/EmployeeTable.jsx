@@ -1,24 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Button, SearchInput } from "../../components";
+import { Button } from "../../components";
 import { textFormat } from "../../utils/textFormat";
 
 export const EmployeeTable = ({ data }) => {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filtredData = data.filter((item) =>
-    Object.values(item).some((value) =>
-      value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  );
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  const sortedData = [...data].reverse();
 
   return (
-    <div className="w-full rounded-lg bg-foreground p-2">
-      <SearchInput value={searchQuery} onChange={handleSearch} />
+    <>
       <div className="max-h-[78vh] w-full overflow-y-auto">
         <table className="w-full ">
           <thead className="sticky top-0 h-12 border-b-2 bg-foreground text-sm font-normal text-neutral-400">
@@ -31,10 +20,10 @@ export const EmployeeTable = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {filtredData.length === 0 ? (
+            {data.length === 0 ? (
               <div className="my-8 text-xl font-bold text-textColor-light">No Data</div>
             ) : (
-              filtredData.map((item, index) => (
+              sortedData.map((item, index) => (
                 <tr key={index} className={`text-sm font-medium hover:bg-neutral-200`}>
                   <td className=" px-2 py-1">{item.name}</td>
                   <td className={`flex px-2 py-1 text-sm`}>
@@ -64,6 +53,6 @@ export const EmployeeTable = ({ data }) => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
