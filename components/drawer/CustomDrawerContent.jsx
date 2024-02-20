@@ -79,7 +79,7 @@ export const CustomDrawerContent = (props) => {
             console.log("CustomDrawerContent logout");
 
             AsyncStorage.removeItem("user-data").then(() => {
-              console.log("removed");
+              //console.log("removed");
               router.push("login");
             });
           } else {

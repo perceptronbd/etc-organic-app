@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
 import tw from "twrnc";
@@ -44,28 +45,43 @@ export default function Page() {
 
   useEffect(() => {
     console.log("...home useEffect...");
-    const fetchAPI = async () => {
-      console.log("...useEffect fetchAPI start...");
-      try {
-        AsyncStorage.getItem("user-token").then((token) => {
-          setLoading(true);
-          fetchProducts(token).then((res) => {
-            const { data } = res;
-            console.log("useEffect grouping...");
-            const groupedData = groupByCategory(data);
-            setProducts(groupedData);
-            console.log("useEffect groupedData", groupedData);
-            console.log("...fetchAPI res:", res);
-            setLoading(false);
-          });
-        });
-      } catch (error) {
-        console.log("...fetchAPI error:", error);
-      }
-    };
+    // setTimeout(() => {
+    //   console.log("...home useEffect setTimeout... 10 minutes have passed...");
+      
+    //   showToast({ description: "Session timeout. Please login again!", variant: "danger" })
+    //   logOut();
+    // }, 10 * 60 * 1000);
 
     fetchAPI();
   }, []);
+
+  const logOut = async() => {
+    AsyncStorage.removeItem("user-data").then(() => {
+      //console.log("removed");
+      router.push("login");
+    });
+  }
+
+
+  const fetchAPI = async () => {
+    console.log("...useEffect fetchAPI start...");
+    try {
+      AsyncStorage.getItem("user-token").then((token) => {
+        setLoading(true);
+        fetchProducts(token).then((res) => {
+          const { data } = res;
+          console.log("useEffect grouping...", data);
+          const groupedData = groupByCategory(data);
+          setProducts(groupedData);
+          console.log("useEffect groupedData", groupedData);
+          console.log("...fetchAPI res:", res);
+          setLoading(false);
+        });
+      });
+    } catch (error) {
+      console.log("...fetchAPI error:", error);
+    }
+  };
 
   return (
     <>
