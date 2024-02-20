@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { router, useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { ActivityIndicator, Divider, RadioButton } from "react-native-paper";
@@ -43,6 +43,7 @@ const bankInputFeilds = [
 ];
 
 const withdraw = () => {
+
   const [balance, setBalance] = useState(0); //state value for balance fetched from the server for the logged in user
 
   const [withdrawAmount, setWithdrawAmount] = useState(""); //state value for withdraw amount
@@ -71,19 +72,29 @@ const withdraw = () => {
     hideModal: hideConfirmModal,
   } = useModal();
 
-  useEffect(() => {
-    setLoading(true);
-    async function fetch() {
-      console.log("...index redeem fetching...");
-      AsyncStorage.getItem("user-data").then((data) => {
-        const userData = JSON.parse(data);
-        console.log("...index redeem userData", userData);
-        setBalance(userData?.taka);
-        setLoading(false);
-      });
-    }
-    fetch();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      setLoading(true);
+      async function fetch() {
+        console.log("...index redeem fetching...");
+        AsyncStorage.getItem("user-data").then((data) => {
+          const userData = JSON.parse(data);
+          console.log("...index redeem userData", userData);
+          setBalance(userData?.taka);
+          setLoading(false);
+        });
+      }
+      fetch();
+  
+      return () => {
+        setWithdrawAmount("");
+        setPaymentType("");
+        setBankId("");
+        setPhoneNumber("");
+      }
+    }, [])
+  );
+  
 
   const openConfirmModal = async () => {
     if (!withdrawAmount && paymentType === "bank") {
@@ -155,7 +166,8 @@ const withdraw = () => {
         console.log("...withdraw res:", res);
         const { status } = res;
         if (status === 200 || status === 201) {
-          router.replace("/(drawer)/(tabs)/home");
+         
+          
           hideConfirmModal();
           hideBkash();
           hideNagad();
@@ -165,6 +177,7 @@ const withdraw = () => {
             variant: "success",
           });
           setLoadingWithdraw(false);
+           router.push("/(drawer)/(tabs)/home");
         } else if (status === 400) {
           const { message } = res.data;
           hideConfirmModal();
@@ -197,6 +210,7 @@ const withdraw = () => {
       <View>
         <GoBack route={"/(drawer)/(tabs)/(wallet)"}>উত্তোলন</GoBack>
         <BalanceWithdraw
+        withdrawAmount={withdrawAmount}
           setWithdrawAmount={setWithdrawAmount}
           balance={balance}
         />
@@ -266,7 +280,7 @@ const withdraw = () => {
   );
 };
 
-const BalanceWithdraw = ({ setWithdrawAmount, balance }) => {
+const BalanceWithdraw = ({ withdrawAmount,setWithdrawAmount, balance }) => {
   return (
     <View style={tailwind`py-4`}>
       <View style={tailwind`flex-row items-end justify-between py-1`}>
@@ -288,6 +302,7 @@ const BalanceWithdraw = ({ setWithdrawAmount, balance }) => {
               height: 40,
             }}
             type="number"
+            value={withdrawAmount}
             onChangeText={(text) => setWithdrawAmount(text)}
           />
           <StyledText type="b">BDT</StyledText>
