@@ -111,8 +111,8 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
                           key={index}
                           className={`h-4 border-b bg-foreground text-sm font-normal `}
                         >
-                          <td className="whitespace-nowrap px-1 py-1 text-left text-xs font-normal">
-                            {item?.product?.productName}
+                          <td className="px-1 py-1 text-left text-xs font-normal">
+                            <p className="w-44 truncate">{item?.product?.productName}</p>
                           </td>
                           <td className="whitespace-nowrap px-1 py-1 text-left text-xs font-normal">
                             {item?.product?.salesPrice}
@@ -151,13 +151,12 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
   );
 };
 
-export const ListAndView = ({ data }) => {
+export const ListAndView = ({ data, setRefresh }) => {
   // logs("ListAndView:", [data], Style.code);
-
-  const [selectedOrder, setSelectedOrder] = useState(data[0] || {});
-  const [loading, setLoading] = useState(false);
-
   const sortedData = [...data].reverse();
+
+  const [selectedOrder, setSelectedOrder] = useState(sortedData[0] || {});
+  const [loading, setLoading] = useState(false);
 
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
@@ -179,6 +178,7 @@ export const ListAndView = ({ data }) => {
                 }}
                 selectedOrder={selectedOrder}
                 setViewLoading={setLoading}
+                setRefresh={setRefresh}
               />
             ))}
         </div>

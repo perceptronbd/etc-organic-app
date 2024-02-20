@@ -1,18 +1,13 @@
 import React, { useState } from "react";
+import { toast } from "sonner";
+import { cancelOnlineOrderApi, completeOnlineOrderApi } from "../../api";
 import { Button } from "../button/Button";
 import { Text } from "../text/Text";
 
-export const OrderCard = ({
-  data,
-  onClick,
-  onCancel,
-  onComplete,
-  selectedOrder,
-  setViewLoading,
-}) => {
+export const OrderCard = ({ data, onClick, setViewLoading, setRefresh, selectedOrder }) => {
   const { status } = data;
-  const [isComplete, setIsComplete] = useState(status === "complete" ? true : false);
-  const [loading, setLoading] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   //const firstThreeKeys = Object.keys(data).slice(0, 3);
 
@@ -21,15 +16,49 @@ export const OrderCard = ({
 
   // logs("OrderCard:", [data, selectedOrder, isSelected], Style.code);
 
-  const handleComplete = () => {
-    setLoading(true);
-    setViewLoading(true);
-    setTimeout(() => {
-      setIsComplete(true);
-      setLoading(false);
+  const handleComplete = async () => {
+    setCompleting(true);
+    // setViewLoading(true);
+
+    console.log("handleComplete data", data);
+
+    const res = await completeOnlineOrderApi(data._id, {
+      customerId: data.user._id,
+      products: data.cart.products,
+    });
+    console.log("completeOnlineOrderApi res", res);
+    if (res.status === 200 || res.status === 201) {
+      setCompleting(false);
       setViewLoading(false);
-    }, 1000);
-    onComplete();
+      setRefresh((prev) => prev + 1);
+
+      toast.success("Order completed successfully");
+    } else {
+      setCompleting(false);
+      setViewLoading(false);
+
+      toast.error(res.data.message || "Error completing order!");
+    }
+  };
+
+  const handleCancel = async () => {
+    setCancelling(true);
+    setViewLoading(true);
+
+    const res = await cancelOnlineOrderApi(data._id);
+    console.log("cancelOnlineOrderApi res", res);
+    if (res.status === 200 || res.status === 201) {
+      setCancelling(false);
+      setViewLoading(false);
+      setRefresh((prev) => prev + 1);
+
+      toast.success("Order cancelled successfully");
+    } else {
+      setCancelling(false);
+      setViewLoading(false);
+
+      toast.error(res.data.message || "Error cancelling order!");
+    }
   };
 
   return (
@@ -59,13 +88,19 @@ export const OrderCard = ({
       <div className="flex flex-col justify-start gap-2">
         <Button
           className="h-8 w-32"
-          loading={loading}
-          disabled={isComplete}
+          loading={completing}
+          disabled={completing}
           onClick={handleComplete}
         >
-          {isComplete ? "Completed" : "Complete"}
+          Complete
         </Button>
-        <Button variant="destructive" className="h-8 w-32" onClick={onCancel}>
+        <Button
+          variant="destructive"
+          className="h-8 w-32"
+          loading={cancelling}
+          disabled={cancelling}
+          onClick={handleCancel}
+        >
           Cancel
         </Button>
       </div>
