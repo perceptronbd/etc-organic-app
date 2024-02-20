@@ -89,14 +89,16 @@ export const StyledButton = ({
   return (
     <Button
       loading={loading}
-      disabled={disabled}
+      disabled={disabled || loading}
       style={tw.style(
         `mt-2 items-center justify-center rounded-${rounded} `,
         variant === "outline" || variant === "ghost"
           ? ""
           : disabled
             ? `bg-[${COLOR.neutral}] text-[${COLOR.neutralDark}]`
-            : `bg-[${color}]`,
+            : loading
+              ? `bg-[${color}] text-[${color}]`
+              : `bg-[${color}]`,
         determineWidth(),
         determineHeight(),
         determineSize(),
