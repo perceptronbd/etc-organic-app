@@ -369,19 +369,20 @@ const Profile = ({
           </StyledText>
         </View>
         <View
-          style={tailwind`w-32 flex-row items-center justify-between gap-2 px-2 bg-[${COLOR.secondaryLight}] rounded-md`}
+          style={tailwind` flex-row items-center justify-between gap-2 px-2 bg-[${COLOR.secondaryLight}] rounded-md`}
         >
           <StyledText variant="bodySmall">CSB:</StyledText>
+
           <StyledText type="b" color={COLOR.secondary}>
-            {CSB === undefined ? 0 : CSB}
+            {CSB === undefined ? 0 : parseFloat( CSB).toFixed(2)}
           </StyledText>
         </View>
         <View
-          style={tailwind`w-32 flex-row items-center justify-between gap-2  px-2 bg-[${COLOR.secondaryLight}] rounded-md`}
+          style={tailwind`flex-row items-center justify-between gap-2  px-2 bg-[${COLOR.secondaryLight}] rounded-md`}
         >
           <StyledText variant="bodySmall">Points:</StyledText>
           <StyledText type="b" color={COLOR.secondary}>
-            {points === undefined ? 0 : points}
+            {points === undefined ? 0 :parseFloat( points).toFixed(2)}
           </StyledText>
         </View>
       </View>
