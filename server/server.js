@@ -12,7 +12,7 @@ const branchRoute = require("./ERP/routes/branchRoutes");
 const purchaseRoute = require("./ERP/routes/purchaseRoutes");
 const salesRoute = require("./ERP/routes/salesRouter");
 const ordersRoute = require("./ERP/routes/orderRouter");
-const withdrawRoute = require("./ERP/routes/widrawRoutes");
+const withdrawRoute = require("./ERP/routes/withdrawRoutes");
 const walletHistoryRoute = require("./ERP/routes/walletRouter");
 
 //Mobile Routes

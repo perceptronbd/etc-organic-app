@@ -38,7 +38,7 @@ exports.displayOrders = asyncHandler(async (req, res) => {
         model: mobileUser,
       });
 
-    console.log(orders);
+    // console.log(orders);
     res.status(200).json(orders);
   } catch (error) {
     console.error(error);

@@ -15,7 +15,7 @@ exports.getAllOrders = asyncHandler(async (req, res) => {
         const orders = await OrderModel.find({})
             
            
-            console.log(orders);
+            // console.log(orders);
         if (!orders) {
             return res.status(404).json({ message: 'No orders found' });
         }
