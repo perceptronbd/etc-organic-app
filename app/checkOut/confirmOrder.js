@@ -13,14 +13,20 @@ import { placeOrder } from "../../api";
 import { StyledButton, StyledText } from "../../components";
 import COLOR from "../../constants/COLOR";
 import CartContext from "../../contexts/CartContext";
+import { useCustomToast } from "../../hooks";
 import { formatNumbers } from "../../utils/formatNumbers";
 import { Style, log } from "../../utils/log";
 import { totalPrice } from "../../utils/totalPrice";
 import { trycatch } from "../../utils/trycatch";
 
 const confirmOrder = () => {
+
+  const showToast = useCustomToast();
+
   const [value, setValue] = React.useState("delivery");
   const [visible, setVisible] = React.useState(false);
+
+  const [isPlacingOrder, setIsPlacingOrder] = React.useState(false);
 
   const data = useLocalSearchParams();
 
@@ -31,21 +37,37 @@ const confirmOrder = () => {
   const showModal = () => setVisible(true);
 
   const onConfirm = async () => {
+    setIsPlacingOrder(true);
     const [placeOrderRes, placeOrderErr] = await trycatch(placeOrder(data));
 
     if (placeOrderErr) {
+      setIsPlacingOrder(false);
       log("...confirmOrder onConfirm:", [placeOrderErr], Style.danger);
+      showToast({
+        description: "Something went wrong!",
+        variant: "danger",
+        placement: "bottom",
+      });
+
       return;
     }
 
     log("...confirmOrder onConfirm:", [placeOrderRes], Style.success);
     const { status } = placeOrderRes;
     if (status === 201) {
+      setIsPlacingOrder(false);
       log("...confirmOrder onConfirm status:", [status]);
       fetchCartDetails();
       showModal();
     } else {
+      setIsPlacingOrder(false);
       log("...confirmOrder onConfirm status:", [status]);
+      showToast({
+        description: "Something went wrong!",
+        variant: "danger",
+        placement: "bottom",
+      });
+      return
     }
     fetchCartDetails();
     showModal();
@@ -146,7 +168,7 @@ const confirmOrder = () => {
         </View>
       </View>
       {/* Confirm Order */}
-      <StyledButton onPress={onConfirm}>কনফার্ম অর্ডার</StyledButton>
+      <StyledButton onPress={onConfirm} loading={isPlacingOrder}>কনফার্ম অর্ডার</StyledButton>
       <ConfirmationModel
         visible={visible}
         navigateToMyOrder={navigateToMyOrder}
