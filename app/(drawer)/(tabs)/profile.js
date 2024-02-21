@@ -328,6 +328,14 @@ const Profile = ({
   pickImage,
   isProfileLoading,
 }) => {
+
+  const [profileImage, setProfileImage] = useState({uri:source});
+
+  const handleImageError = () => {
+    // console.log("error:Profile Image");
+    setProfileImage(require('../../../assets/profile.png'));
+  };
+
   return (
     <View style={tailwind`w-full flex-row items-start gap-8 py-1`}>
       <View style={tailwind`flex`}>
@@ -343,7 +351,11 @@ const Profile = ({
             size={80}
             style={tailwind`bg-[${COLOR.neutral}]`}
             //source={{ uri: `data:image/jpeg;base64,${source}` }}
-            source={{ uri: source }}
+            // source={{ uri: profileImage }}
+            source={profileImage}
+            onError={
+              handleImageError
+            }
           />
         )}
         <Button
@@ -409,14 +421,21 @@ const NIDandAddress = ({
     }));
   }, [division, district]);
 
+  const [NIDImage, setNIDImage] = useState({uri:nidImage});
+
+  const handleImageError = () => {
+    setNIDImage(require('../../../assets/NID.png'));
+  }
+
   return (
     <View style={tailwind`w-full justify-between py-4`}>
       <View style={tailwind`flex items-start`}>
         <StyledText variant="bodySmall">জাতীয় পরিচয়পত্রের ছবি</StyledText>
         <Image
           style={tailwind`h-52 w-full rounded-md bg-[${COLOR.neutral}] border bg-opacity-50 border-[${COLOR.neutralDark}]`}
-          source={{ uri: nidImage }}
+          source={NIDImage}
           alt="NID"
+          onError={handleImageError}
         />
         <Button
           onPress={pickNID}
