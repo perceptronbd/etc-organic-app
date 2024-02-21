@@ -1,7 +1,11 @@
 import { GanttChartSquare, Info, RefreshCw } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { getWalletHistoryByIdApi, getWithdrawRequestsApi } from "../../api";
+import {
+  confirmWithdrawRequestApi,
+  getWalletHistoryByIdApi,
+  getWithdrawRequestsApi,
+} from "../../api";
 import { Button, Container, ContentModal, ListViewSkeleton, Text } from "../../components";
 import { useModal } from "../../hooks";
 import { Style, logs } from "../../utils/logs";
@@ -34,7 +38,13 @@ export const CashWithdraw = () => {
 
     if (response.status === 200 || response.status === 201) {
       console.log("withdrawRequests", response.data.withdrawRequests);
-      setWithdrawRequests(response.data.withdrawRequests.reverse());
+
+      // filter out the pending requests
+      const requests = response.data.withdrawRequests.filter(
+        (request) => request.status === "pending"
+      );
+
+      setWithdrawRequests(requests.reverse());
       setFetchingData(false);
     } else {
       setFetchingData(false);
@@ -61,8 +71,19 @@ export const CashWithdraw = () => {
   };
 
   const handleViewRequest = (request) => {
-    console.log("handleViewRequest", request);
     setSelectedRequest(request);
+  };
+
+  const handlePayment = async (request) => {
+    // console.log("handlePayment", request);
+    const response = await confirmWithdrawRequestApi(request._id);
+
+    if (response.status === 200 || response.status === 201) {
+      getWithdrawRequests();
+      toast.success("Marked as paid successfully!");
+    } else {
+      toast.error(response.data.message);
+    }
   };
 
   return fetchingData ? (
@@ -86,7 +107,8 @@ export const CashWithdraw = () => {
               data={item}
               showEarnings={handleShowEarnings}
               selectedRequest={selectedRequest}
-              onClick={() => handleViewRequest(item)}
+              onViewRequest={() => handleViewRequest(item)}
+              onPayment={() => handlePayment(item)}
             />
           ))}
         </div>
@@ -101,7 +123,7 @@ export const CashWithdraw = () => {
   );
 };
 
-const CashWithdrawCard = ({ data, showEarnings, selectedRequest, onClick }) => {
+const CashWithdrawCard = ({ data, showEarnings, selectedRequest, onViewRequest, onPayment }) => {
   return (
     <>
       <section
@@ -155,12 +177,14 @@ const CashWithdrawCard = ({ data, showEarnings, selectedRequest, onClick }) => {
           <Button
             size="sm"
             variant="outline"
-            onClick={onClick}
-            className={`${selectedRequest._id === data._id ? "bg-secondary-light text-white" : ""}`}
+            onClick={onViewRequest}
+            className={`${
+              selectedRequest?._id === data._id ? "bg-secondary-light text-white" : ""
+            }`}
           >
             Details
           </Button>
-          <Button size="sm" variant="primary">
+          <Button size="sm" variant="primary" onClick={onPayment}>
             Mark as Paid
           </Button>
         </div>
@@ -361,7 +385,7 @@ const TabContent = ({ viewLoading, selectedRequest }) => {
         <div className="flex h-full w-full flex-col items-center justify-center">
           <GanttChartSquare size={200} className="rounded-lg  text-neutral-200" />
           <Text variant="titleMedium" type="sb" className={"text-neutral-400"}>
-            Select a request to view details
+            Click Details to view request
           </Text>
         </div>
       )}
