@@ -5,7 +5,6 @@ import { Button } from "../button/Button";
 import { Text } from "../text/Text";
 
 export const OrderCard = ({ data, onClick, setViewLoading, setRefresh, selectedOrder }) => {
-  const { status } = data;
   const [completing, setCompleting] = useState(false);
   const [cancelling, setCancelling] = useState(false);
 

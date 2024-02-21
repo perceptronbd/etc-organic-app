@@ -18,7 +18,6 @@ export const CashWithdraw = () => {
   const [selectedRequest, setSelectedRequest] = useState(null);
 
   const [fetchingData, setFetchingData] = useState(false);
-  // const [fetchingHistory, setFetchingHistory] = useState(false);
 
   const {
     showModal: showEarnings,
@@ -74,18 +73,6 @@ export const CashWithdraw = () => {
     setSelectedRequest(request);
   };
 
-  const handlePayment = async (request) => {
-    // console.log("handlePayment", request);
-    const response = await confirmWithdrawRequestApi(request._id);
-
-    if (response.status === 200 || response.status === 201) {
-      getWithdrawRequests();
-      toast.success("Marked as paid successfully!");
-    } else {
-      toast.error(response.data.message);
-    }
-  };
-
   return fetchingData ? (
     <ListViewSkeleton />
   ) : withdrawRequests.length === 0 ? (
@@ -108,7 +95,7 @@ export const CashWithdraw = () => {
               showEarnings={handleShowEarnings}
               selectedRequest={selectedRequest}
               onViewRequest={() => handleViewRequest(item)}
-              onPayment={() => handlePayment(item)}
+              getWithdrawRequests={getWithdrawRequests}
             />
           ))}
         </div>
@@ -123,7 +110,30 @@ export const CashWithdraw = () => {
   );
 };
 
-const CashWithdrawCard = ({ data, showEarnings, selectedRequest, onViewRequest, onPayment }) => {
+const CashWithdrawCard = ({
+  data,
+  showEarnings,
+  selectedRequest,
+  onViewRequest,
+  getWithdrawRequests,
+}) => {
+  const [acceptingRequest, setAcceptingRequest] = useState(false);
+
+  const handlePayment = async (id) => {
+    setAcceptingRequest(true);
+    // console.log("handlePayment", request);
+    const response = await confirmWithdrawRequestApi(id);
+
+    if (response.status === 200 || response.status === 201) {
+      getWithdrawRequests();
+      setAcceptingRequest(false);
+      toast.success("Marked as paid successfully!");
+    } else {
+      setAcceptingRequest(false);
+      toast.error("Something went wrong! Please try again.");
+    }
+  };
+
   return (
     <>
       <section
@@ -184,7 +194,12 @@ const CashWithdrawCard = ({ data, showEarnings, selectedRequest, onViewRequest, 
           >
             Details
           </Button>
-          <Button size="sm" variant="primary" onClick={onPayment}>
+          <Button
+            size="sm"
+            variant="primary"
+            onClick={() => handlePayment(data._id)}
+            loading={acceptingRequest}
+          >
             Mark as Paid
           </Button>
         </div>
