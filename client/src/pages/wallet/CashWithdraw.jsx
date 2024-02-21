@@ -1,8 +1,8 @@
-import { Info, LucideLoader2, X } from "lucide-react";
+import { Info } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { getWalletHistoryByIdApi, getWithdrawRequestsApi } from "../../api";
-import { Button, Container, ContentModal, Text } from "../../components";
+import { Button, Container, ContentModal, ListViewSkeleton, Text } from "../../components";
 import { useModal } from "../../hooks";
 
 export const CashWithdraw = () => {
@@ -10,7 +10,7 @@ export const CashWithdraw = () => {
   const [walletHistory, setWalletHistory] = useState([]);
 
   const [fetchingData, setFetchingData] = useState(false);
-  const [fetchingHistory, setFetchingHistory] = useState(false);
+  // const [fetchingHistory, setFetchingHistory] = useState(false);
 
   const {
     showModal: showEarnings,
@@ -39,41 +39,26 @@ export const CashWithdraw = () => {
   };
 
   const handleShowEarnings = async (id) => {
-    setFetchingHistory(true);
-    toast.custom((t) => {
-      return (
-        <div className="flex items-center justify-between gap-4 rounded-lg bg-foreground p-4">
-          <div className="flex h-4 w-4 animate-spin items-center justify-center rounded-full">
-            <LucideLoader2 />
-          </div>
-          <Text>Fetching wallet history...</Text>
-          <button
-            className={
-              "group flex h-5 w-5 items-center justify-center rounded bg-red-500 transition-all duration-300 ease-in-out"
-            }
-            onClick={() => toast.dismiss(t)}
-          >
-            <X className="text-white" />
-          </button>
-        </div>
-      );
-    });
+    // setFetchingHistory(true);
+    toast.loading("Fetching wallet history...");
 
     const response = await getWalletHistoryByIdApi(id);
     console.log("response", id);
     // console.log("walletHistory", response);
     if (response.status === 200 || response.status === 201) {
       setWalletHistory(response.data.data.reverse());
-      setFetchingHistory(false);
+      // setFetchingHistory(false);
       toast.success(`Wallet history fetched successfully!`);
       openEarnings();
     } else {
-      setFetchingHistory(false);
+      // setFetchingHistory(false);
       toast.error(response.data.message);
     }
   };
 
-  return withdrawRequests.length === 0 ? (
+  return fetchingData ? (
+    <ListViewSkeleton />
+  ) : withdrawRequests.length === 0 ? (
     <Container className={"flex h-full w-full flex-col items-center justify-center bg-foreground"}>
       <Text variant="headerMedium" type="sb" className={"text-neutral-400"}>
         No Withdraw Requests Available!
