@@ -182,7 +182,7 @@ export const ListAndView = ({ data, setRefresh }) => {
               />
             ))}
         </div>
-        {<TabContent viewLoading={loading} selectedOrder={selectedOrder} />}
+        <TabContent viewLoading={loading} selectedOrder={selectedOrder} />
       </div>
     </>
   );
