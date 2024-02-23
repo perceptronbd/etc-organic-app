@@ -3,8 +3,6 @@ import { Style, log } from "../utils/log";
 import { removeUploadsPrefix } from "../utils/removeUploadPrefix";
 
 export const useImage = (image) => {
-  //const apiUrl = Constants.manifest2.extra.apiUrl;
-
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
@@ -13,8 +11,7 @@ export const useImage = (image) => {
       const imageURL = removeUploadsPrefix(image);
       log("useEffect ImageURL", [imageURL], Style.code);
       setImageUrl(
-        //NOTE: URL Hardcoded
-        `https://etc-backend.onrender.com/uploads/${imageURL}`,
+        `https://etc-backend.onrender.com/uploads/${encodeURIComponent(imageURL)}`
       );
     }
   }, [image]);
@@ -27,8 +24,7 @@ export const useImage = (image) => {
       log("setImage Image URL", [image], Style.code);
       log("setImage ImageURL", [imageURL], Style.code);
       setImageUrl(
-        //NOTE: URL Hardcoded
-        `https://etc-backend.onrender.com/uploads/${imageURL}`,
+        `https://etc-backend.onrender.com/uploads/${encodeURIComponent(imageURL)}`
       );
     }
   };
