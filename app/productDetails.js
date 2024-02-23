@@ -15,7 +15,7 @@ const productDetails = () => {
   const { updateProductDetails, fetchCartDetails } = useContext(CartContext);
   const showToast = useCustomToast();
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const [loading, setLoading] = useState(false);
 
