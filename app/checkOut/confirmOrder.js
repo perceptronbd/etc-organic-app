@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useContext } from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import {
   DataTable,
   Divider,
@@ -20,6 +20,9 @@ import { totalPrice } from "../../utils/totalPrice";
 import { trycatch } from "../../utils/trycatch";
 
 const confirmOrder = () => {
+
+  
+  const {width} = Dimensions.get("window");
 
   const showToast = useCustomToast();
 
@@ -168,7 +171,7 @@ const confirmOrder = () => {
         </View>
       </View>
       {/* Confirm Order */}
-      <StyledButton onPress={onConfirm} loading={isPlacingOrder}>কনফার্ম অর্ডার</StyledButton>
+      <StyledButton width={width-32} onPress={onConfirm} loading={isPlacingOrder}>কনফার্ম অর্ডার</StyledButton>
       <ConfirmationModel
         visible={visible}
         navigateToMyOrder={navigateToMyOrder}
