@@ -2,7 +2,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { Image } from "native-base";
 import React, { useContext, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import tailwind from "twrnc";
 import { Counter, Loading, StyledButton, StyledText } from "../components";
@@ -15,14 +15,17 @@ const productDetails = () => {
   const { updateProductDetails, fetchCartDetails } = useContext(CartContext);
   const showToast = useCustomToast();
 
-  const [quantity, setQuantity] = useState(0);
+  //get screen width
+  const {width} = Dimensions.get("window");
+
+  const [quantity, setQuantity] = useState(1);
 
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigation();
 
   const item = useLocalSearchParams();
-  console.log("...productDetails item:", item);
+  console.log("...productDetails item:", width);
 
   // useEffect(() => {
   //   console.log("item", item);
@@ -87,7 +90,7 @@ const productDetails = () => {
           </StyledText>
         </View>
 
-        <StyledButton variant={"outline"} height={"md"} onPress={onAddToCart}>
+        <StyledButton variant={"outline"} height={"md"} width={width-32} onPress={onAddToCart}>
           Add to Cart
         </StyledButton>
       </View>

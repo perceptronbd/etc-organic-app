@@ -568,7 +568,14 @@ const Orders = () => {
                 variant="bodySmall"
                 style={{
                   marginBottom: -10,
+                  width: 100,
+                  padding: 5,
+                  borderRadius: 5,
+                  textAlign: "center",
+                  backgroundColor:'rgb(254 249 195)'
+
                 }}
+                color={'rgb(250, 204, 21)'}
               >
                 পেন্ডিং অর্ডার
               </StyledText>
@@ -592,13 +599,19 @@ const Orders = () => {
         {loading ? (
           <ActivityIndicator animating color={COLOR.secondary} size={"small"} />
         ) : (
-          orders.Completed && (
+          orders.Complete && (
             <>
               <StyledText
                 variant="bodySmall"
                 style={{
                   marginBottom: -10,
+                  width: 150,
+                  padding: 5,
+                  borderRadius: 5,
+                  textAlign: "center",
+                  backgroundColor:'rgb(220, 252 ,231)'
                 }}
+                color={' rgb(34, 197, 94)'}
               >
                 কমপ্লিটেড অর্ডার
               </StyledText>
@@ -607,7 +620,7 @@ const Orders = () => {
                   rowGap: 10,
                 }}
               >
-                {orders.Completed?.map((item, index) => (
+                {orders.Complete?.map((item, index) => (
                   <OrderCard
                     key={index}
                     products={item.cart.products}

@@ -21,5 +21,5 @@ export {
   deleteBankAccount,
   getBankAccounts,
 } from "./wallet/bank";
-export { redeemCSB } from "./wallet/redeemCSB";
+export { redeemCSB, getWalletHistory } from "./wallet/wallet";
 export { requestWithdraw } from "./wallet/withdraw";

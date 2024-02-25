@@ -27,7 +27,7 @@ export const StyledButton = ({
         case "sm":
           return "w-48";
         default:
-          return `w-${width}`;
+          return `w-[${width}px]`;
       }
     }
 

@@ -34,9 +34,10 @@ export default function Page() {
           setProducts(groupedData);
           console.log("...onRefresh res:", groupedData);
           setLoading(false);
+          setRefreshing(false);
         });
       });
-      setRefreshing(false);
+      
     } catch (error) {
       setRefreshing(false);
       console.log("...onRefresh error:", error);
@@ -45,15 +46,23 @@ export default function Page() {
 
   useEffect(() => {
     console.log("...home useEffect...");
-    // setTimeout(() => {
-    //   console.log("...home useEffect setTimeout... 10 minutes have passed...");
+    const startTime = new Date(); // Capture the start time
+    console.log(`Start time: ${startTime}`);
+  
+    setTimeout(() => {
+      console.log("...home useEffect setTimeout...  10 minutes have passed...");
       
-    //   showToast({ description: "Session timeout. Please login again!", variant: "danger" })
-    //   logOut();
-    // }, 10 * 60 * 1000);
-
+      const endTime = new Date(); // Capture the end time
+      console.log(`End time: ${endTime}`);
+      console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
+  
+      showToast({ description: "Session timeout. Please login again!", variant: "danger" });
+      logOut();
+    },  10 *  60 *  1000);
+  
     fetchAPI();
   }, []);
+  
 
   const logOut = async() => {
     AsyncStorage.removeItem("user-data").then(() => {
@@ -96,12 +105,9 @@ export default function Page() {
 
           <StyledButton
             height={"md"}
-            disabled={true}
-            onPress={() =>
-              showToast({ description: "world", variant: "warning" })
-            }
+
           >
-            <StyledText>Book Now</StyledText>
+            Details
           </StyledButton>
         </View>
         {/* Categories */}

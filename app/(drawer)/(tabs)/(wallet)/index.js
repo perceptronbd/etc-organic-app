@@ -1,11 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Dimensions, View } from "react-native";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";
 import tailwind from "twrnc";
-import { redeemCSB } from "../../../../api";
+import { getWalletHistory, redeemCSB } from "../../../../api";
 import {
   ContentModal,
   Loading,
@@ -15,15 +15,21 @@ import {
   StyledText,
 } from "../../../../components";
 import COLOR from "../../../../constants/COLOR";
-import { earnedCSB } from "../../../../constants/mockData";
 import { useModal } from "../../../../hooks";
 import { formatNumbers } from "../../../../utils/formatNumbers";
+import { trycatch } from "../../../../utils/trycatch";
 
 export default function Page() {
+
+  const {width} = Dimensions.get("window");
+
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
   const [totalCSB, setTotalCSB] = useState(0);
   const [csb, setCSB] = useState(0);
   const [taka, setTaka] = useState(0);
+  const [earnedCSB, setEarnedCSB] = useState([]);
 
   const {
     visible: visibleRedeem,
@@ -35,19 +41,47 @@ export default function Page() {
 
   useEffect(() => {
     setLoading(true);
-    async function fetch() {
-      console.log("...index redeem fetching...");
-      AsyncStorage.getItem("user-data").then((data) => {
-        const userData = JSON.parse(data);
-        console.log("...index redeem userData", userData);
-        setCSB(userData?.CSB || 0);
-        setTotalCSB(userData?.totalCSB || 0);
-        setTaka(userData?.taka || 0);
-        setLoading(false);
-      });
-    }
+   fetchWalletHistory();
     fetch();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    fetchWalletHistory();
+    fetch();
+    setRefreshing(false);
+  }
+
+  async function fetch() {
+    console.log("...index redeem fetching...");
+    AsyncStorage.getItem("user-data").then((data) => {
+      const userData = JSON.parse(data);
+      console.log("...index redeem userData", userData);
+      setCSB(userData?.CSB || 0);
+      setTotalCSB(userData?.totalCSB || 0);
+      setTaka(userData?.taka || 0);
+      setLoading(false);
+    });
+  }
+
+  const fetchWalletHistory = async () => {
+
+    const [res,err] = await trycatch( getWalletHistory());
+
+    if (err) {
+      console.log("...index redeem fetchWalletHistory err", err);
+      return;
+    }
+
+    console.log("...index redeem fetchWalletHistory res", res);
+
+    if (res.status === 200) {
+      console.log("...index redeem fetchWalletHistory res.data", res.data);
+      setEarnedCSB(res.data.data);
+    }
+
+
+  }
 
   const onRedeem = async () => {
     setLoading(true);
@@ -81,7 +115,7 @@ export default function Page() {
   };
 
   return (
-    <View style={tailwind.style(`flex-1 gap-4  p-4`, {})}>
+    <View style={tailwind.style(`flex-1 gap-4  p-4`, {})} >
       <View style={tailwind`gap-2`}>
         <StyledText type="b">বর্তমান CSB ব্যালেন্স</StyledText>
         {/* CSB and BDT */}
@@ -105,10 +139,10 @@ export default function Page() {
         </StyledText>
         {/* Buttons */}
         <View style={tailwind`flex-row justify-between gap-2`}>
-          <StyledButton width={"28"} onPress={onRedeem} disabled={csb<=0}>
+          <StyledButton width={(width/5)*2-20} onPress={onRedeem} disabled={csb<=0}>
             Redeem
           </StyledButton>
-          <StyledButton width={"64"} onPress={onWithdraw} disabled={taka <= 0}>
+          <StyledButton width={(width/5)*3-20} onPress={onWithdraw} disabled={taka <= 0}>
             Request to Withdraw
           </StyledButton>
         </View>
@@ -121,6 +155,9 @@ export default function Page() {
           columnGap: 10,
           rowGap: 8,
         }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+        }
       >
         {!earnedCSB ? (
           <View
@@ -133,7 +170,7 @@ export default function Page() {
         ) : (
           earnedCSB?.map((item) => (
             <ReferredEarnCard
-              key={item.id}
+              key={item._id}
               date={item.date}
               time={item.time}
               csb={item.csb}

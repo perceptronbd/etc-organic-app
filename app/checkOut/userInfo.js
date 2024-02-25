@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { SelectList } from "react-native-dropdown-select-list";
 import tailwind from "twrnc";
@@ -117,6 +117,10 @@ const userInfoInputFields = [
 ];
 
 const userInfo = () => {
+
+  
+  const {width} = Dimensions.get("window");
+
   const [data, setData] = useState({
     name: "",
     phone: "",
@@ -300,7 +304,7 @@ const userInfo = () => {
             );
           })}
         </View>
-        <StyledButton height={"md"} onPress={handleSaveAndContinue}>
+        <StyledButton width={width-32} height={"md"} onPress={handleSaveAndContinue}>
           পরের ধাপ
         </StyledButton>
       </View>

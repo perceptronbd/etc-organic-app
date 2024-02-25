@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { View } from "native-base";
 import React, { useContext } from "react";
-import { Pressable, ScrollView } from "react-native";
+import { Dimensions, Pressable, ScrollView } from "react-native";
 import tailwind from "twrnc";
 import {
   CartCard,
@@ -90,6 +90,9 @@ export default function Page() {
 }
 
 const Checkout = ({ totalPrice, onCheckout }) => {
+  
+  const {width} = Dimensions.get("window");
+
   return (
     <View style={tailwind`p-4`}>
       <View style={tailwind`flex-row`}>
@@ -104,7 +107,7 @@ const Checkout = ({ totalPrice, onCheckout }) => {
         <StyledText type="b"> ৳ {formatNumbers(totalPrice)}</StyledText>
         <StyledText> +ডেলিভারি চার্জ</StyledText>
       </View>
-      <StyledButton height={"md"} onPress={onCheckout}>
+      <StyledButton  width={width-32}height={"md"} onPress={onCheckout}>
         চেকআউট
       </StyledButton>
     </View>
