@@ -15,3 +15,17 @@ export const redeemCSB = async () => {
     return errorResponse;
   }
 };
+
+export const getWalletHistory = async () => {
+    log("=======getWalletHistory API=======", [], Style.api);
+    try {
+        const token = await AsyncStorage.getItem("user-token");
+        const res = await authURL(token).get("/getwallethistory");
+        log("...getWalletHistory api response:", [res], Style.success);
+        return res;
+    } catch (error) {
+        log("...getWalletHistory api error:", [error], Style.danger);
+        const errorResponse = error.response;
+        return errorResponse;
+    }
+}
