@@ -45,12 +45,12 @@ export default function Page() {
 
   useEffect(() => {
     console.log("...home useEffect...");
-    // setTimeout(() => {
-    //   console.log("...home useEffect setTimeout... 10 minutes have passed...");
+    setTimeout(() => {
+      console.log("...home useEffect setTimeout... 10 minutes have passed...");
       
-    //   showToast({ description: "Session timeout. Please login again!", variant: "danger" })
-    //   logOut();
-    // }, 10 * 60 * 1000);
+      showToast({ description: "Session timeout. Please login again!", variant: "danger" })
+      logOut();
+    }, 10 * 60 * 1000);
 
     fetchAPI();
   }, []);
