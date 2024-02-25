@@ -7,8 +7,6 @@ import {
   View,
 } from "react-native";
 import tailwind from "twrnc";
-import COLOR from "../../constants/COLOR";
-import { StyledText } from "../texts/StyledText";
 
 const { width } = Dimensions.get("window");
 const carouselItem = require("./carousel.json");
@@ -50,15 +48,10 @@ export function Carousel() {
       <View
         style={tailwind`flex h-full w-full items-center justify-center rounded-xl bg-neutral-200`}
       >
-        <StyledText
-          variant="titleLarge"
-          type="b"
-          style={{
-            color: COLOR.neutralDark,
-          }}
-        >
-          কোন অফার চলছে না
-        </StyledText>
+        <Image
+          source={require("../../assets/body-massage-chair.png")}
+          style={styles.image}
+        />
       </View>
       {/* <FlatList
         data={carouselItem}
