@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";
 import tailwind from "twrnc";
 import { getWalletHistory, redeemCSB } from "../../../../api";
@@ -24,6 +24,7 @@ export default function Page() {
   const {width} = Dimensions.get("window");
 
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [totalCSB, setTotalCSB] = useState(0);
   const [csb, setCSB] = useState(0);
@@ -43,6 +44,13 @@ export default function Page() {
    fetchWalletHistory();
     fetch();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    fetchWalletHistory();
+    fetch();
+    setRefreshing(false);
+  }
 
   async function fetch() {
     console.log("...index redeem fetching...");
@@ -107,7 +115,7 @@ export default function Page() {
   };
 
   return (
-    <View style={tailwind.style(`flex-1 gap-4  p-4`, {})}>
+    <View style={tailwind.style(`flex-1 gap-4  p-4`, {})} >
       <View style={tailwind`gap-2`}>
         <StyledText type="b">বর্তমান CSB ব্যালেন্স</StyledText>
         {/* CSB and BDT */}
@@ -147,6 +155,9 @@ export default function Page() {
           columnGap: 10,
           rowGap: 8,
         }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+        }
       >
         {!earnedCSB ? (
           <View
