@@ -5,6 +5,7 @@ const profileUpdateController = require("../controllers/profileUpdateController"
 const cartController = require("../controllers/cartController");
 const orderController = require("../controllers/orderController");
 const redeemCSB = require("../controllers/redeemCSBtotaka");
+const getCSBandTakaController = require("../controllers/getCSBandTakaController");
 const bankController = require("../controllers/bankController");
 const commonColtroller = require("../../CommonControllers/getProducts");
 const withdrawController = require("../controllers/withdrawController");
@@ -87,6 +88,11 @@ router.get(
   "/getwallethistory",
   authenticateUser,
   walletHistoryController.walletHistory
+);
+router.get(
+  "/get-csb-and-taka",
+  authenticateUser,
+  getCSBandTakaController.getCSBandTaka
 );
 
 //bank

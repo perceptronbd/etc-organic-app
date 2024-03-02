@@ -25,7 +25,7 @@ async function redeemCSBtoTaka(req, res) {
     if (CSB !== 0) {
       // Convert CSB to Taka (use the actual conversion rate)
       const conversionRate = 1; // Replace with the correct value
-      const convertedTaka = CSB * conversionRate;
+      const convertedTaka = taka + (CSB * conversionRate);
 
       // Update the user model
       const updatedUser = await MobileUser.findOneAndUpdate(
