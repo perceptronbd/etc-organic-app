@@ -5,7 +5,7 @@ import { Dimensions, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { Divider } from "react-native-paper";
 import tailwind from "twrnc";
-import { getWalletHistory, redeemCSB } from "../../../../api";
+import { getCSBandTaka, getWalletHistory, redeemCSB } from "../../../../api";
 import {
   ContentModal,
   Loading,
@@ -20,15 +20,11 @@ import { formatNumbers } from "../../../../utils/formatNumbers";
 import { trycatch } from "../../../../utils/trycatch";
 
 export default function Page() {
-
-  const {width} = Dimensions.get("window");
+  const { width } = Dimensions.get("window");
 
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-
-  const [totalCSB, setTotalCSB] = useState(0);
-  const [csb, setCSB] = useState(0);
-  const [taka, setTaka] = useState(0);
+  const [csbAndTaka, setCsbAndTaka] = useState({ csb: 0, taka: 0 });
   const [earnedCSB, setEarnedCSB] = useState([]);
 
   const {
@@ -41,28 +37,42 @@ export default function Page() {
 
   useEffect(() => {
     setLoading(true);
-   fetchWalletHistory();
-    fetch();
+    fetchData();
   }, []);
 
   const onRefresh = async () => {
+    setLoading(true);
     setRefreshing(true);
-    fetchWalletHistory();
-    fetch();
+    fetchData();
     setRefreshing(false);
+  };
+
+  const fetchData = async () => {
+    await fetchWalletHistory();
+    await fetchCSBandTaka();
+    setLoading(false);
+  };
+
+  const fetchCSBandTaka = async () => {
+    const [res, err] = await trycatch(getCSBandTaka());
+
+    if (err) {
+      console.log("...index redeem fetchCSBandTaka err", err);
+      return;
+    }
+
+    console.log("...index redeem fetchCSBandTaka res", res);
+
+    if (res.status === 200) {
+      console.log("...index redeem fetchCSBandTaka res.data", res.data);
+      setCsbAndTaka({
+        csb: res.data?.CSB ||0,
+        taka: res.data?.taka||0,
+      });
+    }
   }
 
-  async function fetch() {
-    console.log("...index redeem fetching...");
-    AsyncStorage.getItem("user-data").then((data) => {
-      const userData = JSON.parse(data);
-      console.log("...index redeem userData", userData);
-      setCSB(userData?.CSB || 0);
-      setTotalCSB(userData?.totalCSB || 0);
-      setTaka(userData?.taka || 0);
-      setLoading(false);
-    });
-  }
+  
 
   const fetchWalletHistory = async () => {
 
@@ -77,7 +87,7 @@ export default function Page() {
 
     if (res.status === 200) {
       console.log("...index redeem fetchWalletHistory res.data", res.data);
-      setEarnedCSB(res.data.data);
+      setEarnedCSB(res.data.data.reverse());
     }
 
 
@@ -93,9 +103,7 @@ export default function Page() {
           AsyncStorage.mergeItem("user-data", JSON.stringify(res.data)).then(
             (res) => console.log("...index redeem mergeItem", res),
           );
-          setCSB(res.data.CSB);
-          setTotalCSB(res.data.totalCSB);
-          setTaka(res.data.taka);
+          fetchCSBandTaka()
           showRedeem();
         } else {
           const { message } = res.data;
@@ -122,13 +130,13 @@ export default function Page() {
         <View style={tailwind`flex-row justify-between`}>
           <View style={tailwind`flex-row gap-2`}>
             <StyledText type="b" variant="displaySmall">
-              {formatNumbers(csb)}
+              {formatNumbers(csbAndTaka.csb)}
             </StyledText>
             <StyledText variant="bodySmall">CSB</StyledText>
           </View>
           <View style={tailwind`flex-row gap-2`}>
             <StyledText type="b" variant="displaySmall">
-              {formatNumbers(taka)}
+              {formatNumbers(csbAndTaka.taka)}
             </StyledText>
             <StyledText variant="bodySmall">BDT</StyledText>
           </View>
@@ -139,10 +147,10 @@ export default function Page() {
         </StyledText>
         {/* Buttons */}
         <View style={tailwind`flex-row justify-between gap-2`}>
-          <StyledButton width={(width/5)*2-20} onPress={onRedeem} disabled={csb<=0}>
+          <StyledButton width={(width/5)*2-20} onPress={onRedeem} disabled={csbAndTaka.csb<=0}>
             Redeem
           </StyledButton>
-          <StyledButton width={(width/5)*3-20} onPress={onWithdraw} disabled={taka <= 0}>
+          <StyledButton width={(width/5)*3-20} onPress={onWithdraw} disabled={csbAndTaka.taka <= 0}>
             Request to Withdraw
           </StyledButton>
         </View>
@@ -159,12 +167,12 @@ export default function Page() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
         }
       >
-        {!earnedCSB ? (
+        {earnedCSB.length === 0 ? (
           <View
             style={tailwind`h-96 w-full flex-1 items-center justify-center`}
           >
             <StyledText variant="titleLarge" type="b" color={COLOR.neutralDark}>
-              কোন তথ্য নেই
+              কোন Wallet History নেই
             </StyledText>
           </View>
         ) : (

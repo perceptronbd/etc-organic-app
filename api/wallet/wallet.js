@@ -29,3 +29,17 @@ export const getWalletHistory = async () => {
         return errorResponse;
     }
 }
+
+export const getCSBandTaka = async () => {
+    log("=======getCSBandTaka API=======", [], Style.api);
+    try {
+        const token = await AsyncStorage.getItem("user-token");
+        const res = await authURL(token).get("/get-csb-and-taka");
+        log("...getCSBandTaka api response:", [res], Style.success);
+        return res;
+    } catch (error) {
+        log("...getCSBandTaka api error:", [error], Style.danger);
+        const errorResponse = error.response;
+        return errorResponse;
+    }
+}

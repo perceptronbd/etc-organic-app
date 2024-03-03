@@ -49,16 +49,16 @@ export default function Page() {
     const startTime = new Date(); // Capture the start time
     console.log(`Start time: ${startTime}`);
   
-    setTimeout(() => {
-      console.log("...home useEffect setTimeout...  10 minutes have passed...");
+    // setTimeout(() => {
+    //   console.log("...home useEffect setTimeout...  10 minutes have passed...");
       
-      const endTime = new Date(); // Capture the end time
-      console.log(`End time: ${endTime}`);
-      console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
+    //   const endTime = new Date(); // Capture the end time
+    //   console.log(`End time: ${endTime}`);
+    //   console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
   
-      showToast({ description: "Session timeout. Please login again!", variant: "danger" });
-      logOut();
-    },  10 *  60 *  1000);
+    //   showToast({ description: "Session timeout. Please login again!", variant: "danger" });
+    //   logOut();
+    // },  10 *  60 *  1000);
   
     fetchAPI();
   }, []);

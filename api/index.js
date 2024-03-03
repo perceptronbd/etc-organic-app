@@ -3,7 +3,7 @@ export {
   addToCart,
   decreaseQuantity,
   getCartDetails,
-  increaseQuantity,
+  increaseQuantity
 } from "./cart/cart";
 //order api
 export { fetchProducts } from "./cart/product";
@@ -13,13 +13,14 @@ export {
   getUserDetails,
   loginUser,
   registerUser,
-  updateProfile,
+  updateProfile
 } from "./user/authUser";
 //wallet api
 export {
   addBankAccount,
   deleteBankAccount,
-  getBankAccounts,
+  getBankAccounts
 } from "./wallet/bank";
-export { redeemCSB, getWalletHistory } from "./wallet/wallet";
+export { getCSBandTaka, getWalletHistory, redeemCSB } from "./wallet/wallet";
 export { requestWithdraw } from "./wallet/withdraw";
+
