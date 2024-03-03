@@ -16,9 +16,9 @@ async function getCSBandTaka(req, res) {
       console.log(CSB, taka);
       
   
-      if (CSB === 0 || taka === 0) {
-        return res.status(400).json({ message: "CSB or Taka cannot be zero" }); // Error for zero CSB
-      }
+      // if (CSB === 0 || taka === 0) {
+      //   return res.status(400).json({ message: "CSB or Taka cannot be zero" }); // Error for zero CSB
+      // }
   
       //send taka and CSB as response
       return res.status(200).json({ taka, CSB });
