@@ -6,7 +6,7 @@ import { View } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Image } from "react-native";
 import { SelectList } from "react-native-dropdown-select-list";
-import { ScrollView } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import {
   ActivityIndicator,
   Avatar,
@@ -15,7 +15,7 @@ import {
   Divider,
 } from "react-native-paper";
 import tailwind from "twrnc";
-import { getOrderDetails } from "../../../api";
+import { getCSBandTaka, getOrderDetails } from "../../../api";
 import { updateProfile } from "../../../api/user/authUser";
 import {
   Loading,
@@ -118,14 +118,22 @@ const addressInput = [
 export default function Page() {
   //const apiUrl = Constants.manifest2.extra.apiUrl;
 
+  const [csb, setCSB] = useState(0);
+
+  const [orders, setOrders] = useState({});
+
   const [address, setAddress] = useState({
     division: "",
     district: "",
   });
 
+
+
   const [disabled, setDisabled] = useState(false);
   const [isProfileLoading, setIsProfileLoading] = useState(false);
   const [isNIDLoading, setIsNIDLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [loadingOrder, setLoadingOrder] = useState(false);
 
   const { user, loading } = useAuth();
   const { imageUrl: profileImage, setImage: setProfileImage } = useImage(
@@ -136,6 +144,11 @@ export default function Page() {
   );
 
   const { visible, showModal, hideModal, isError, modalMessage } = useModal();
+
+  useEffect(() => {
+    getCSB();
+    fetchOrderDetails();
+  }, []);
 
   const pickAndUploadImage = async () => {
     log("openImagePickerAsync...", [], Style.function);
@@ -274,17 +287,73 @@ export default function Page() {
     }
   };
 
+  const fetchOrderDetails = async () => {
+    setLoadingOrder(true);
+    const [getOrderDetailsRes, getOrderDetailsErr] =
+      await trycatch(getOrderDetails());
+
+    if (getOrderDetailsErr) {
+      //log("order details:", [getOrderDetailsErr], Style.danger);
+      setLoadingOrder(false);
+      return;
+    }
+
+    //log("profile order details:", [getOrderDetailsRes], Style.success);
+    const { data, status } = getOrderDetailsRes;
+    if (status === 200 || status === 201) {
+      log("data:", [data], Style.code);
+      const groupedData = groupByOrder(data);
+      //log("groupedData:", [groupedData], Style.code);
+      setOrders(groupedData);
+      setLoadingOrder(false);
+    } else {
+      setLoadingOrder(false);
+    }
+  };
+
+  const getCSB = async () => {
+    const [res, err] = await trycatch(getCSBandTaka());
+    if (err) {
+      console.log("...index redeem fetchCSBandTaka err", err);
+      return;
+    }
+
+    console.log("...index redeem fetchCSBandTaka res", res);
+
+    if (res.status === 200) {
+      console.log("...index redeem fetchCSBandTaka res.data", res.data);
+      setCSB(res.data?.CSB || 0);
+    }
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+     console.log("...onRefresh start...");
+     getCSB();
+     fetchOrderDetails();
+     setRefreshing(false);
+    } catch (error) {
+      setRefreshing(false);
+      console.log("...onRefresh error:", error);
+    }
+  }
+
   return loading ? (
     <Loading isLoading={loading} />
   ) : (
-    <ScrollView style={tailwind`flex-1 px-3 py-4`}>
+    <ScrollView style={tailwind`flex-1 px-3 py-4`} 
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+    }
+    >
       <View style={tailwind`flex items-center rounded-xl bg-white p-2`}>
         <Profile
           source={profileImage}
           name={user?.name}
           phone={user?.mobileNumber}
           refCode={user?.referralCode}
-          CSB={user?.CSB}
+          CSB={csb? csb: user?.CSB}
           points={user?.points}
           pickImage={pickAndUploadImage}
           isProfileLoading={isProfileLoading}
@@ -307,7 +376,7 @@ export default function Page() {
           তথ্য সেভ করুন
         </StyledButton>
       </View>
-      <Orders />
+      <Orders loading={loadingOrder} orders={orders} />
       <MessageModal
         isError={isError}
         visible={visible}
@@ -485,62 +554,15 @@ const NIDandAddress = ({
   );
 };
 
-const Orders = () => {
-  //declare state for orders
-  const [orders, setOrders] = useState({});
-  const [loading, setLoading] = useState(false);
+const Orders = ({loading,orders}) => {
+  
 
-  useEffect(() => {
-    //log("...order details...", [], Style.effects);
-    setLoading(true);
-    const fetchOrderDetails = async () => {
-      const [getOrderDetailsRes, getOrderDetailsErr] =
-        await trycatch(getOrderDetails());
-
-      if (getOrderDetailsErr) {
-        //log("order details:", [getOrderDetailsErr], Style.danger);
-        setLoading(false);
-        return;
-      }
-
-      //log("profile order details:", [getOrderDetailsRes], Style.success);
-      const { data, status } = getOrderDetailsRes;
-      if (status === 200 || status === 201) {
-        log("data:", [data], Style.code);
-        const groupedData = groupByOrder(data);
-        //log("groupedData:", [groupedData], Style.code);
-        setOrders(groupedData);
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    };
-
-    fetchOrderDetails();
-  }, []);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      getOrderDetails().then((res) => {
-        //console.log("...profile order details:", res);
-        const { data, status } = res;
-        if (status === 200 || status === 201) {
-          log("data:", [data], Style.code);
-          const groupedData = groupByOrder(data);
-          //log("groupedData:", [groupedData], Style.code);
-          setOrders(groupedData);
-          setLoading(false);
-        } else {
-          setLoading(false);
-        }
-      });
-    }, 10000); // 5000 ms = 5 s
-
-    return () => clearInterval(intervalId);
-  }, []);
+ 
 
   return (
     <View>
+     {Object.keys( orders).length>0 &&
+     <>
       <StyledText
         variant="titleMedium"
         type="b"
@@ -632,6 +654,8 @@ const Orders = () => {
           )
         )}
       </View>
+      </>
+      }
     </View>
   );
 };
