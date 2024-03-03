@@ -18,8 +18,8 @@ const updateUserCSB = asyncHandler(async (productId, customerId, quantity) => {
         $inc: { CSB: primaryCSBIncrement, points: productPoints* quantity, totalCSB: primaryCSBIncrement }
     });
 
-    let remainingCSB = 1-0.4;
-    const distributionPercentages = [0.25, 0.10, 0.05, 0.03, 0.02, 0.01];
+    let remainingCSB = 1-0.45;
+    const distributionPercentages = [0.20, 0.10, 0.05, 0.03, 0.02, 0.01];
     let currentUserId = customerId;
     
     const currentDate = new Date();
