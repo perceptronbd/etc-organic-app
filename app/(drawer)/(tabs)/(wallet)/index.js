@@ -103,7 +103,8 @@ export default function Page() {
           AsyncStorage.mergeItem("user-data", JSON.stringify(res.data)).then(
             (res) => console.log("...index redeem mergeItem", res),
           );
-          fetchCSBandTaka()
+          setCsbAndTaka(prev => ({ ...prev, csb: 0, taka: res.data.taka})
+            );
           showRedeem();
         } else {
           const { message } = res.data;
