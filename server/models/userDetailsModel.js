@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const mobileUserModel = require('./mobileUserModel');
 
+
+
 const userDetailsSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -8,12 +10,26 @@ const userDetailsSchema = mongoose.Schema({
         ref: mobileUserModel
     },
     image: {
-        type: String, // URL to the image
-        required: false
+        public_id: {
+            type: String,
+            
+          },
+          secure_url: {
+            type: String,
+            
+          
+          },
     },
     nationalIdImage: {
-        type: String, // URL to the national ID image
-        required: false
+        public_id: {
+            type: String,
+            
+          },
+          secure_url: {
+            type: String,
+           
+          
+          },
     },
     district: {
         type: String,

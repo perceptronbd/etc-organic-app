@@ -39,9 +39,15 @@ const productSchema = mongoose.Schema({
     trim: true,
   },
   image: {
-    type: Object,
-    required: true,
-    trim: true,
+    public_id: {
+      type: String,
+      required: true,
+    },
+    secure_url: {
+      type: String,
+      required: true,
+    
+    },
   },
 });
 

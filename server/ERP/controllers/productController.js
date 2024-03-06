@@ -1,32 +1,41 @@
 const asyncHandler = require("express-async-handler");
 const multer = require('multer');
+const cloudinary = require('../../utils/cloudinary');
+
 
 const path = require('path');
 
 const Product = require("../../models/productModel");
 
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './public/uploads')
-  },
-  filename: function(req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname )
-  }
- })
+const storage =  multer.memoryStorage();
+const upload = multer({ storage: storage });
+
  
  
 
 
 const createProduct = async (req, res) => {
   try {
-    // Handle file upload
+    // Check if there's a file in the request
+    console.log(req.file);
+    if (!req.file) {
+      return res.status(400).send('No file uploaded');
+    }
 
-    // console.log(req.file);
-    if (!req.file) throw new Error('No file received')
- 
-    // Create a new product instance
-    const product = new Product({
-      productName: req.body.productName,
+    // Upload image to Cloudinary
+    const image = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        { folder: "products" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(req.file.buffer);
+    });
+
+      
+        const data = {
+          productName: req.body.productName,
       category: req.body.category,
       salesPrice: req.body.salesPrice,
       purchasePrice: req.body.purchasePrice,
@@ -34,19 +43,24 @@ const createProduct = async (req, res) => {
       csb: req.body.csb,
       points: req.body.points,
       description: req.body.description,
-      image: req.file
-    });
- 
+      image: {public_id: image.public_id, secure_url: image.secure_url}
+        };
+
+    // Create a new product instance
+    const product = new Product(
+      data 
+      );
+
     // Save the product
     await product.save();
- 
+
     // Send response
     res.status(201).send(product);
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');
   }
- };
+};
 
 
 const getAllProducts = asyncHandler(async(req,res) => {
@@ -135,6 +149,7 @@ module.exports = {
     calculateProductStock,
     getProductByid,
     updateProduct,
+    upload,
     deleteProduct
-    
+
 };
