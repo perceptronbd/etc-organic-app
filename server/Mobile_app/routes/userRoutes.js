@@ -10,8 +10,10 @@ const bankController = require("../controllers/bankController");
 const commonColtroller = require("../../CommonControllers/getProducts");
 const withdrawController = require("../controllers/withdrawController");
 const walletHistoryController = require("../controllers/walletHistoryController");
-const upload = require("../middleware/imageMiddleware");
 const authenticateUser = require("../middleware/authMiddleware");
+
+const {upload} = require("../controllers/profileUpdateController");
+
 
 //user
 router.post("/register", userController.register);
@@ -20,15 +22,15 @@ router.post(
   "/update-image",
   authenticateUser,
   upload.single("image"),
-  profileUpdateController.handleImage
+  profileUpdateController.uploadProfileImage
 );
 
-// Update the route for national image handling
+//Update the route for national image handling
 router.post(
   "/update-national-image",
   upload.single("nationalIdImage"),
   authenticateUser,
-  profileUpdateController.handleNationalImage
+  profileUpdateController.uploadNationalImage
 );
 
 // Update the route for district and division handling
