@@ -16,7 +16,9 @@ export const CustomDrawerContent = (props) => {
   const pathName = usePathname();
 
   const { user } = useAuth();
-  const { imageUrl: profileImage } = useImage(user?.userDetails?.image);
+  const { imageUrl: profileImage } = useImage(
+    user?.userDetails?.image?.secure_url,
+  );
 
   const drawerItems = drawerContents.map((item, index) => {
     return item.labal === "Profile" ? (

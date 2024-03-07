@@ -13,7 +13,7 @@ import { StyledText } from "../texts/StyledText";
 export function ProductCard({ productData }) {
   const [isFavorite, setIsFavorite] = useState(productData?.favorite);
 
-  const { imageUrl: productImageUrl } = useImage(productData?.image.path);
+  const { imageUrl: productImageUrl } = useImage(productData?.image.secure_url);
 
   const handleNavigation = () => {
     const item = { ...productData, image: productImageUrl };

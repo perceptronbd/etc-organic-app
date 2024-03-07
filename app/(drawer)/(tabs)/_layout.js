@@ -16,7 +16,7 @@ const Layout = () => {
 
   const { products } = useContext(CartContext);
   const { user } = useAuth();
-  const { imageUrl } = useImage(user?.userDetails?.image);
+  const { imageUrl } = useImage(user?.userDetails?.image?.secure_url);
 
   return (
     <>
