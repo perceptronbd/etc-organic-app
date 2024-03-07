@@ -23,7 +23,7 @@ export default function Page() {
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(async () => {
-    console.log("...onRefresh start...");
+    // console.log("...onRefresh start...");
     setRefreshing(true);
     try {
       AsyncStorage.getItem("user-token").then((token) => {
@@ -32,7 +32,7 @@ export default function Page() {
           const { data } = res;
           const groupedData = groupByCategory(data);
           setProducts(groupedData);
-          console.log("...onRefresh res:", groupedData);
+          // console.log("...onRefresh res:", groupedData);
           setLoading(false);
           setRefreshing(false);
         });
@@ -45,20 +45,20 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    console.log("...home useEffect...");
+    // console.log("...home useEffect...");
     const startTime = new Date(); // Capture the start time
     console.log(`Start time: ${startTime}`);
   
-    // setTimeout(() => {
-    //   console.log("...home useEffect setTimeout...  10 minutes have passed...");
+    setTimeout(() => {
+      console.log("...home useEffect setTimeout...  10 minutes have passed...");
       
-    //   const endTime = new Date(); // Capture the end time
-    //   console.log(`End time: ${endTime}`);
-    //   console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
+      const endTime = new Date(); // Capture the end time
+      console.log(`End time: ${endTime}`);
+      console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
   
-    //   showToast({ description: "Session timeout. Please login again!", variant: "danger" });
-    //   logOut();
-    // },  10 *  60 *  1000);
+      showToast({ description: "Session timeout. Please login again!", variant: "danger" });
+      // logOut();
+    },  10 *  60 *  1000);
   
     fetchAPI();
   }, []);
@@ -73,17 +73,17 @@ export default function Page() {
 
 
   const fetchAPI = async () => {
-    console.log("...useEffect fetchAPI start...");
+    // console.log("...useEffect fetchAPI start...");
     try {
       AsyncStorage.getItem("user-token").then((token) => {
         setLoading(true);
         fetchProducts(token).then((res) => {
           const { data } = res;
-          console.log("useEffect grouping...", data);
+          // console.log("useEffect grouping...", data);
           const groupedData = groupByCategory(data);
           setProducts(groupedData);
-          console.log("useEffect groupedData", groupedData);
-          console.log("...fetchAPI res:", res);
+          // console.log("useEffect groupedData", groupedData);
+          // console.log("...fetchAPI res:", res);
           setLoading(false);
         });
       });

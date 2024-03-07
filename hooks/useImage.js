@@ -3,28 +3,29 @@ import { Style, log } from "../utils/log";
 import { removeUploadsPrefix } from "../utils/removeUploadPrefix";
 
 export const useImage = (image) => {
+  
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    log("...useImage...", [], Style.effects);
+    log("...useImage...", [image], Style.effects);
     if (image && typeof image === "string") {
       const imageURL = removeUploadsPrefix(image);
-      log("useEffect ImageURL", [imageURL], Style.code);
+      log("useEffect image", [imageURL], Style.code);
       setImageUrl(
-        `https://etc-backend.onrender.com/uploads/${encodeURIComponent(imageURL)}`
+        image
       );
     }
   }, [image]);
 
   // Set image url function
   const setImage = (img) => {
-    log("...useImage setImage...", [], Style.function);
+    log("...useImage setImage...", [img], Style.function);
     if (img && typeof img === "string") {
       const imageURL = removeUploadsPrefix(img);
-      log("setImage Image URL", [image], Style.code);
+      log("setImage Image URL", [img], Style.code);
       log("setImage ImageURL", [imageURL], Style.code);
       setImageUrl(
-        `https://etc-backend.onrender.com/uploads/${encodeURIComponent(imageURL)}`
+        img
       );
     }
   };

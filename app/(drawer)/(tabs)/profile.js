@@ -137,10 +137,10 @@ export default function Page() {
 
   const { user, loading } = useAuth();
   const { imageUrl: profileImage, setImage: setProfileImage } = useImage(
-    user?.userDetails?.image,
+    user?.userDetails?.image.secure_url,
   );
   const { imageUrl: nationalIdImage, setImage: setNationalIdImage } = useImage(
-    user?.userDetails?.nationalIdImage,
+    user?.userDetails?.nationalIdImage.secure_url,
   );
 
   const { visible, showModal, hideModal, isError, modalMessage } = useModal();
@@ -170,8 +170,9 @@ export default function Page() {
         AsyncStorage.getItem("user-token").then((token) => {
           log("Upload Image API", [], Style.api);
           FileSystem.uploadAsync(
-            //NOTE: URL Hardcoded
+            //NOTE: URL
             `https://etc-backend.onrender.com/mobile/update-image`,
+            // `http://192.168.0.101:5000/mobile/update-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
@@ -186,7 +187,7 @@ export default function Page() {
               log("uploadResult:", [uploadResult], Style.success);
               const body = uploadResult.body;
               const imageURL = JSON.parse(body).imagePath;
-              log("imageURL:", [imageURL], Style.code);
+              log("imageURL profile image:", [imageURL], Style.code);
               setProfileImage(imageURL);
               setIsProfileLoading(false);
             })
@@ -221,8 +222,9 @@ export default function Page() {
         console.log("pickerResult:", pickerResult);
         AsyncStorage.getItem("user-token").then((token) => {
           FileSystem.uploadAsync(
-            //NOTE: URL Hardcoded
+            //NOTE: URL
             `https://etc-backend.onrender.com/mobile/update-national-image`,
+            // `http://192.168.0.101:5000/mobile/update-national-image`,
             pickerResult.assets[0].uri,
             {
               httpMethod: "POST",
@@ -235,7 +237,7 @@ export default function Page() {
           ).then((uploadResult) => {
             const body = uploadResult.body;
             const imageURL = JSON.parse(body).imagePath;
-            console.log("uploadResult:", imageURL);
+            console.log("uploadResult NID Image:", body);
             setNationalIdImage(imageURL);
             setIsNIDLoading(false);
           });
@@ -398,7 +400,11 @@ const Profile = ({
   isProfileLoading,
 }) => {
 
-  const [profileImage, setProfileImage] = useState({uri:source});
+  const [profileImage, setProfileImage] = useState(null);
+
+  useEffect(() => {
+    setProfileImage({uri:source});
+  }, [source]);
 
   const handleImageError = () => {
     // console.log("error:Profile Image");
@@ -479,6 +485,9 @@ const NIDandAddress = ({
   dist,
   isNIDLoading,
 }) => {
+  
+  const [NIDImage, setNIDImage] = useState(null);
+
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
 
@@ -490,7 +499,9 @@ const NIDandAddress = ({
     }));
   }, [division, district]);
 
-  const [NIDImage, setNIDImage] = useState({uri:nidImage});
+  useEffect(() => {
+    setNIDImage({uri:nidImage});
+  }, [nidImage]);
 
   const handleImageError = () => {
     setNIDImage(require('../../../assets/NID.png'));
@@ -682,22 +693,22 @@ const OrderCard = ({ products, subTotal }) => {
           <DataTable.Row key={index}>
             <DataTable.Cell style={{ flex: 1.5 }}>
               <StyledText variant="bodySmall">
-                {item.product.productName}
+                {item.product?.productName}
               </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
               <StyledText variant="bodySmall">
-                {formatNumbers(item.quantity)}
+                {formatNumbers(item?.quantity)}
               </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
               <StyledText variant="bodySmall">
-                ৳ {formatNumbers(item.product.salesPrice)}
+                ৳ {formatNumbers(item.product?.salesPrice)}
               </StyledText>
             </DataTable.Cell>
             <DataTable.Cell numeric>
               <StyledText variant="bodySmall">
-                ৳ {formatNumbers(item.product.salesPrice * item.quantity)}
+                ৳ {formatNumbers(item.product?.salesPrice * item.quantity)}
               </StyledText>
             </DataTable.Cell>
           </DataTable.Row>
