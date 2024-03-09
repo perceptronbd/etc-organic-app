@@ -60,7 +60,7 @@ export default function Page() {
       console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
   
       showToast({ description: "Session timeout. Please login again!", variant: "danger" });
-      // logOut();
+      logOut();
     },  10 *  60 *  1000);
   
     fetchAPI();
