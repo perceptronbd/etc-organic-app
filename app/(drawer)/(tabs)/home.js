@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
+import { Modal, Portal } from "react-native-paper";
 import tw from "twrnc";
 import { fetchProducts } from "../../../api";
 import {
@@ -17,6 +18,8 @@ import { groupByCategory } from "../../../utils/groupByCategory";
 
 export default function Page() {
   const showToast = useCustomToast();
+
+  const [visible, setVisible] = React.useState(false);
 
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(false);
@@ -92,6 +95,9 @@ export default function Page() {
     }
   };
 
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+
   return (
     <>
       <ScrollView
@@ -105,10 +111,46 @@ export default function Page() {
 
           <StyledButton
             height={"md"}
-
+onPress={showModal}
           >
             Details
           </StyledButton>
+          <Portal>
+            <Modal
+            visible={visible}
+            onDismiss={hideModal}
+            contentContainerStyle={{
+              backgroundColor: "white",
+              borderRadius: 10,
+              paddingVertical: 40,
+              paddingHorizontal: 20,
+              margin: 20,
+            }}
+            >
+            <ScrollView>
+              <StyledText variant="titleLarge" type="b" style={{
+                lineHeight: 30,
+              }}>বডি ম্যাসাজিং চেয়ার</StyledText>
+            <StyledText variant="bodyMedium">
+            বডি ম্যাসাজ চেয়ার কোন লাক্সারি নয়, এটি একটি প্রয়োজন।এই স্ট্রেসফুল জীবনে কিছুমুহূর্তের জন্য সস্থি পেতে ম্যাসাজ এর নেই কোনো জুড়ি। স্ট্রেস বা মানুসিক চাপ, ব্যাকপেইন,মেদ বৃদ্ধি কিংবা শরীরের যেকোনো সমস্যার উপায় হলো বডি ম্যাসাজিং চেয়ার। ম্যাসাজ আপনাকে করবে শিথিল এবং স্ট্রেসফ্রি। মাত্র ১৫ মিনিটের বডি ম্যাসাজের সেশনে আপনি হয়ে উঠবেন সতেজ এবং প্রাণবন্ত। 
+            </StyledText>
+            <StyledText></StyledText>
+            <StyledText variant="bodyLarge" type="b">
+বডি ম্যাসাজিং চেয়ারের উপকারিতা:
+</StyledText>
+<StyledText variant="bodyLarge">১. স্ট্রেস বা মানসিক চাপ থেকে মুক্ত করতে সাহায্য করে। </StyledText>
+<StyledText variant="bodyLarge">
+২. ব্যাকপেইন নিরাময় করে।</StyledText>
+<StyledText variant="bodyLarge">
+৩. মেদ বৃদ্ধি রোধে সাহায্য করে।</StyledText>
+<StyledText variant="bodyLarge">
+৪. রক্ত চলাচল স্বাভাবিক করতে সাহায্য করে।</StyledText>
+<StyledText variant="bodyLarge">
+৫. শীর্ণ ও দুর্বল পেশীর শক্তি বৃদ্ধিতে সাহায্য করে।</StyledText>
+          </ScrollView>
+            </Modal>
+          </Portal>
+         
         </View>
         {/* Categories */}
         {loading ? (
