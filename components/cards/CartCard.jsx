@@ -19,7 +19,7 @@ export const CartCard = ({
 }) => {
   const { width } = Dimensions.get("window");
 
-  const { imageUrl } = useImage(image?.path);
+  const { imageUrl } = useImage(image?.secure_url);
 
   const [imageLink, setImageLink] = useState(null);
 

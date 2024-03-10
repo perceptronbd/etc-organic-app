@@ -71,7 +71,7 @@ const productDetails = () => {
   ) : (
     <View style={tailwind`flex-1 items-center justify-between p-4`}>
       <View style={tailwind`w-full`}>
-        <ProductImage image={item.image.secure_url} name={item.productName} />
+        <ProductImage image={item?.image} name={item.productName} />
         <Points points={item.points} />
         <ProductDetails
           title={item.productName}
