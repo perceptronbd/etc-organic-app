@@ -8,7 +8,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../components";
-import { imageURL } from "../../utils/removePrefix";
 
 export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
   const sortedData = [...data].reverse();
@@ -66,7 +65,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                         >
                           {item[key] ? (
                             <img
-                              src={imageURL(item[key].path)}
+                              src={item[key].secure_url}
                               alt="Img"
                               className="h-8 w-8 rounded border"
                             />
