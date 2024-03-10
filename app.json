@@ -2,7 +2,7 @@
   "expo": {
     "name": "ETC Organic",
     "slug": "etc-organic",
-    "version": "1.1.2-alpha",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon-etc.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,7 @@
     },
     "android": {
       "package": "com.yourcompany.etcorganic",
-      "versionCode": 112,
+      "versionCode": 20000,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon-etc.png",
         "backgroundColor": "#ffffff"
