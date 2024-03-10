@@ -95,7 +95,10 @@ export const StyledButton = ({
         variant === "outline" || variant === "ghost"
           ? ""
           : disabled
-            ? `bg-[${COLOR.neutral}] text-[${COLOR.neutralDark}]`
+            ? {
+                backgroundColor: `rgba(0, 0, 0, 0.2)`,
+                color: `rgba(0, 0, 0, 0.2)`,
+              }
             : loading
               ? `bg-[${color}] text-[${color}]`
               : `bg-[${color}]`,
