@@ -122,27 +122,57 @@ const getProductByid = asyncHandler(async (req, res) => {
  });
 
 
-const updateProduct = asyncHandler(async (req, res) => {
-
-  //Second PR 
- try {
-    const productId = req.params.id; // Assuming the product ID is passed as a route parameter
-    const updatedData = req.body; // Assuming the updated data is sent in the request body
-    const file = req.file; // file object provided by Multer
-
-    // Update the product with the new data and file
-    const product = await Product.findByIdAndUpdate(productId, {...updatedData, image: file}, { new: true });
-
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-
-    res.status(200).json(product);
- } catch (error) {
-    console.error('Error updating product:', error);
-    res.status(500).json({ message: 'Internal server error' });
- }
-});
+ const updateProduct = asyncHandler(async (req, res) => {
+  try {
+     const productId = req.params.id; // Assuming the product ID is passed as a route parameter
+     const updatedData = req.body; // Assuming the updated data is sent in the request body
+     const file = req.file; // file object provided by Multer
+ 
+     // Initialize variables for the updated product data
+     let updatedProductData = { ...updatedData };
+ 
+     // Check if a file was uploaded
+     if (file) {
+       try {
+         // Upload image to Cloudinary
+         const result = await new Promise((resolve, reject) => {
+           cloudinary.uploader.upload_stream(
+             { folder: "products" },
+             (error, result) => {
+               if (error) reject(error);
+               else resolve(result);
+             }
+           ).end(file.buffer);
+         });
+ 
+         // Prepare the image object with Cloudinary's public_id and secure_url
+         const image = {
+           public_id: result.public_id,
+           secure_url: result.secure_url
+         };
+ 
+         // Update the image in the product data
+         updatedProductData.image = image;
+       } catch (error) {
+         console.error('Error uploading image to Cloudinary:', error);
+         return res.status(500).json({ message: 'Server error' });
+       }
+     }
+ 
+     // Update the product with the new data
+     const product = await Product.findByIdAndUpdate(productId, updatedProductData, { new: true });
+ 
+     if (!product) {
+       return res.status(404).json({ message: 'Product not found' });
+     }
+ 
+     // Send response
+     res.status(200).json(product);
+  } catch (error) {
+     console.error('Error updating product:', error);
+     res.status(500).json({ message: 'Internal server error' });
+  }
+ });
 module.exports = {
     createProduct,
     getAllProducts,
