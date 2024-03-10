@@ -14,7 +14,6 @@ import {
 } from "../../components";
 import { selectCategory } from "../../const/mockData";
 import { Style, logs } from "../../utils/logs";
-import { imageURL } from "../../utils/removePrefix";
 
 export const EditProduct = () => {
   const { id } = useParams();
@@ -60,7 +59,7 @@ export const EditProduct = () => {
           points: data.points,
           units: data.units,
           description: data.description,
-          image: data.image.path,
+          image: data.image.secure_url,
         }));
         setLoading(false);
       }
@@ -209,7 +208,7 @@ export const EditProduct = () => {
           </div>
           <div className="mb-4">
             <ImgInput
-              file={file || imageURL(formValues.image)}
+              file={file || formValues.image}
               label={"Upload Image"}
               id={"img"}
               onChange={onChange}
