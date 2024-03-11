@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { router } from "expo-router";
-import { usePathname } from "expo-router/src/hooks";
+import { router, usePathname } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { Avatar } from "react-native-paper";
