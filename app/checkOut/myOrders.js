@@ -14,7 +14,7 @@ const myOrders = () => {
         style={tailwind`my-2 flex-row items-center`}
         onPress={() => router.replace("/(drawer)/(tabs)")}
       >
-        <Ionicons name="md-chevron-back-sharp" size={24} color="black" />
+       <Ionicons name="chevron-back" size={24} color="black" />
         <StyledText type="b">অমার অর্ডার</StyledText>
       </Pressable>
 

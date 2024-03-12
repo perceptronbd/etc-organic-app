@@ -1,5 +1,5 @@
 import { Ionicons, Octicons } from "@expo/vector-icons";
-import { Icon, Input } from "native-base";
+import { Input } from "native-base";
 import React from "react";
 import { View } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -23,12 +23,13 @@ export const HeaderComponent = ({ imgURL, points }) => {
         py="1"
         px="2"
         InputLeftElement={
-          <Icon
-            ml="2"
-            size="4"
-            color="gray.400"
-            as={<Ionicons name="ios-search" />}
-          />
+          <Ionicons name="search" size={24} color="gray" />
+          // <Icon
+          //   ml="2"
+          //   size="4"
+          //   color="gray.400"
+          //   as={<Ionicons name="ios-search" />}
+          // />
         }
       />
       <View style={tailwind`flex-row items-center gap-2`}>

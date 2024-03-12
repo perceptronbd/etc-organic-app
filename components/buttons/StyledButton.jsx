@@ -97,10 +97,10 @@ export const StyledButton = ({
           : disabled
             ? {
                 backgroundColor: `rgba(0, 0, 0, 0.2)`,
-                color: `rgba(0, 0, 0, 0.2)`,
+                color: `black`,
               }
             : loading
-              ? `bg-[${color}] text-[${color}]`
+              ? { backgroundColor: `rgba(0, 0, 0, 0.2)`, color: `black` }
               : `bg-[${color}]`,
         determineWidth(),
         determineHeight(),
@@ -115,7 +115,7 @@ export const StyledButton = ({
         determineHeight(),
         determineSize(),
       )}
-      textColor={textColor}
+      textColor={disabled ? "black" : loading ? "black" : textColor}
       maxFontSizeMultiplier={1}
       labelStyle={tw.style(textSize, { fontFamily: "mon" })}
       rippleColor={COLOR.tertiary}

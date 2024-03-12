@@ -42,7 +42,7 @@ export default function Page() {
           style={tailwind`my-2 flex-row items-center px-2`}
           onPress={() => router.replace("/(drawer)/(tabs)/home")}
         >
-          <Ionicons name="md-chevron-back-sharp" size={24} color="black" />
+         <Ionicons name="chevron-back" size={24} color="black" />
           <StyledText type="b">কার্ট</StyledText>
         </Pressable>
 
