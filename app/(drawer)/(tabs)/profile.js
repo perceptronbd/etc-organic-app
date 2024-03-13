@@ -31,89 +31,9 @@ import { formatNumbers } from "../../../utils/formatNumbers";
 import { groupByOrder } from "../../../utils/groupByOrder";
 import { Style, log } from "../../../utils/log";
 import { trycatch } from "../../../utils/trycatch";
+import { addressInput } from "../../../utils/inputs";
 
-const addressInput = [
-  {
-    id: 0,
-    label: "বিভাগ*",
-    placeholder: "বিভাগ সিলেক্ট করুন",
-    type: "select",
-    items: [
-      { key: "ঢাকা", value: "ঢাকা" },
-      { key: "চট্টগ্রাম", value: "চট্টগ্রাম" },
-      { key: "রাজশাহী", value: "রাজশাহী" },
-      { key: "খুলনা", value: "খুলনা" },
-      { key: "বরিশাল", value: "বরিশাল" },
-      { key: "রংপুর", value: "রংপুর" },
-      { key: "সিলেট", value: "সিলেট" },
-      { key: "ময়মনসিংহ", value: "ময়মনসিংহ" },
-    ],
-  },
-  {
-    id: 1,
-    label: "জেলা*",
-    placeholder: "জেলা সিলেক্ট করুন",
-    type: "sub-select",
-    items: {
-      ঢাকা: [
-        { key: "ঢাকা", value: "ঢাকা" },
-        { key: "গাজীপুর", value: "গাজীপুর" },
-        { key: "কিশোরগঞ্জ", value: "কিশোরগঞ্জ" },
-        { key: "মুন্সিগঞ্জ", value: "মুন্সিগঞ্জ" },
-        { key: "নারায়ণগঞ্জ", value: "নারায়ণগঞ্জ" },
-        { key: "নরসিংদী", value: "নরসিংদী" },
-        { key: "ফরিদপুর", value: "ফরিদপুর" },
-        { key: "টাঙ্গাইল", value: "টাঙ্গাইল" },
-        { key: "মানিকগঞ্জ", value: "মানিকগঞ্জ" },
-        { key: "রাজবাড়ি", value: "রাজবাড়ি" },
-      ],
-      চট্টগ্রাম: [
-        { key: "চট্টগ্রাম", value: "চট্টগ্রাম" },
-        { key: "বান্দরবান", value: "বান্দরবান" },
-        { key: "ব্রাহ্মণবাড়িয়া", value: "ব্রাহ্মণবাড়িয়া" },
-        { key: "চট্টগ্রাম", value: "চট্টগ্রাম" },
-        { key: "বান্দরবান", value: "বান্দরবান" },
-        { key: "ব্রাহ্মণবাড়িয়া", value: "ব্রাহ্মণবাড়িয়া" },
-      ],
-      রাজশাহী: [
-        { key: "রাজশাহী", value: "রাজশাহী" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-        { key: "নাটোর", value: "নাটোর" },
-        { key: "পাবনা", value: "পাবনা" },
-        { key: "সিরাজগঞ্জ", value: "সিরাজগঞ্জ" },
-      ],
-      খুলনা: [
-        { key: "খুলনা", value: "খুলনা" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-        { key: "নাটোর", value: "নাটোর" },
-        { key: "পাবনা", value: "পাবনা" },
-        { key: "সিরাজগঞ্জ", value: "সিরাজগঞ্জ" },
-      ],
-      বরিশাল: [
-        { key: "বরিশাল", value: "বরিশাল" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-      ],
-      রংপুর: [
-        { key: "রংপুর", value: "রংপুর" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-      ],
-      সিলেট: [
-        { key: "সিলেট", value: "সিলেট" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-      ],
-      ময়মনসিংহ: [
-        { key: "ময়মনসিংহ", value: "ময়মনসিংহ" },
-        { key: "বগুড়া", value: "বগুড়া" },
-        { key: "যশোর", value: "যশোর" },
-      ],
-    },
-  },
-];
+
 
 export default function Page() {
   //const apiUrl = Constants.manifest2.extra.apiUrl;
