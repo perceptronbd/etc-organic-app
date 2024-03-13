@@ -48,22 +48,26 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    // console.log("...home useEffect...");
-    const startTime = new Date(); // Capture the start time
+    const startTime = new Date();
     console.log(`Start time: ${startTime}`);
   
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       console.log("...home useEffect setTimeout...  10 minutes have passed...");
-      
-      const endTime = new Date(); // Capture the end time
+  
+      const endTime = new Date();
       console.log(`End time: ${endTime}`);
       console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
   
       showToast({ description: "Session timeout. Please login again!", variant: "danger" });
       logOut();
-    },  10 *  60 *  1000);
+    }, 10 * 60 * 1000);
   
     fetchAPI();
+  
+    // Cleanup function
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
   
 
@@ -146,7 +150,7 @@ onPress={showModal}
 <StyledText variant="bodyLarge">
 ৪. রক্ত চলাচল স্বাভাবিক করতে সাহায্য করে।</StyledText>
 <StyledText variant="bodyLarge">
-৫. শীর্ণ ও দুর্বল পেশীর শক্তি বৃদ্ধিতে সাহায্য করে।</StyledText>
+৫. শীর্ণ ও দুর্বল পেশীর শক্তি বৃদ্ধিতে সাহায্য করে।</StyledText>
           </ScrollView>
             </Modal>
           </Portal>
