@@ -16,7 +16,7 @@ export const ReferredEarnCard = ({ date, time, csb, percentage }) => {
         </View>
         <View style={tailwind`flex-row justify-between`}>
           <StyledText variant="bodySmall" type="b" color={COLOR.neutralDark}>
-            +{csb}
+            +{parseFloat(csb).toFixed(2)}
           </StyledText>
           <StyledText variant="bodySmall" type="b" color={COLOR.neutralDark}>
             {time}

@@ -1,5 +1,4 @@
-import { Ionicons, Octicons } from "@expo/vector-icons";
-import { Input } from "native-base";
+import { Octicons } from "@expo/vector-icons";
 import React from "react";
 import { View } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -10,11 +9,9 @@ import { StyledText } from "../texts/StyledText";
 export const HeaderComponent = ({ imgURL, points }) => {
   return (
     <View
-      style={tailwind.style(
-        `w-full flex-row items-center justify-between gap-2`,
-      )}
+      style={tailwind.style(`w-full flex-row items-center justify-end gap-2`)}
     >
-      <Input
+      {/* <Input
         placeholder="প্রোডাক্ট খুঁজুন"
         variant="filled"
         width="70%"
@@ -31,7 +28,7 @@ export const HeaderComponent = ({ imgURL, points }) => {
           //   as={<Ionicons name="ios-search" />}
           // />
         }
-      />
+      /> */}
       <View style={tailwind`flex-row items-center gap-2`}>
         <View style={tailwind`items-center justify-center`}>
           <Octicons name="feed-star" size={20} color={COLOR.tertiary} />

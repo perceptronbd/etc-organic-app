@@ -87,17 +87,6 @@ export const CartCard = ({
               ৳ {formatNumbers(price * quantity)}
             </StyledText>
           </View>
-          <View>
-            <StyledText
-              variant="bodySmall"
-              style={{
-                color: "#808080",
-              }}
-            >
-              প্রোডাক্টের ক্যাটেগরি
-            </StyledText>
-            <StyledText type="b">ঔষধ</StyledText>
-          </View>
         </View>
       </View>
 
