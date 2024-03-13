@@ -103,7 +103,7 @@ router.get("/getBank", authenticateUser, bankController.fetchBanksByUser);
 router.delete("/deleteBank", authenticateUser, bankController.deleteBank);
 
 //common
-router.get("/get-products",authenticateUser ,commonColtroller.getAllProducts);
+router.get("/get-products", commonColtroller.getAllProducts);
 
 
 module.exports = router;
