@@ -38,7 +38,50 @@ const Layout = () => {
             borderTopWidth: 0,
           },
         }}
-      >
+      ><Tabs.Screen
+      name="home"
+      options={{
+        title: "Home",
+        headerStyle: { backgroundColor: COLOR.background, elevation: 0 },
+        tabBarIcon: ({ size, color }) => (
+          <Ionicons name="home-outline" size={size} color={color} />
+        ),
+      }}
+    /> <Tabs.Screen
+    name="cart"
+    options={{
+      headerTitle: "Cart",
+      headerStyle: { backgroundColor: COLOR.background, elevation: 0 },
+      tabBarIcon: ({ size, color }) =>
+        products.length > 0 ? (
+          <View style={{ position: "relative" }}>
+            <View
+              style={{
+                position: "absolute",
+                top: -10,
+                left: -10,
+                borderRadius: 999,
+                backgroundColor: "red",
+                padding: 0,
+                width: 16,
+                height: 16,
+                zIndex: 1,
+              }}
+            >
+              <Text
+                style={tailwind`m-0 self-center p-0 text-xs text-white`}
+              >
+                {products.length}
+              </Text>
+            </View>
+
+            <Ionicons name="cart-outline" size={size} color={color} />
+          </View>
+        ) : (
+          <Ionicons name="cart-outline" size={size} color={color} />
+        ),
+    }}
+  />
         <Tabs.Screen
           name="(wallet)"
           options={{
@@ -49,7 +92,7 @@ const Layout = () => {
             ),
           }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
           name="favorite"
           options={{
             headerTitle: "Favorite",
@@ -58,52 +101,9 @@ const Layout = () => {
               <Ionicons name="heart-outline" size={size} color={color} />
             ),
           }}
-        />
-        <Tabs.Screen
-          name="home"
-          options={{
-            title: "Home",
-            headerStyle: { backgroundColor: COLOR.background, elevation: 0 },
-            tabBarIcon: ({ size, color }) => (
-              <Ionicons name="home-outline" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="cart"
-          options={{
-            headerTitle: "Cart",
-            headerStyle: { backgroundColor: COLOR.background, elevation: 0 },
-            tabBarIcon: ({ size, color }) =>
-              products.length > 0 ? (
-                <View style={{ position: "relative" }}>
-                  <View
-                    style={{
-                      position: "absolute",
-                      top: -10,
-                      left: -10,
-                      borderRadius: 999,
-                      backgroundColor: "red",
-                      padding: 0,
-                      width: 16,
-                      height: 16,
-                      zIndex: 1,
-                    }}
-                  >
-                    <Text
-                      style={tailwind`m-0 self-center p-0 text-xs text-white`}
-                    >
-                      {products.length}
-                    </Text>
-                  </View>
-
-                  <Ionicons name="cart-outline" size={size} color={color} />
-                </View>
-              ) : (
-                <Ionicons name="cart-outline" size={size} color={color} />
-              ),
-          }}
-        />
+        /> */}
+        
+       
         <Tabs.Screen
           name="profile"
           options={{

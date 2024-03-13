@@ -18,88 +18,56 @@ import { groupByCategory } from "../../../utils/groupByCategory";
 
 export default function Page() {
   const showToast = useCustomToast();
-
-  const [visible, setVisible] = React.useState(false);
-
+  const [visible, setVisible] = useState(false);
   const [products, setProducts] = useState({});
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-
+ 
   const onRefresh = useCallback(async () => {
-    // console.log("...onRefresh start...");
-    setRefreshing(true);
-    try {
-      AsyncStorage.getItem("user-token").then((token) => {
-        setLoading(true);
-        fetchProducts(token).then((res) => {
-          const { data } = res;
-          const groupedData = groupByCategory(data);
-          setProducts(groupedData);
-          // console.log("...onRefresh res:", groupedData);
-          setLoading(false);
-          setRefreshing(false);
-        });
-      });
-      
-    } catch (error) {
-      setRefreshing(false);
-      console.log("...onRefresh error:", error);
-    }
+     setRefreshing(true);
+     try {
+       const token = await AsyncStorage.getItem("user-token");
+       setLoading(true);
+       const res = await fetchProducts(token);
+       const groupedData = groupByCategory(res.data);
+       setProducts(groupedData);
+       setLoading(false);
+       setRefreshing(false);
+     } catch (error) {
+       setRefreshing(false);
+       console.log("...onRefresh error:", error);
+     }
   }, []);
-
+ 
   useEffect(() => {
-    const startTime = new Date();
-    console.log(`Start time: ${startTime}`);
-  
-    const timeoutId = setTimeout(() => {
-      console.log("...home useEffect setTimeout...  10 minutes have passed...");
-  
-      const endTime = new Date();
-      console.log(`End time: ${endTime}`);
-      console.log(`Elapsed time: ${endTime - startTime} milliseconds`);
-  
-      showToast({ description: "Session timeout. Please login again!", variant: "danger" });
-      logOut();
-    }, 10 * 60 * 1000);
-  
-    fetchAPI();
-  
-    // Cleanup function
-    return () => {
-      console.log("...home useEffect cleanup...");
-      clearTimeout(timeoutId);
-    };
+     const timeoutId = setTimeout(() => {
+       showToast({ description: "Session timeout. Please login again!", variant: "danger" });
+       logOut();
+     }, 10 * 60 * 1000);
+ 
+     fetchAPI();
+ 
+     return () => clearTimeout(timeoutId);
   }, []);
-  
-
-  const logOut = async() => {
-    AsyncStorage.removeItem("user-data").then(() => {
-      //console.log("removed");
-      router.push("login");
-    });
-  }
-
-
-  const fetchAPI = async () => {
-    // console.log("...useEffect fetchAPI start...");
-    try {
-      AsyncStorage.getItem("user-token").then((token) => {
-        setLoading(true);
-        fetchProducts(token).then((res) => {
-          const { data } = res;
-          // console.log("useEffect grouping...", data);
-          const groupedData = groupByCategory(data);
-          setProducts(groupedData);
-          // console.log("useEffect groupedData", groupedData);
-          // console.log("...fetchAPI res:", res);
-          setLoading(false);
-        });
-      });
-    } catch (error) {
-      console.log("...fetchAPI error:", error);
-    }
+ 
+  const logOut = async () => {
+     await AsyncStorage.removeItem("user-data");
+     router.push("login");
   };
-
+ 
+  const fetchAPI = useCallback(async () => {
+     try {
+       const token = await AsyncStorage.getItem("user-token");
+       setLoading(true);
+       const res = await fetchProducts(token);
+       const groupedData = groupByCategory(res.data);
+       setProducts(groupedData);
+       setLoading(false);
+     } catch (error) {
+       console.log("...fetchAPI error:", error);
+     }
+  }, []);
+ 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 

@@ -13,18 +13,6 @@ export default function Layout() {
         }}
       >
         <Drawer.Screen
-          name="points"
-          options={{
-            headerShown: true,
-          }}
-        />
-        <Drawer.Screen
-          name="tutorials"
-          options={{
-            headerShown: true,
-          }}
-        />
-        <Drawer.Screen
           name="referEarn"
           options={{
             headerShown: true,
