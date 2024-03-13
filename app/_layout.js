@@ -74,12 +74,7 @@ export default function Layout() {
                 ),
               }}
             />
-            <Stack.Screen
-              name="checkOut/myOrders"
-              options={{
-                headerShown: false,
-              }}
-            />
+           
           </Stack>
         </NativeBaseProvider>
       </PaperProvider>
