@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Link, router } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -30,6 +30,9 @@ const inputFeilds = [
 ];
 
 const login = () => {
+
+  const router = useRouter();
+
   const [data, setData] = useState({
     mobileNumber: "",
     password: "",
@@ -58,7 +61,7 @@ const login = () => {
         const user = JSON.parse(userData);
 
         if (user !== null) {
-          router.push("/(drawer)/(tabs)/home");
+          router.replace("/(drawer)/(tabs)/home");
         }
       } catch (e) {
         console.log("login error:", e);
@@ -136,7 +139,7 @@ const login = () => {
           setLoading(false);
           console.log("user data", userData);
           storeUserData(userData);
-          router.push("/(drawer)/(tabs)/home");
+          router.replace("/(drawer)/(tabs)/home");
         } else {
           setLoading(false);
           showMessage(message, true);
