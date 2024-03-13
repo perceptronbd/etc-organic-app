@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -43,6 +43,8 @@ const bankInputFeilds = [
 ];
 
 const withdraw = () => {
+
+  const router = useRouter()
 
   const [balance, setBalance] = useState(0); //state value for balance fetched from the server for the logged in user
 
@@ -177,7 +179,7 @@ const withdraw = () => {
             variant: "success",
           });
           setLoadingWithdraw(false);
-           router.push("/(drawer)/(tabs)/home");
+           router.replace("/(drawer)/(tabs)/home");
         } else if (status === 400) {
           const { message } = res.data;
           hideConfirmModal();

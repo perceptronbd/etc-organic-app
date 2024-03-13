@@ -38,7 +38,8 @@ const Layout = () => {
             borderTopWidth: 0,
           },
         }}
-      ><Tabs.Screen
+      >
+        <Tabs.Screen
       name="home"
       options={{
         title: "Home",
@@ -47,7 +48,8 @@ const Layout = () => {
           <Ionicons name="home-outline" size={size} color={color} />
         ),
       }}
-    /> <Tabs.Screen
+    /> 
+    <Tabs.Screen
     name="cart"
     options={{
       headerTitle: "Cart",
@@ -92,17 +94,6 @@ const Layout = () => {
             ),
           }}
         />
-        {/* <Tabs.Screen
-          name="favorite"
-          options={{
-            headerTitle: "Favorite",
-            headerStyle: { backgroundColor: COLOR.background, elevation: 0 },
-            tabBarIcon: ({ size, color }) => (
-              <Ionicons name="heart-outline" size={size} color={color} />
-            ),
-          }}
-        /> */}
-        
        
         <Tabs.Screen
           name="profile"

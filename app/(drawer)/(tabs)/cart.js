@@ -107,7 +107,7 @@ const Checkout = ({ totalPrice, onCheckout }) => {
         <StyledText type="b"> ৳ {formatNumbers(totalPrice)}</StyledText>
         <StyledText> +ডেলিভারি চার্জ</StyledText>
       </View>
-      <StyledButton  width={width-32}height={"md"} onPress={onCheckout}>
+      <StyledButton  width={width-32} height={"md"} onPress={onCheckout}>
         চেকআউট
       </StyledButton>
     </View>

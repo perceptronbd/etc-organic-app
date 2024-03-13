@@ -46,7 +46,7 @@ export function Carousel() {
   return (
     <View style={styles.container}>
       <View
-        style={tailwind`flex h-full w-full items-center justify-center rounded-xl bg-neutral-200`}
+        style={tailwind`flex h-full w-[${width}px] items-center justify-center rounded-xl bg-neutral-200`}
       >
         <Image
           source={require("../../assets/body-massage-chair.png")}

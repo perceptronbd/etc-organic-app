@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
-import { RefreshControl, ScrollView, View } from "react-native";
+import { Dimensions, RefreshControl, ScrollView, View } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 import tw from "twrnc";
 import { fetchProducts } from "../../../api";
@@ -17,6 +17,8 @@ import { useCustomToast } from "../../../hooks";
 import { groupByCategory } from "../../../utils/groupByCategory";
 
 export default function Page() {
+  const {width} = Dimensions.get("window");
+
   const showToast = useCustomToast();
   const [visible, setVisible] = useState(false);
   const [products, setProducts] = useState({});
@@ -83,6 +85,7 @@ export default function Page() {
           <Carousel />
 
           <StyledButton
+          width={width - 20}
             height={"md"}
 onPress={showModal}
           >

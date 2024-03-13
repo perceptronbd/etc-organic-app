@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, View } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
@@ -20,6 +20,9 @@ import { formatNumbers } from "../../../../utils/formatNumbers";
 import { trycatch } from "../../../../utils/trycatch";
 
 export default function Page() {
+
+  const router = useRouter();
+
   const { width } = Dimensions.get("window");
 
   const [loading, setLoading] = useState(false);

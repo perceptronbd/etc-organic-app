@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import { router, usePathname } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { Avatar } from "react-native-paper";
@@ -13,6 +13,7 @@ import { renderIcon } from "./renderIcon";
 
 export const CustomDrawerContent = (props) => {
   const pathName = usePathname();
+  const router = useRouter();
 
   const { user } = useAuth();
   const { imageUrl: profileImage } = useImage(
@@ -84,7 +85,7 @@ export const CustomDrawerContent = (props) => {
               router.push("login");
             });
           } else {
-            router.push(item.route);
+            router.replace(item.route);
           }
         }}
       />
