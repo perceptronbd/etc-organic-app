@@ -12,7 +12,7 @@ const updateUserCSB = asyncHandler(async (productId, customerId, quantity) => {
     }
     const productCSB = product.csb;
     const productPoints = product.points;
-    const primaryCSBIncrement = 0.4 * productCSB * quantity;
+    const primaryCSBIncrement = 0.45 * productCSB * quantity;
 
     await MobileUser.findByIdAndUpdate(customerId, {
         $inc: { CSB: primaryCSBIncrement, points: productPoints* quantity, totalCSB: primaryCSBIncrement }
