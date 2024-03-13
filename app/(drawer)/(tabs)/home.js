@@ -66,6 +66,7 @@ export default function Page() {
   
     // Cleanup function
     return () => {
+      console.log("...home useEffect cleanup...");
       clearTimeout(timeoutId);
     };
   }, []);

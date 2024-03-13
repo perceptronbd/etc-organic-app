@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Style, log } from "../utils/log";
 import { removeUploadsPrefix } from "../utils/removeUploadPrefix";
 
 export const useImage = (image) => {
@@ -7,10 +6,10 @@ export const useImage = (image) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
-    log("...useImage...", [image], Style.effects);
+    // log("...useImage...", [image], Style.effects);
     if (image && typeof image === "string") {
       const imageURL = removeUploadsPrefix(image);
-      log("useEffect image", [imageURL], Style.code);
+      // log("useEffect image", [imageURL], Style.code);
       setImageUrl(
         image
       );
@@ -19,11 +18,11 @@ export const useImage = (image) => {
 
   // Set image url function
   const setImage = (img) => {
-    log("...useImage setImage...", [img], Style.function);
+    // log("...useImage setImage...", [img], Style.function);
     if (img && typeof img === "string") {
       const imageURL = removeUploadsPrefix(img);
-      log("setImage Image URL", [img], Style.code);
-      log("setImage ImageURL", [imageURL], Style.code);
+      // log("setImage Image URL", [img], Style.code);
+      // log("setImage ImageURL", [imageURL], Style.code);
       setImageUrl(
         img
       );
