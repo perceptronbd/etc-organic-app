@@ -88,6 +88,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   // Check if user exists with the given mobile number
   const user = await User.findOne({ mobileNumber });
+
   if (!user) {
     res.status(401);
     throw new Error("Invalid credentials");
@@ -95,6 +96,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   // Compare the provided password with the stored hashed password
   const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) {
     res.status(401);
     throw new Error("Invalid credentials");
@@ -102,13 +104,17 @@ exports.login = asyncHandler(async (req, res) => {
 
   // Generate Token
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "30m",
   });
+
+  // Calculate the session expiration time (30 minutes from now)
+  const sessionExpirationTime = new Date().getTime() + 1 * 60 * 1000;
 
   res.status(200).json({
     data: {
       user,
       token,
+      sessionExpirationTime,
     },
     message: "User logged in successfully",
   });
