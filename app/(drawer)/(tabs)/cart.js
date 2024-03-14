@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { View } from "native-base";
 import React, { useContext } from "react";
 import { Dimensions, Pressable, ScrollView } from "react-native";
@@ -17,8 +17,10 @@ import { formatNumbers } from "../../../utils/formatNumbers";
 export default function Page() {
   const { loading, products, incQty, decQty } = useContext(CartContext);
 
+  const router = useRouter();
+
   const onCheckout = () => {
-    router.push("/checkOut");
+    router.replace("/checkOut");
   };
 
   const handleIncreaseQuantity = async (product) => {
