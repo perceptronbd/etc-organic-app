@@ -42,7 +42,7 @@ export default function Page() {
 		// Set up a timer to check for session expiration
 		const intervalId = setInterval(() => {
 			checkSessionExpiration();
-		}, 60000); // Check every minute
+		}, 3 * 60000); // Check every 3 minute
 
 		fetchAPI();
 
@@ -69,6 +69,8 @@ export default function Page() {
 			if (storedSessionExpirationTime) {
 				const currentTime = new Date().getTime();
 				const expirationTime = parseInt(storedSessionExpirationTime, 10);
+
+				console.log("Session expiration time:", expirationTime, "Current time:", currentTime);
 
 				if (currentTime > expirationTime) {
 					// Session has expired, navigate to login screen
