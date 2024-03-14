@@ -42,10 +42,10 @@ export default function Page() {
 
 	const { user, loading } = useAuth();
 	const { imageUrl: profileImage, setImage: setProfileImage } = useImage(
-		user?.userDetails?.image.secure_url
+		user?.userDetails?.image?.secure_url
 	);
 	const { imageUrl: nationalIdImage, setImage: setNationalIdImage } = useImage(
-		user?.userDetails?.nationalIdImage.secure_url
+		user?.userDetails?.nationalIdImage?.secure_url
 	);
 
 	const { visible, showModal, hideModal, isError, modalMessage } = useModal();
@@ -76,7 +76,7 @@ export default function Page() {
 					FileSystem.uploadAsync(
 						//NOTE: URL
 						`https://etc-backend.onrender.com/mobile/update-image`,
-						// `http://192.168.0.101:5000/mobile/update-image`,
+						// `http:/192.168.0.104:5000/mobile/update-image`,
 						pickerResult.assets[0].uri,
 						{
 							httpMethod: "POST",
@@ -127,7 +127,7 @@ export default function Page() {
 					FileSystem.uploadAsync(
 						//NOTE: URL
 						`https://etc-backend.onrender.com/mobile/update-national-image`,
-						// `http://192.168.0.101:5000/mobile/update-national-image`,
+						// `http://192.168.0.104:5000/mobile/update-national-image`,
 						pickerResult.assets[0].uri,
 						{
 							httpMethod: "POST",

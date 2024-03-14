@@ -105,12 +105,14 @@ const login = () => {
 
 	const storeUserData = async (userData) => {
 		try {
-			const { token, user } = userData;
-			console.log("storeUserData", token);
-			console.log("storeUserData", user);
+			const {sessionExpirationTime, token, user } = userData;
+			// console.log("storeUserData", token);
+			// console.log("storeUserData", user);
+			// console.log("storeUserData", sessionExpirationTime);
 			const jsonUser = JSON.stringify(user);
 			await AsyncStorage.setItem("user-data", jsonUser);
 			await AsyncStorage.setItem("user-token", token);
+			await AsyncStorage.setItem("session-expiration-time", JSON.stringify(sessionExpirationTime));
 		} catch (error) {
 			console.log(error);
 		}
@@ -127,8 +129,8 @@ const login = () => {
 				if (status === 200 || status === 201) {
 					setLoading(false);
 					console.log("user data", userData);
-					storeUserData(userData);
-					router.replace("/(drawer)/(tabs)/home");
+					storeUserData(userData).then(() => {
+						router.replace("/(drawer)/(tabs)/home");});
 				} else {
 					setLoading(false);
 					showMessage(message, true);
