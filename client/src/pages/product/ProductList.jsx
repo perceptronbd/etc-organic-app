@@ -16,7 +16,7 @@ export const ProductList = () => {
 
   const headers = ["Name", "Sales Price", "CSB", "Points", "Description"];
   const actions = [{ label: "Edit", link: "edit-product" }];
-  const ignoreKeys = ["sn", "_id", "__v", "createdAt", "updatedAt"];
+  const ignoreKeys = ["sn", "_id", "__v", "createdAt", "updatedAt", "units"];
 
   useEffect(() => {
     setLoading(true);

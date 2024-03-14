@@ -196,15 +196,6 @@ export const EditProduct = () => {
               required
               onChange={onChange}
             />
-            <FormInput
-              id={"units"}
-              label={"Unit(s)"}
-              placeholder={"Unit(s)"}
-              name={"units"}
-              value={formValues.units}
-              required
-              onChange={onChange}
-            />
           </div>
           <div className="mb-4">
             <ImgInput

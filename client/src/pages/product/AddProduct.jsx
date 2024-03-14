@@ -30,7 +30,7 @@ export const AddProduct = () => {
     purchasePrice: "",
     csb: "",
     points: "",
-    units: "",
+    units: 0,
     description: "",
     image: null,
   });
@@ -163,14 +163,6 @@ export const AddProduct = () => {
             name={"points"}
             type={"number"}
             pattern={"[0-9]{3}-[0-9]{2}-[0-9]{3}"}
-            required
-            onChange={onChange}
-          />
-          <FormInput
-            id={"units"}
-            label={"Unit(s)"}
-            placeholder={"Unit(s)"}
-            name={"units"}
             required
             onChange={onChange}
           />
