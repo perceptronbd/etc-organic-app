@@ -104,7 +104,7 @@ exports.login = asyncHandler(async (req, res) => {
 
   // Generate Token
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "30m",
+    expiresIn: "35m",
   });
 
   // Calculate the session expiration time (30 minutes from now)
