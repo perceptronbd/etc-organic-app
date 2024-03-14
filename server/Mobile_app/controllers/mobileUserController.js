@@ -108,7 +108,7 @@ exports.login = asyncHandler(async (req, res) => {
   });
 
   // Calculate the session expiration time (30 minutes from now)
-  const sessionExpirationTime = new Date().getTime() + 1 * 60 * 1000;
+  const sessionExpirationTime = new Date().getTime() + 30 * 60 * 1000;
 
   res.status(200).json({
     data: {
