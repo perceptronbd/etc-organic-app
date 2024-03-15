@@ -2,10 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, AppState, Dimensions, RefreshControl, ScrollView, View } from "react-native";
-import { Modal, Portal } from "react-native-paper";
+import { ActivityIndicator, Modal, Portal } from "react-native-paper";
 import tw from "twrnc";
 import { fetchProducts } from "../../../api";
-import { Carousel, Category, Loading, StyledButton, StyledText } from "../../../components";
+import { Carousel, Category, StyledButton, StyledText } from "../../../components";
 import COLOR from "../../../constants/COLOR";
 import { groupByCategory } from "../../../utils/groupByCategory";
 
@@ -163,7 +163,7 @@ export default function Page() {
 				</View>
 				{/* Categories */}
 				{loading ? (
-					<Loading isLoading={loading} />
+					<ActivityIndicator animating color={COLOR.secondary} size={"large"} />
 				) : products ? (
 					Object.keys(products).map((category) => (
 						<Category key={category} categoryTitle={category} products={products} />
