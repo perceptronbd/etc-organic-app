@@ -1,4 +1,10 @@
 export const selectCategory = {
+// Organic Food
+// Safe Food
+// Mushroom
+// Natural medicine
+// Healthcare devices
+// Others
   id: "category",
   name: "category",
   placeholder: "Select Category",
@@ -6,8 +12,12 @@ export const selectCategory = {
   type: "select",
   selectOpts: {
     "Select Category": [
-      { value: "category-1", label: "Category 01" },
-      { value: "category-2", label: "Category 02" },
+      { value: "organic-food", label: "Organic Food" },
+      { value: "safe-food", label: "Safe Food" },
+      { value: "mushroom", label: "Mushroom" },
+      { value: "natural-medicine", label: "Natural medicine" },
+      { value: "healthcare-devices", label: "Healthcare devices" },
+      { value: "others", label: "Others" },
     ],
   },
 };
