@@ -26,8 +26,8 @@ const updateUserCSB = asyncHandler(async (productId, customerId, quantity) => {
     let currentUserId = customerId;
     
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString('en-BD'); // Format: YYYY-MM-DD
-    const currentTime = currentDate.toLocaleTimeString('en-BD', { hour12: true, hour: 'numeric', minute: 'numeric' }); 
+    const formattedDate = currentDate.toLocaleDateString('bn-BD'); // Format: YYYY-MM-DD
+    const currentTime = currentDate.toLocaleTimeString('bn-BD', { hour12: true, hour: 'numeric', minute: 'numeric' }); 
         
 
     for (let i = 0; i < distributionPercentages.length; i++) {
