@@ -83,7 +83,7 @@ export const CustomDrawerContent = (props) => {
 							router.push("login");
 						});
 					} else {
-						router.replace(item.route);
+						router.push(item.route);
 					}
 				}}
 			/>
