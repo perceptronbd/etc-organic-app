@@ -12,7 +12,7 @@ import {
   Text,
   TextInput,
 } from "../../components";
-import { selectCategory } from "../../const/mockData";
+import { selectCategory } from "../../const/selectInputs";
 import { Style, logs } from "../../utils/logs";
 
 export const EditProduct = () => {

@@ -6,9 +6,9 @@ export const selectBranch = {
   type: "select",
   selectOpts: {
     "Select Branch": [
-      { value: "online", label: "Online" },
-      { value: "dagun", label: "Dagun Bhuiyan" },
-      { value: "feni", label: "Feni" },
+      { value: "Online", label: "Online" },
+      { value: "Dagan", label: "Dagan Bhuiyan" },
+      { value: "Feni", label: "Feni" },
     ],
   },
 };

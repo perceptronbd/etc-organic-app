@@ -11,7 +11,7 @@ import {
   Text,
   TextInput,
 } from "../../components";
-import { selectCategory } from "../../const/mockData";
+import { selectCategory } from "../../const/selectInputs";
 import { useAuth } from "../../context/AuthContext";
 import { Style, logs } from "../../utils/logs";
 
