@@ -1,50 +1,46 @@
 {
-  "expo": {
-    "name": "ETC Organic",
-    "slug": "etc-organic",
-    "version": "2.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon-etc.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash-etc-screen.png",
-      "resizeMode": "fit",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "package": "com.yourcompany.etcorganic",
-      "versionCode": 20000,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon-etc.png",
-        "backgroundColor": "#ffffff"
-      },
-      "usesCleartextTraffic": true
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "scheme": "eCom",
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "apiUrl": "https://etc-organic-backend.onrender.com",
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "5c23822a-d198-4e2f-a599-4a10f5314547"
-      }
-    },
-    "jsEngine": "hermes",
-    "plugins": [
-      "expo-router"
-    ]
-  }
+	"expo": {
+		"name": "ETC Organic",
+		"slug": "etc-organic",
+		"version": "2.0.1",
+		"orientation": "portrait",
+		"icon": "./assets/icon-etc.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash-etc-screen.png",
+			"resizeMode": "fit",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"package": "com.yourcompany.etcorganic",
+			"versionCode": 20001,
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/icon-etc.png",
+				"backgroundColor": "#ffffff"
+			},
+			"usesCleartextTraffic": true
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"scheme": "eCom",
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"apiUrl": "https://etc-organic-backend.onrender.com",
+			"router": {
+				"origin": false
+			},
+			"eas": {
+				"projectId": "5c23822a-d198-4e2f-a599-4a10f5314547"
+			}
+		},
+		"jsEngine": "hermes",
+		"plugins": ["expo-router"]
+	}
 }
