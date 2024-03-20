@@ -71,10 +71,10 @@ export const Retail = () => {
     const form = {
       ...formValues,
       quantity: quantity.toString(),
-      price: selectedProduct?.purchasePrice,
+      price: selectedProduct?.salesPrice,
       finalPrice: (
-        parseFloat(selectedProduct?.purchasePrice) * quantity -
-        parseFloat(selectedProduct?.purchasePrice) *
+        parseFloat(selectedProduct?.salesPrice) * quantity -
+        parseFloat(selectedProduct?.salesPrice) *
           quantity *
           parseFloat(formValues.discount ? formValues.discount / 100 : 0)
       ).toString(),
@@ -129,7 +129,7 @@ export const Retail = () => {
               placeholder={"Product Price"}
               pattern={"[0-9]+"}
               name={"productPrice"}
-              value={selectedProduct?.purchasePrice}
+              value={selectedProduct?.salesPrice}
               errorMessage={"Please enter a valid price"}
               onChange={onChange}
               required
@@ -153,8 +153,8 @@ export const Retail = () => {
               errorMessage={"Please enter a valid price"}
               value={
                 selectedProduct
-                  ? parseFloat(selectedProduct?.purchasePrice) * quantity -
-                    parseFloat(selectedProduct?.purchasePrice) *
+                  ? parseFloat(selectedProduct?.salesPrice) * quantity -
+                    parseFloat(selectedProduct?.salesPrice) *
                       quantity *
                       parseFloat(formValues.discount ? formValues.discount / 100 : 0)
                   : 0
