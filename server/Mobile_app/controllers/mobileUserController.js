@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 exports.register = asyncHandler(async (req, res) => {
   const { mobileNumber, password, name, givenCode } = req.body;
 
-  if (!name || !givenCode || !password || !mobileNumber) {
+  if (!name || !password || !mobileNumber) {
     res.status(400);
     throw new Error("Please fill in all required fields");
   }
@@ -18,9 +18,21 @@ exports.register = asyncHandler(async (req, res) => {
     throw new Error("User with this phone number already exists");
   }
 
+  let referrer;
+  if (givenCode) {
+    // Find the referring user
+    referrer = await User.findOne({ referralCode: givenCode });
+    if (!referrer) {
+      res.status(400);
+      throw new Error("Invalid Referral Code");
+    }
+
+    // Increment the referNumber of the referring user
+    await User.findByIdAndUpdate(referrer._id, { $inc: { referNumber: 1 } });
+  }
+
   // Generate a random referral code
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const codeLength = 6;
   let referralCode;
   let codeExists = true;
@@ -38,20 +50,16 @@ exports.register = asyncHandler(async (req, res) => {
       codeExists = false;
     }
   }
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const referrer = await User.findOne({ referralCode: givenCode });
-  if (!referrer) {
-    res.status(400);
-    throw new Error("Invalid Referral Code");
-  }
   // Create new user
   const user = new User({
     mobileNumber,
     password: hashedPassword,
     name,
     referralCode,
-    referredBy: referrer._id,
+    referredBy: referrer ? referrer._id : null,
   });
 
   await user.save();
