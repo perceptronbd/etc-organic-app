@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from './../../components/container/Container';
 import { Table } from './../../components/index';
-import { mockdata } from '../../utils/mockData';
+import { stockQuantity } from '../../utils/mockData';
 
 export const StockQuantity = () => {
 
@@ -11,7 +11,7 @@ export const StockQuantity = () => {
     return (
         <>
             <Container className={"flex-col justify-start"}>
-                <Table data={mockdata} headers={headers} ignoreKeys={ignoreKeys}  />
+                <Table data={stockQuantity} headers={headers} ignoreKeys={ignoreKeys}  />
             </Container>
         </>
     );
