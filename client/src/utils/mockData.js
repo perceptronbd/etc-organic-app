@@ -1,4 +1,4 @@
-export const mockdata = [
+export const stockQuantity = [
     {
           SN : 12,
           PRODUCTNAME : "Mystic Potion",
