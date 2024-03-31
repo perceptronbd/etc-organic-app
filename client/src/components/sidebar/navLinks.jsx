@@ -8,6 +8,7 @@ import {
   ShoppingCart,
   Users,
   Wallet,
+  Layers2,
 } from "lucide-react";
 
 export const navLinks = [
@@ -35,6 +36,11 @@ export const navLinks = [
         icon: <ShoppingBag size={18} />,
       },
       { title: "Sales", path: "/sales", icon: <ShoppingCart size={18} /> },
+      {
+        title: "Stock",
+        path: "stockQuantity",
+        icon : <Layers2 />,
+      }
     ],
   },
   {

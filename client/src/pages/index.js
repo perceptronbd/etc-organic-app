@@ -20,3 +20,5 @@ export { CashWithdraw } from "./wallet/CashWithdraw";
 export { AddEmployee } from "./employees/AddEmployee";
 export { Employees } from "./employees/Employees";
 export { UpdateEmployee } from "./employees/UpdateEmployee";
+//Empolyees
+export { StockQuantity } from "./stockQuantity/stockQuantity";
