@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from './../../components/container/Container';
 import { Table } from './../../components/index';
-import mockdata from '../../utils/mockData';
+import { mockdata } from '../../utils/mockData';
 
 export const StockQuantity = () => {
 

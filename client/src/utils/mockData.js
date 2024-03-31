@@ -1,4 +1,4 @@
-const mockdata = [
+export const mockdata = [
     {
           SN : 12,
           PRODUCTNAME : "Mystic Potion",
@@ -74,5 +74,3 @@ const mockdata = [
           TOTAL : 70
       },
   ];
-
-  export default mockdata
