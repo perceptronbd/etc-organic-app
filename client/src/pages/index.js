@@ -21,4 +21,9 @@ export { AddEmployee } from "./employees/AddEmployee";
 export { Employees } from "./employees/Employees";
 export { UpdateEmployee } from "./employees/UpdateEmployee";
 //Empolyees
+// stockQuantity
 export { StockQuantity } from "./stockQuantity/stockQuantity";
+// stockQuantity
+// referers 
+export { Referers } from "./Referers/referers"
+// referers
