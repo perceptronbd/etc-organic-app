@@ -14,7 +14,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
 
   return (
     <>
-      <div className="max-h-[80vh] w-full overflow-y-auto">
+      <div className="max-h-[80vh] w-full overflow-y-auto rounded-lg">
         <table className="w-full border-collapse">
           <thead className="sticky top-0 h-12 border-b-2 bg-foreground">
             <tr>
