@@ -187,7 +187,7 @@ export const accounts = [
 
 export const csbReferers = [
   {
-    data : [
+    referdata : [
         {
           userName: "User 14",
           mobileNumber: "01987654322",
