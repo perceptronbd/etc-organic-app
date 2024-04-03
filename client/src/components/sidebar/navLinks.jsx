@@ -9,7 +9,8 @@ import {
   Users,
   Wallet,
   Layers2,
-  UserCircle
+  UserCircle,
+  Ticket
 } from "lucide-react";
 export const navLinks = [
   {
@@ -45,6 +46,10 @@ export const navLinks = [
         title: "CSB and Referers",
         path: "/referers",
         icon :  <UserCircle />,
+      },{
+        title: "Vouchers",
+        path: "/vouchers",
+        icon :  <Ticket />,
       }
     ],
   },

@@ -27,3 +27,5 @@ export { StockQuantity } from "./stockQuantity/stockQuantity";
 // referers 
 export { Referers } from "./Referers/referers"
 // referers
+
+export { Voucher } from "./pointVoucher/pointVoucher"

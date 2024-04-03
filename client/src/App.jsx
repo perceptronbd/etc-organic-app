@@ -4,6 +4,7 @@ import { Component } from "./components/Component";
 import { useAuth } from "./context/AuthContext";
 import {
   AddEmployee,
+  Voucher,
   AddProduct,
   CashWithdraw,
   EditProduct,
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="employees/add-employee" element={<AddEmployee />} />
         <Route path="stockQuantity" element={< StockQuantity/>} />
         <Route path="referers" element={< Referers/>} />
+        <Route path="vouchers" element={<Voucher/>} />
         <Route path="employees/update-employee/:item" element={<UpdateEmployee />} />
       </Route>
     </Routes>

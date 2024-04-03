@@ -20,9 +20,11 @@ export { Table } from "./table/Table";
 //Container
 export { Container } from "./container/Container";
 export { ListAndView } from "./container/ListAndView";
+export { ViewVoucher } from "./container/viewVoucher";
 export { WillArriveSoon } from "./container/WillArriveSoon";
 //Card
 export { ListCard } from "./card/ListCard";
+export { VoucherCard } from "./card/voucherCard";
 export { OrderCard } from "./card/OrderCard";
 export { SalesCard } from "./card/SalesCard";
 //Calendar

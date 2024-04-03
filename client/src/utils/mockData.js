@@ -267,3 +267,23 @@ export const csbReferers = [
     date: "April 2023",
   },
 ];
+
+export const vouchers =[
+  {
+    name : "shopon",
+    mobile :"01642956206",
+    refcode : "484hjrw",
+    voucher : "DSDFdf74S"
+  },{
+    name : "shopon",
+    mobile :"0162956206",
+    refcode : "484hjrw",
+    voucher : "DSDFdfg74S"
+  },
+  {
+    name : "shopn",
+    mobile :"0162956206",
+    refcode : "484hjrw",
+    voucher : "DSDdsfgsF74S"
+  }
+]
