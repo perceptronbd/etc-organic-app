@@ -1,8 +1,17 @@
+import { useState } from "react";
 import { Button } from "../button/Button";
 import { Text } from "../text/Text";
 
 export const VoucherCard = ({ data, onClick}) => {
-  
+  const [serviceState , setServiceState] = useState(data.taken)
+  const handleService = ()=>{
+    if(serviceState===true){
+      setServiceState(false)
+    }else{
+      setServiceState(false)
+    }
+    
+  }
   return (
     <div
       className={`my-2 flex h-28 justify-between rounded-md border-2 border-accent border-neutral-200
@@ -35,8 +44,10 @@ export const VoucherCard = ({ data, onClick}) => {
         <Button
           variant="destructive"
           className="h-8 w-32"
+          onClick={handleService}
+          disabled={serviceState? false : true}
         >
-          Sevice Taken
+          {serviceState ? "Take Service" : "Service taken"} 
         </Button>
       </div>
     </div>

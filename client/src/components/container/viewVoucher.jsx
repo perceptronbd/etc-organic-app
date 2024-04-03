@@ -3,17 +3,18 @@ import { useEffect, useState } from "react";
 import { Style, logs } from "../../utils/logs";
 import { Text } from "../text/Text";
 import { VoucherCard } from "../card/voucherCard";
+import voucherImage from "../../assets/images/voucher.png"
 
-const TabContent = ({ selectedOrder, viewLoading }) => {
+const TabContent = ({ selectedVoucher, viewLoading }) => {
   const [key, setKey] = useState(0);
 
-  const objSelectedOrder = Object.entries(selectedOrder);
+  const objSelectedOrder = Object.entries(selectedVoucher);
 
   logs("TabContent: objSelectedOrder", [objSelectedOrder, viewLoading], Style.code);
 
   useEffect(() => {
     setKey((prev) => prev + 1);
-  }, [selectedOrder]);
+  }, [selectedVoucher]);
 
   return viewLoading ? (
     <div className="w-[450px] rounded-lg bg-foreground p-4">
@@ -25,8 +26,17 @@ const TabContent = ({ selectedOrder, viewLoading }) => {
       </div>
     </div>
   ) : (
-    <article key={key} className="w-[450px] animate-enterFromRight rounded-lg bg-foreground p-4">
-      <h1>Voucher will go Here {selectedOrder.voucher}</h1>
+    <article key={key} className="w-[750px] animate-enterFromRight p-4">
+    <div className="voucher relative">
+        <div className="text absolute bottom-5 right-20">
+        <h4 className="text-2xl text-yellow font-bold">Voucher  <span className="text-green-700">{selectedVoucher.voucher}</span></h4>
+        <h4 className="text-lg font-semibold my-2 text-green-700">Expire Date {selectedVoucher.expireDate}</h4>
+        <h4 className="text-lg font-semibold my-2 text-green-700">Credit {selectedVoucher.credit}</h4>
+        </div>
+
+    <img  src={voucherImage} alt="voucherImage" />
+    </div>
+
     </article>
   );
 };
@@ -40,6 +50,7 @@ export const ViewVoucher = ({ data, setRefresh }) => {
 
   const handleVoucherClick = (Voucher) => {
     setSelectedVoucher(Voucher);
+    
   };
 
   return (
@@ -55,13 +66,13 @@ export const ViewVoucher = ({ data, setRefresh }) => {
                 onClick={() => {
                   handleVoucherClick(Voucher);
                 }}
-                selectedOrder={selectedVoucher}
+                selectedVoucher={selectedVoucher}
                 setViewLoading={setLoading}
                 setRefresh={setRefresh}
               />
             ))}
         </div>
-        <TabContent viewLoading={loading} selectedOrder={selectedVoucher} />
+        <TabContent viewLoading={loading} selectedVoucher={selectedVoucher} />
       </div>
     </>
   );

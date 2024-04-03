@@ -273,17 +273,26 @@ export const vouchers =[
     name : "shopon",
     mobile :"01642956206",
     refcode : "484hjrw",
-    voucher : "DSDFdf74S"
+    voucher : "EW5HSF",
+    expireDate : "23/5/2025",
+    taken : true,
+    credit : 40
   },{
     name : "shopon",
     mobile :"0162956206",
     refcode : "484hjrw",
-    voucher : "DSDFdfg74S"
+    voucher : "H45HSF",
+    expireDate : "4/2/2025",
+    taken : true,
+    credit : 105
   },
   {
     name : "shopn",
     mobile :"0162956206",
     refcode : "484hjrw",
-    voucher : "DSDdsfgsF74S"
+    voucher : "Y45SGD",
+    expireDate : "12/7/2025",
+    taken : true,
+    credit : 100
   }
 ]
