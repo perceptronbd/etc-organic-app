@@ -22,15 +22,15 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="m-2 mr-4 h-[98%] rounded-md bg-foreground">
-      <div className={` ${open ? "w-52" : "w-20 "}  relative p-5 duration-300`}>
+    <div className="relative m-2 mr-4 h-[98%] rounded-md bg-foreground">
+      <div className={` ${open ? "w-52" : "w-20 "}  relative duration-300`}>
         <ArrowRightCircle
           className={`absolute -right-3 top-16 h-6 w-6 cursor-pointer rounded-full border-2 border-foreground bg-foreground text-primary  ${
             open ? "rotate-180" : "rotate-0"
           }`}
           onClick={() => setOpen(!open)}
         />
-        <div className="m-0 flex items-center gap-x-4">
+        <div className="m-0 flex items-center gap-x-4 p-5">
           <Text
             type="b"
             className={`m-0 text-2xl text-primary duration-200 ${!open && "flex flex-col"}`}
@@ -40,7 +40,7 @@ export const Sidebar = () => {
           </Text>
         </div>
         <span className="block h-3" />
-        <nav className="h-full w-full">
+        <nav className="scrollable-div  h-full max-h-[79vh] w-full overflow-y-scroll p-5">
           {navLinks.map((section, index) => (
             <React.Fragment key={index}>
               {open ? (
@@ -82,9 +82,9 @@ export const Sidebar = () => {
         </nav>
       </div>
       <div
-        className={`absolute bottom-2 flex h-12 2xl:bottom-4 ${
+        className={`fixed bottom-3 flex h-12 2xl:bottom-4 ${
           open ? "w-52" : "w-20"
-        } items-center justify-between p-2 text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
+        } items-center justify-between  bg-white p-3  text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
       >
         <Button className="w-full" onClick={() => handleLogOut()} loading={loading}>
           Logout
