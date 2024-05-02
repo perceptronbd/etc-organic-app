@@ -83,8 +83,8 @@ export const Sidebar = () => {
       </div>
       <div
         className={`fixed bottom-3 flex h-12 2xl:bottom-4 ${
-          open ? "w-52" : "w-20"
-        } items-center justify-between  bg-white p-3  text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
+          open ? "w-52  p-3 " : "w-20 p-1"
+        } items-center justify-between  bg-white text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
       >
         <Button className="w-full" onClick={() => handleLogOut()} loading={loading}>
           Logout
