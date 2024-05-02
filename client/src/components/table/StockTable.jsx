@@ -17,23 +17,20 @@ export const StockTable = ({ data }) => {
   return (
     <>
       {data ? (
-        <article className=" rounded-lg bg-foreground pt-4 pl-1 pb-1">
-          <div className="flex justify-between items-center px-4">
+        <article className="rounded-lg bg-foreground pb-1 pl-1 pt-4">
+          <div className="flex items-center justify-between px-4">
             <Text h2>Stock Quantity</Text>
             <SearchInput value={searchQuery} onChange={handleSearch} />
           </div>
-          <div className="w-full max-h-[480px] 3xl:max-h-[780px] overflow-y-auto rounded-lg">
+          <div className="3xl:max-h-[780px] max-h-[480px] w-full overflow-y-auto rounded-lg">
             <table className="w-full border-collapse">
-              <thead className="text-xs text-textColor-light uppercase border-b-2 border-background  bg-foreground  sticky top-0">
+              <thead className="sticky top-0 border-b-2 border-background bg-foreground text-xs uppercase text-textColor-light">
                 <tr className="w-[900px]">
                   {Object.keys(data[0]).map((item, index) =>
                     item === "id" ? (
                       ""
                     ) : (
-                      <th
-                        className="p-4 font-medium whitespace-nowrap text-left"
-                        key={index}
-                      >
+                      <th className="whitespace-nowrap p-4 text-left font-medium" key={index}>
                         {item}
                       </th>
                     )
@@ -42,15 +39,10 @@ export const StockTable = ({ data }) => {
               </thead>
               <tbody>
                 {filteredData.length === 0 ? (
-                  <div className="font-bold text-xl text-textColor-light my-8">
-                    No Data
-                  </div>
+                  <div className="my-8 text-xl font-bold text-textColor-light">No Data</div>
                 ) : (
                   filteredData.map((item, index) => (
-                    <tr
-                      key={index}
-                      className={`border-b-2 border-background font-semibold `}
-                    >
+                    <tr key={index} className={`border-b-2 border-background font-semibold `}>
                       {Object.keys(item).map((key, index) => {
                         if (key === "id") return "";
                         return (
@@ -67,7 +59,7 @@ export const StockTable = ({ data }) => {
           </div>
         </article>
       ) : (
-        <div className="flex w-full h-full justify-center items-center bg-foreground rounded-lg">
+        <div className="flex h-full w-full items-center justify-center rounded-lg bg-foreground">
           <Text h1 className={"text-textColor-light"}>
             No Data to Show
           </Text>

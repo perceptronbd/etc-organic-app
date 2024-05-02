@@ -14,8 +14,8 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
 
   return (
     <>
-      <div className="max-h-[80vh] w-full overflow-y-auto rounded-lg">
-        <table className="w-full border-collapse">
+      <div className="max-h-[80vh] w-full overflow-y-auto rounded-lg bg-white p-4">
+        <table className="w-full border-collapse ">
           <thead className="sticky top-0 h-12 border-b-2 bg-foreground">
             <tr>
               {data.length > 0 &&
@@ -25,7 +25,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                   } else {
                     return (
                       <th
-                        className="whitespace-nowrap p-4 text-left text-xs font-medium uppercase text-neutral-400"
+                        className="whitespace-nowrap p-4 text-left text-xs font-semibold uppercase text-gray-500 "
                         key={index}
                       >
                         {key}
@@ -40,7 +40,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
               )}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {data.length === 0 ? (
               <tr>
                 <td colSpan={headers.length + (actions ? 1 : 0)}>
@@ -51,7 +51,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
               sortedData.map((item, index) => (
                 <tr
                   key={index}
-                  className={`h-4 bg-foreground text-sm font-normal hover:bg-neutral-200`}
+                  className={`h-11 rounded-lg bg-foreground py-5 text-sm font-normal hover:bg-neutral-200`}
                 >
                   {Object.keys(item).map((key, i) => {
                     if (ignoreKeys.includes(key)) {
@@ -82,7 +82,7 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
                     );
                   })}
                   {actions && actions.length > 0 && (
-                    <td className=" px-2 py-1">
+                    <td className="px-2 py-1 ">
                       {actions.map((action, idx) => (
                         <Button asChild key={idx} className={"h-6"}>
                           <Link to={`${action.link}/${item._id}`}> {action.label} </Link>
