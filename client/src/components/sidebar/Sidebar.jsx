@@ -82,8 +82,8 @@ export const Sidebar = () => {
         </nav>
       </div>
       <div
-        className={`fixed bottom-3 flex h-12 2xl:bottom-4 ${
-          open ? "w-52  p-3 " : "w-20 p-1"
+        className={`fixed bottom-6 flex h-12 2xl:bottom-4 ${
+          open ? "w-52  p-3 " : "bottom-2 w-20 p-1"
         } items-center justify-between  bg-white text-lg font-semibold transition-all duration-200 ease-in-out hover:cursor-pointer`}
       >
         <Button className="w-full" onClick={() => handleLogOut()} loading={loading}>
