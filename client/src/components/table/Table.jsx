@@ -14,10 +14,10 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
   console.log(sortedData);
 
   return (
-    <>
-      <div className="max-h-[80vh] w-full overflow-y-auto rounded-lg bg-white p-4">
+    <div className="w-full">
+      <div className={` w-full  rounded-lg bg-white px-4 pb-4 `}>
         <table className="w-full border-collapse ">
-          <thead className="sticky top-0 h-12 border-b-2 bg-foreground">
+          <thead className="sticky top-0 h-14 border-b-2 bg-foreground">
             <tr>
               {data.length > 0 &&
                 Object.keys(data[0]).map((key, index) => {
@@ -97,6 +97,6 @@ export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };

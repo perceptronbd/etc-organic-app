@@ -50,8 +50,10 @@ export const ProductList = () => {
       {loading ? (
         <TableSkeleton />
       ) : (
-        <div className="w-full rounded-md bg-foreground p-2">
-          <SearchInput value={filterQuery} onChange={handleSearch} />
+        <div className="max-h-screen w-full overflow-y-auto rounded-md bg-foreground">
+          <div className="p-4">
+            <SearchInput value={filterQuery} onChange={handleSearch} />
+          </div>
           <Table data={filteredData} headers={headers} actions={actions} ignoreKeys={ignoreKeys} />
         </div>
       )}

@@ -52,7 +52,9 @@ export const StockQuantity = () => {
         {loading ? (
           <TableSkeleton />
         ) : (
-          <Table data={stockQuantityData} headers={headers} ignoreKeys={ignoreKeys} />
+          <div className="max-h-screen w-full overflow-y-auto">
+            <Table data={stockQuantityData} headers={headers} ignoreKeys={ignoreKeys} />
+          </div>
         )}
       </Container>
     </>
