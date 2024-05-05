@@ -6,6 +6,7 @@ const mobileUser = require("../../models/mobileUserModel");
 const product = require("../../models/productModel");
 const Product = require("../../models/productModel");
 const { default: mongoose } = require("mongoose");
+const salesModel = require("../../models/salesModel");
 
 // Add a new sale
 
@@ -237,9 +238,33 @@ const createMultipleSales = async (req, res) => {
   }
 };
 
+const getMultipleSalesData = async (req, res) => {
+  try {
+    // Fetch all sales, populating the branch and the products within the multipleProduct array
+    const salesRecords = await Sales.find(); // Populate the product reference within multipleProduct
+
+    const salesSummary = salesRecords.map((sale) => ({
+      customerName: sale.customerName,
+      customerNumber: sale.customerNumber,
+      finalPrice: sale.finalPrice,
+      address: sale.address, // Fetch address
+    }));
+    res.status(200).json({
+      message: "All sales records fetched successfully",
+      sales: salesSummary,
+    });
+  } catch (error) {
+    console.error("Error fetching sales records:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching the sales records",
+    });
+  }
+};
+
 module.exports = {
   addSale,
   updateUserCSB,
   getAllProductByBranch,
   createMultipleSales,
+  getMultipleSalesData,
 };

@@ -32,7 +32,8 @@ exports.register = asyncHandler(async (req, res) => {
   }
 
   // Generate a random referral code
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const codeLength = 6;
   let referralCode;
   let codeExists = true;
