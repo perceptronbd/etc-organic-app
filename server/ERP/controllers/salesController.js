@@ -6,6 +6,7 @@ const mobileUser = require("../../models/mobileUserModel");
 const product = require("../../models/productModel");
 const Product = require("../../models/productModel");
 const { default: mongoose } = require("mongoose");
+const salesModel = require("../../models/salesModel");
 
 // Add a new sale
 
@@ -186,17 +187,17 @@ const createMultipleSales = async (req, res) => {
 
     // Validate multipleProduct content
     for (const item of multipleProduct) {
-      if (!item.product || !mongoose.isValidObjectId(item.product)) {
+      if (!item.product && !mongoose.isValidObjectId(item.product)) {
         return res.status(400).json({
           message: "Invalid or missing productId in multipleProduct",
         });
       }
-      if (typeof item.quantity !== "number" || item.quantity <= 0) {
+      if (typeof item.quantity !== "number" && item.quantity <= 0) {
         return res.status(400).json({
           message: "Quantity must be a positive number",
         });
       }
-      if (typeof item.price !== "number" || item.price < 0) {
+      if (typeof item.price !== "number" && item.price < 0) {
         return res.status(400).json({
           message: "Price must be a non-negative number",
         });
@@ -215,7 +216,6 @@ const createMultipleSales = async (req, res) => {
     });
 
     // Save the new sale to the database
-    await newSale.save();
 
     // Apply CSB updates and wallet history for each product in multipleProduct
     for (const item of multipleProduct) {
@@ -223,7 +223,7 @@ const createMultipleSales = async (req, res) => {
       console.log(product, quantity, customerId);
       await updateUserCSB(product, customerId, quantity);
     }
-
+    await newSale.save();
     // Return success response
     res.status(201).json({
       message: "Sales record created successfully",
@@ -237,9 +237,41 @@ const createMultipleSales = async (req, res) => {
   }
 };
 
+const getAllSales = async (req, res) => {
+  try {
+    // Fetch all sales and populate related fields
+    const salesRecords = await salesModel
+      .find()
+      .populate("branch")
+      .populate("multipleProduct.product");
+
+    // Map the data to get only the required fields
+    const salesSummary = salesRecords.map((sale) => ({
+      customerId: sale.customerId,
+      customerName: sale.customerName,
+      customerNumber: sale.customerNumber,
+      finalPrice: sale.finalPrice,
+      branch: sale.branch.name,
+      address: sale.address,
+    }));
+
+    // Return the sales data
+    res.status(200).json({
+      message: "All sales records fetched successfully",
+      sales: salesSummary,
+    });
+  } catch (error) {
+    console.error("Error fetching sales records:", error);
+    res.status(500).json({
+      message: "An error occurred while fetching the sales records",
+    });
+  }
+};
+
 module.exports = {
   addSale,
   updateUserCSB,
   getAllProductByBranch,
   createMultipleSales,
+  getAllSales,
 };

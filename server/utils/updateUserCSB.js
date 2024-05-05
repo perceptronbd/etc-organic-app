@@ -39,7 +39,7 @@ const updateUserCSB = asyncHandler(async (productId, customerId, quantity) => {
   for (let i = 0; i < distributionPercentages.length; i++) {
     const currentUser = await MobileUser.findById(currentUserId);
     console.log(currentUser);
-    // console.log(currentUser.referredBy);
+    console.log(currentUser.referredBy);
     if (currentUser.referredBy.equals(new ObjectId(motherAccountID))) {
       break;
     }
