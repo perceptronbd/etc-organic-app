@@ -18,6 +18,7 @@ router.get(
   salesManagement,
   getAllProductByBranch
 );
+// create all multiple salas route
 router.post(
   "/create-multiple-sales",
   checkLogin,
