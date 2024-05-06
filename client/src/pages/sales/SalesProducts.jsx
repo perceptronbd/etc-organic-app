@@ -91,13 +91,13 @@ const Cart = ({ cartItems }) => {
   }, [cartItems]);
 
   return (
-    <div className="min-w-full rounded-lg border p-5">
-      <div className="grid w-full grid-cols-3 gap-4 font-medium">
+    <div className="max-h-[67vh] min-w-full overflow-y-auto rounded-lg border ">
+      <div className="sticky top-0 z-10 grid w-full grid-cols-3 gap-4 bg-white p-4 pb-3 font-medium ">
         <h6 className="text-start">Product</h6>
         <h6>Quantity</h6>
         <h6>Ind. Price</h6>
       </div>
-      <div className="mt-3">
+      <div className="p-4 py-0">
         {!cartItems.length ? (
           <div className={`${total === 0 ? "block" : "hidden"} py-5 `}>No product added</div>
         ) : (
@@ -111,9 +111,9 @@ const Cart = ({ cartItems }) => {
         )}
       </div>
 
-      <div className="w-full transition-all duration-300 ease-in-out">
-        <div className="mt-4 h-[1px] w-full bg-black" />
-        <div className="flex flex-col gap-y-4">
+      <div className="w-full p-4 pt-2">
+        <div className=" h-[1px] w-full bg-black" />
+        <div className="pr- flex flex-col gap-y-4">
           <p className="w-full pt-1 text-right font-semibold">Total: {total}</p>
           <p className="text-right">
             <span className="font-semibold"> Discount:</span>
@@ -155,7 +155,7 @@ const SalesProducts = ({ products }) => {
 
   return (
     <div className="grid min-h-[390px] w-full grid-cols-2 gap-4">
-      <div className="max-h-[65vh] overflow-y-auto">
+      <div className="max-h-[67vh] overflow-y-auto">
         {products.length === 0 ? (
           <div className="font-semibold capitalize text-rose-400">
             No Product Found for this Branch!!

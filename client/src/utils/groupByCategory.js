@@ -10,4 +10,14 @@ export const groupProductsByCategory = (data) => {
   }, {});
 };
 
-export const extractCategories = ({ data }) => {};
+export const extractCategories = (data) => {
+  // Check if data is an array
+  if (!Array.isArray(data)) {
+    throw new Error("extractCategories() must accept an array as argument.");
+  }
+
+  // Extract categories from the array
+  const categories = Array.from(new Set(data.map((product) => product.category)));
+  categories.unshift("all");
+  return categories;
+};

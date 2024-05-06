@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import CatergorySelection from "./CatergorySelection";
 import SalesProducts from "./SalesProducts";
 import CustomerDetails from "./CustomerDetails";
 import { useBranchOpt } from "../../hooks";
 import { Button, SelectInput } from "../../components";
 import { useSelector } from "react-redux";
+import { extractCategories } from "../../utils/groupByCategory";
+import FilterBtns from "../../components/button/FilterBtns";
 
 export const MultipleProducts = () => {
   const productsData = useSelector((state) => state.product.products);
@@ -13,23 +14,18 @@ export const MultipleProducts = () => {
     quantity: 0,
   }));
 
-  console.log("product with quantity", productsWithQuantity);
-
-  // This will be replaced by api => the category will come from an api using custom hook
-  const categories = Array.from(new Set(productsWithQuantity.map((product) => product.category)));
-  categories.unshift("All");
+  const categories = extractCategories(productsWithQuantity);
 
   const { branchOpts } = useBranchOpt();
   const [selectedBranch, setSelectedBranch] = useState("all");
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filteredProducts =
-    selectedBranch === "all"
+    selectedCategory === "all"
       ? productsWithQuantity
-      : productsWithQuantity.filter((p) => p.branch === selectedBranch);
+      : productsWithQuantity.filter((p) => p.category === selectedCategory);
 
   const onBranchesChanged = (value) => {
-    console.log("value: " + value);
     if (value === "Select Branch") {
       setSelectedBranch("all");
     } else {
@@ -39,11 +35,11 @@ export const MultipleProducts = () => {
   };
 
   return (
-    <div className="rounded-lg bg-white p-6 ">
-      <CatergorySelection
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+    <div className="rounded-lg bg-white p-6 pb-4">
+      <FilterBtns
+        data={categories}
+        selectedState={selectedCategory}
+        setSelectedState={setSelectedCategory}
       />
       <div className="flex gap-6 pt-6">
         <div className="w-full xl:max-w-2xl">
@@ -67,7 +63,7 @@ export const MultipleProducts = () => {
         </div>
       </div>
       <div className="flex w-full justify-center ">
-        <Button type={"submit"} className="px-12 ">
+        <Button type={"submit"} className="mt-4 px-12">
           Done
         </Button>
       </div>
