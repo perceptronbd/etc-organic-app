@@ -1,3 +1,10 @@
+// `MultipleProducts` is a component that displays a list of products with the ability to filter by category and branch.
+// It uses Redux for state management to fetch product data and a custom hook `useBranchOpt` to get branch options.
+// The component also includes a `SalesProducts` component for product selection and a `CustomerDetails` component for customer information.
+
+// Usage:
+// <MultipleProducts />
+
 import React, { useState } from "react";
 import SalesProducts from "./SalesProducts";
 import CustomerDetails from "./CustomerDetails";
@@ -62,7 +69,7 @@ export const MultipleProducts = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full justify-center ">
+      <div className="flex w-full justify-center xl:max-w-4xl">
         <Button type={"submit"} className="mt-4 px-12">
           Done
         </Button>
