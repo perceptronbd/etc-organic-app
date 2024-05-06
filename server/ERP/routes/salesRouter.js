@@ -5,6 +5,7 @@ const {
   addSale,
   getAllProductByBranch,
   createMultipleSales,
+  getMultipleSalesData,
 } = require("../controllers/salesController");
 
 const { salesManagement } = require("../middleware/authMiddleware");
@@ -17,11 +18,14 @@ router.get(
   salesManagement,
   getAllProductByBranch
 );
+// create all multiple salas route
 router.post(
   "/create-multiple-sales",
   checkLogin,
   salesManagement,
   createMultipleSales
 );
+
+router.get("/get-multiple-sales-data", getMultipleSalesData);
 
 module.exports = router;
