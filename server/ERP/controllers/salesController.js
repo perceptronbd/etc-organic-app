@@ -187,17 +187,17 @@ const createMultipleSales = async (req, res) => {
 
     // Validate multipleProduct content
     for (const item of multipleProduct) {
-      if (!item.product || !mongoose.isValidObjectId(item.product)) {
+      if (!item.product && !mongoose.isValidObjectId(item.product)) {
         return res.status(400).json({
           message: "Invalid or missing productId in multipleProduct",
         });
       }
-      if (typeof item.quantity !== "number" || item.quantity <= 0) {
+      if (typeof item.quantity !== "number" && item.quantity <= 0) {
         return res.status(400).json({
           message: "Quantity must be a positive number",
         });
       }
-      if (typeof item.price !== "number" || item.price < 0) {
+      if (typeof item.price !== "number" && item.price < 0) {
         return res.status(400).json({
           message: "Price must be a non-negative number",
         });
