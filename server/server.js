@@ -22,6 +22,7 @@ const mobileUserRoute = require("./Mobile_app/routes/userRoutes");
 //error Middlewares
 const errorHandler = require("./ERP/middleware/errorMiddleware");
 const mobileErrorHandler = require("./Mobile_app/middleware/errorMiddleware");
+const indirectExpenseRoutes = require("./ERP/routes/indirectExpenseRoutes");
 
 // const mobileUserModel = require("./models/mobileUserModel");
 // const bcrypt = require("bcrypt");
@@ -54,6 +55,7 @@ app.use("/api", withdrawRoute);
 app.use("/api", walletHistoryRoute);
 app.use("/api", stockRoute);
 app.use("/api", topTenRoute);
+app.use("/api", indirectExpenseRoutes);
 
 //Mobile Routes
 app.use("/mobile", mobileUserRoute);
