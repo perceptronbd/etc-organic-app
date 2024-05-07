@@ -11,7 +11,6 @@ import { Button } from "../../components";
 
 export const Table = ({ data, headers, actions, ignoreKeys = [] }) => {
   const sortedData = [...data].reverse();
-  console.log(sortedData);
 
   return (
     <div className="w-full">
