@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export const useFilter = ({ data }) => {
-  console.log(data);
+  console.log("use filter ", data.products);
   const [filterQuery, setFilterQuery] = useState("");
 
   const filteredData = data.filter((item) =>

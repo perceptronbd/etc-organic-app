@@ -25,7 +25,7 @@ export const Tabs = ({ tabs }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="flex ">
         {tabs.map((tab) => (
           <Tab
