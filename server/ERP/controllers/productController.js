@@ -73,10 +73,7 @@ const getAllProducts = async (req, res) => {
       })
     );
 
-    res.status(200).json({
-      code: 200,
-      products: productsWithBranches,
-    });
+    res.status(200).json(productsWithBranches);
   } catch (error) {
     console.error("Error retrieving products:", error);
     res.status(500).json({ message: "Internal server error", error });
@@ -103,10 +100,7 @@ const calculateProductStock = async (req, res) => {
       })
     );
 
-    res.status(200).json({
-      code: 200,
-      products: productsWithTotalStock,
-    });
+    res.status(200).json(productsWithTotalStock);
   } catch (error) {
     console.error("Error calculating product stock:", error);
     res.status(500).json({ message: "Internal server error", error });
