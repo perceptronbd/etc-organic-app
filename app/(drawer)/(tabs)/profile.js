@@ -21,6 +21,7 @@ import { groupByOrder } from "../../../utils/groupByOrder";
 import { addressInput } from "../../../utils/inputs";
 import { Style, log } from "../../../utils/log";
 import { trycatch } from "../../../utils/trycatch";
+import apiUrl from "../../../api/apiUrl";
 
 export default function Page() {
 	//const apiUrl = Constants.manifest2.extra.apiUrl;
@@ -75,7 +76,7 @@ export default function Page() {
 					log("Upload Image API", [], Style.api);
 					FileSystem.uploadAsync(
 						//NOTE: URL
-						`https://etc-backend.onrender.com/mobile/update-image`,
+						`${apiUrl}/update-image`,
 						// `http:/192.168.0.104:5000/mobile/update-image`,
 						pickerResult.assets[0].uri,
 						{
@@ -126,7 +127,7 @@ export default function Page() {
 				AsyncStorage.getItem("user-token").then((token) => {
 					FileSystem.uploadAsync(
 						//NOTE: URL
-						`https://etc-backend.onrender.com/mobile/update-national-image`,
+						`${apiUrl()}/update-national-image`,
 						// `http://192.168.0.104:5000/mobile/update-national-image`,
 						pickerResult.assets[0].uri,
 						{
