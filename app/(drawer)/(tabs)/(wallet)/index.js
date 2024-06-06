@@ -91,33 +91,30 @@ export default function Page() {
 		}
 	};
 
-	// const onRedeem = async () => {
-	// 	setLoading(true);
-	// 	try {
-	// 		redeemCSB().then((res) => {
-	// 			console.log(res);
-	// 			setLoading(false);
-	// 			if (res.status === 200) {
-	// 				AsyncStorage.mergeItem("user-data", JSON.stringify(res.data)).then((res) =>
-	// 					console.log("...index redeem mergeItem", res)
-	// 				);
-	// 				setCsbAndTaka((prev) => ({ ...prev, csb: 0, taka: res.data.taka }));
-	// 				showRedeem();
-	// 			} else {
-	// 				const { message } = res.data;
-	// 				showRedeem(message || "দয়া করে পুনরায় চেষ্টা করুন", true);
-	// 				console.log("error");
-	// 			}
-	// 		});
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
-	// for development purposes
-	const onRedeem = () => {
-		setIsRedeemed(!isRedeemed);
+	const onRedeem = async () => {
+		setLoading(true);
+		try {
+			redeemCSB().then((res) => {
+				console.log(res);
+				setLoading(false);
+				if (res.status === 200) {
+					AsyncStorage.mergeItem("user-data", JSON.stringify(res.data)).then((res) =>
+						console.log("...index redeem mergeItem", res)
+					);
+					setCsbAndTaka((prev) => ({ ...prev, csb: 0, taka: res.data.taka }));
+					showRedeem();
+					setIsRedeemed(true);
+				} else {
+					const { message } = res.data;
+					showRedeem(message || "দয়া করে পুনরায় চেষ্টা করুন", true);
+					console.log("error");
+				}
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
+
 	const onWithdraw = () => {
 		//router.push("/withdraw");
 		console.log("withdraw");
@@ -127,7 +124,9 @@ export default function Page() {
 	return (
 		<View style={tailwind.style(`flex-1 gap-4  p-4`, {})}>
 			<View style={tailwind`gap-2`}>
-				{!isRedeemed ? (
+				{!isRedeemed &&
+				((csbAndTaka.csb === 0 && csbAndTaka.taka === 0) ||
+					(csbAndTaka.csb !== 0 && csbAndTaka.taka === 0)) ? (
 					<>
 						<StyledText type="b">বর্তমান CSB ব্যালেন্স</StyledText>
 						{/* CSB and BDT */}
@@ -145,32 +144,14 @@ export default function Page() {
 								<StyledText variant="bodySmall">BDT</StyledText>
 							</View>
 						</View>
-					</>
-				) : (
-					<>
-						<StyledText type="b">বর্তমান ব্যালেন্স</StyledText>
-						<View style={tailwind`flex-row gap-2`}>
-							<StyledText type="b" variant="displaySmall">
-								{formatNumbers(csbAndTaka.taka)}
-							</StyledText>
-							<StyledText
-								variant="bodySmall"
-								style={{ position: "relative", bottom: -20, fontWeight: "600" }}>
-								BDT
-							</StyledText>
-						</View>
-					</>
-				)}
-				{/* instrucitons */}
-				{!isRedeemed && (
-					<StyledText variant="bodySmall" color={COLOR.neutralDark}>
-						টাকা তে রুপান্তর করতে Redeem করুন
-					</StyledText>
-				)}
-				{/* Buttons */}
-				<View style={tailwind`flex-row justify-between gap-2`}>
-					{!isRedeemed ? (
-						<>
+
+						{/* instrucitons */}
+						<StyledText variant="bodySmall" color={COLOR.neutralDark}>
+							টাকা তে রুপান্তর করতে Redeem করুন
+						</StyledText>
+
+						{/* Buttons: reedem and transfer balance */}
+						<View style={tailwind`flex-row justify-between gap-2`}>
 							<StyledButton
 								width={(width / 5) * 2 - 20}
 								onPress={onRedeem}
@@ -185,13 +166,28 @@ export default function Page() {
 								variant="outline">
 								Transfer balance
 							</StyledButton>
-						</>
-					) : (
+						</View>
+					</>
+				) : (
+					<>
+						<StyledText type="b">বর্তমান ব্যালেন্স</StyledText>
+						<View style={tailwind`flex-row gap-2`}>
+							<StyledText type="b" variant="displaySmall">
+								{formatNumbers(csbAndTaka.taka)}
+							</StyledText>
+							<StyledText
+								variant="bodySmall"
+								style={{ position: "relative", bottom: -20, fontWeight: "600" }}>
+								BDT
+							</StyledText>
+						</View>
+
+						{/* Button: Request withdraw */}
 						<StyledButton onPress={onWithdraw} disabled={csbAndTaka.taka <= 0}>
 							Request to Withdraw
 						</StyledButton>
-					)}
-				</View>
+					</>
+				)}
 			</View>
 
 			{/* Refer and Earn program */}
