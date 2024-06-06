@@ -76,7 +76,7 @@ export default function Page() {
 					log("Upload Image API", [], Style.api);
 					FileSystem.uploadAsync(
 						//NOTE: URL
-						`${url}/update-image`,
+						`${apiUrl}/update-image`,
 						// `http:/192.168.0.104:5000/mobile/update-image`,
 						pickerResult.assets[0].uri,
 						{
