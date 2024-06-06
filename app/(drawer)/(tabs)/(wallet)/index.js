@@ -180,7 +180,7 @@ export default function Page() {
 							</StyledButton>
 							<StyledButton
 								width={(width / 5) * 3 - 20}
-								onPress={onWithdraw}
+								onPress={() => {}}
 								disabled={csbAndTaka.taka <= 0}
 								variant="outline">
 								Transfer balance
